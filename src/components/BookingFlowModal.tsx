@@ -5,6 +5,7 @@ import { createPortal } from 'react-dom';
 import { X, Calendar, Clock, Check, ArrowRight, ArrowLeft, CalendarCheck, User, Mail, Phone, MessageSquare } from 'lucide-react';
 import styles from './BookingFlowModal.module.css';
 
+interface Property {
   id: string;
   title: string;
   price: number;
