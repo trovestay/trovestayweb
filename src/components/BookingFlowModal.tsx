@@ -12,7 +12,15 @@ interface Property {
   imageUrl?: string;
 }
 
-export default function BookingFlowModal({ property, children }: { property: Property, children?: React.ReactNode }) {
+export default function BookingFlowModal({ 
+  property, 
+  billingCycle = 'monthly',
+  children 
+}: { 
+  property: Property, 
+  billingCycle?: 'monthly' | 'yearly',
+  children?: React.ReactNode 
+}) {
   const [isOpen, setIsOpen] = useState(false);
   const [step, setStep] = useState(1);
   const [mounted, setMounted] = useState(false);
@@ -28,8 +36,7 @@ export default function BookingFlowModal({ property, children }: { property: Pro
   const [formData, setFormData] = useState({
     date: dates[0].toISOString().split('T')[0],
     exactTime: '10:00',
-    name: '',
-    message: ''
+    name: ''
   });
 
   useEffect(() => {
@@ -59,7 +66,7 @@ export default function BookingFlowModal({ property, children }: { property: Pro
   };
 
   const handleSubmit = () => {
-    const text = `Hi, I would like to request a viewing for *${property.title}* (TRV-${property.id}).%0A%0A*Name:* ${formData.name}%0A*Date:* ${formData.date}%0A*Time:* ${formData.exactTime}%0A*Message:* ${formData.message || '-'}`;
+    const text = `Hi, I would like to request a viewing for *${property.title}*.%0A%0A*PROPERTY DETAILS*%0A------------------------%0A*ID:* TRV-${property.id}%0A*Link:* https://trovestayweb.vercel.app/properties/${property.id}%0A*Plan:* ${billingCycle === 'yearly' ? 'Yearly' : 'Monthly'}%0A%0A*VIEWING DETAILS*%0A------------------------%0A*Name:* ${formData.name}%0A*Date:* ${formData.date}%0A*Time:* ${formData.exactTime}`;
     const whatsappUrl = `https://wa.me/6285174119423?text=${text}`;
     window.open(whatsappUrl, '_blank');
     setStep(3);

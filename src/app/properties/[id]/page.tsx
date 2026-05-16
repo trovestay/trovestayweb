@@ -369,7 +369,7 @@ export default function PropertyDetail({ params }: { params: Promise<{ id: strin
 
                {/* Lead Gen Booking Actions */}
                <div className={styles.leadGenActions}>
-                 <BookingFlowModal property={property}>
+                 <BookingFlowModal property={property} billingCycle={billingCycle}>
                    <button className={styles.desktopBookBtn}>
                       <CalendarClock size={16} /> Request Viewing
                    </button>
@@ -428,7 +428,7 @@ export default function PropertyDetail({ params }: { params: Promise<{ id: strin
             <strong>{formatPrice(billingCycle === 'yearly' ? property.price * 10 : property.price)}</strong>
             <span>{billingCycle === 'yearly' ? t('yearly') : t('monthly')}</span>
          </div>
-         <BookingFlowModal property={property}>
+         <BookingFlowModal property={property} billingCycle={billingCycle}>
            <button className={styles.mobileStickyBtn}>
               Request Viewing
            </button>
