@@ -5,10 +5,10 @@ import { createPortal } from 'react-dom';
 import { X, Calendar, Clock, Check, ArrowRight, ArrowLeft, CalendarCheck, User, Mail, Phone, MessageSquare } from 'lucide-react';
 import styles from './BookingFlowModal.module.css';
 
-interface Property {
   id: string;
   title: string;
   price: number;
+  imageUrl?: string;
 }
 
 export default function BookingFlowModal({ property, children }: { property: Property, children?: React.ReactNode }) {
@@ -16,13 +16,20 @@ export default function BookingFlowModal({ property, children }: { property: Pro
   const [step, setStep] = useState(1);
   const [mounted, setMounted] = useState(false);
   
+  // Generate next 7 days
+  const dates = Array.from({ length: 7 }, (_, i) => {
+    const d = new Date();
+    d.setDate(d.getDate() + i);
+    return d;
+  });
+
+  const timeSlots = ['09:00', '11:00', '13:00', '15:00', '17:00'];
+
   // Form State
   const [formData, setFormData] = useState({
-    date: '',
-    time: 'Morning (9AM - 12PM)',
+    date: dates[0].toISOString().split('T')[0],
+    time: timeSlots[0],
     name: '',
-    email: '',
-    phone: '',
     message: ''
   });
 
@@ -53,7 +60,7 @@ export default function BookingFlowModal({ property, children }: { property: Pro
   };
 
   const handleSubmit = () => {
-    const text = `Hi, I would like to request a viewing for *${property.title}* (TRV-${property.id}).%0A%0A*Name:* ${formData.name}%0A*Phone:* ${formData.phone}%0A*Date:* ${formData.date}%0A*Time:* ${formData.time}%0A*Message:* ${formData.message || '-'}`;
+    const text = `Hi, I would like to request a viewing for *${property.title}* (TRV-${property.id}).%0A%0A*Name:* ${formData.name}%0A*Date:* ${formData.date}%0A*Time:* ${formData.time}%0A*Message:* ${formData.message || '-'}`;
     const whatsappUrl = `https://wa.me/6285174119423?text=${text}`;
     window.open(whatsappUrl, '_blank');
     setStep(3);
@@ -111,77 +118,82 @@ export default function BookingFlowModal({ property, children }: { property: Pro
             {step === 1 && (
               <div className={styles.stageContent}>
                 
-                {/* Property / Booking Details */}
-                <div style={{ backgroundColor: '#f9f9fb', borderRadius: '16px', padding: '1rem', marginBottom: '1.5rem', border: '1px solid #f0f0f0', display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
-                   <span style={{ fontSize: '0.8rem', color: '#8e8e93', fontWeight: 600, textTransform: 'uppercase' }}>Property</span>
-                   <strong style={{ fontSize: '1.1rem', color: '#111' }}>{property.title}</strong>
-                   <div style={{ fontSize: '1rem', color: '#111', marginTop: '0.25rem' }}>
-                     Rp {property.price.toLocaleString('id-ID')} <span style={{ fontSize: '0.85rem', color: '#8e8e93' }}>/mo</span>
-                   </div>
+                {/* Property Cover Image & Details */}
+                <div className={styles.propertyCoverCard}>
+                  {property.imageUrl && (
+                    <img src={property.imageUrl} alt={property.title} className={styles.propertyCoverImg} />
+                  )}
+                  <div className={styles.propertyCoverInfo}>
+                    <span className={styles.propertyCoverLabel}>VIEWING REQUEST</span>
+                    <strong className={styles.propertyCoverTitle}>{property.title}</strong>
+                    <div className={styles.propertyCoverPrice}>
+                      Rp {property.price.toLocaleString('id-ID')} <span>/mo</span>
+                    </div>
+                  </div>
                 </div>
 
-                <div style={{ marginBottom: '1rem' }}>
-                  <h4 style={{ fontSize: '1rem', fontWeight: 700, color: '#111', marginBottom: '1rem' }}>When would you like to view it?</h4>
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem', marginBottom: '1.5rem' }}>
-                    <div className={styles.inputGroup} style={{ marginBottom: 0 }}>
-                      <label style={{ fontSize: '0.8rem' }}><Calendar size={14} style={{display: 'inline', marginRight:'4px', color: '#8E8E93'}}/> Date</label>
-                      <input 
-                        type="date" 
-                        className={styles.inputField} 
-                        style={{ padding: '0.75rem' }}
-                        value={formData.date}
-                        onChange={(e) => setFormData({...formData, date: e.target.value})}
-                      />
-                    </div>
-                    <div className={styles.inputGroup} style={{ marginBottom: 0 }}>
-                      <label style={{ fontSize: '0.8rem' }}><Clock size={14} style={{display: 'inline', marginRight:'4px', color: '#8E8E93'}}/> Time</label>
-                      <select 
-                        className={styles.inputField}
-                        style={{ padding: '0.75rem' }}
-                        value={formData.time}
-                        onChange={(e) => setFormData({...formData, time: e.target.value})}
+                <div className={styles.sectionHeader}>
+                  <h4>Select Date</h4>
+                </div>
+                <div className={styles.dateSelectorScroll}>
+                  {dates.map((d, idx) => {
+                    const dateStr = d.toISOString().split('T')[0];
+                    const isSelected = formData.date === dateStr;
+                    const dayName = d.toLocaleDateString('en-US', { weekday: 'short' });
+                    const dayNum = d.getDate();
+                    const monthName = d.toLocaleDateString('en-US', { month: 'short' });
+                    return (
+                      <div 
+                        key={idx} 
+                        className={`${styles.datePill} ${isSelected ? styles.datePillActive : ''}`}
+                        onClick={() => setFormData({...formData, date: dateStr})}
                       >
-                        <option>Morning</option>
-                        <option>Afternoon</option>
-                        <option>Late Afternoon</option>
-                      </select>
-                    </div>
-                  </div>
+                        <span className={styles.datePillMonth}>{monthName}</span>
+                        <strong className={styles.datePillNum}>{dayNum}</strong>
+                        <span className={styles.datePillDay}>{dayName}</span>
+                      </div>
+                    );
+                  })}
                 </div>
 
-                <div style={{ marginBottom: '1.5rem' }}>
-                  <h4 style={{ fontSize: '1rem', fontWeight: 700, color: '#111', marginBottom: '1rem' }}>Your Information</h4>
-                  <div className={styles.inputGroup} style={{ marginBottom: '0.75rem' }}>
-                    <label style={{ fontSize: '0.8rem' }}><User size={14} style={{display: 'inline', marginRight:'4px', color: '#8E8E93'}}/> Full Name</label>
-                    <input 
-                      type="text" 
-                      placeholder="John Doe" 
-                      className={styles.inputField} 
-                      style={{ padding: '0.75rem' }}
-                      value={formData.name}
-                      onChange={(e) => setFormData({...formData, name: e.target.value})}
-                    />
-                  </div>
-                  <div className={styles.inputGroup} style={{ marginBottom: '0.75rem' }}>
-                    <label style={{ fontSize: '0.8rem' }}><Phone size={14} style={{display: 'inline', marginRight:'4px', color: '#8E8E93'}}/> WhatsApp Number</label>
-                    <input 
-                      type="tel" 
-                      placeholder="+62 812 3456 7890" 
-                      className={styles.inputField} 
-                      style={{ padding: '0.75rem' }}
-                      value={formData.phone}
-                      onChange={(e) => setFormData({...formData, phone: e.target.value})}
-                    />
-                  </div>
+                <div className={styles.sectionHeader}>
+                  <h4>Select Time</h4>
+                </div>
+                <div className={styles.timeSelectorScroll}>
+                  {timeSlots.map((time, idx) => {
+                    const isSelected = formData.time === time;
+                    return (
+                      <div 
+                        key={idx} 
+                        className={`${styles.timePill} ${isSelected ? styles.timePillActive : ''}`}
+                        onClick={() => setFormData({...formData, time: time})}
+                      >
+                        {time}
+                      </div>
+                    );
+                  })}
+                </div>
+
+                <div className={styles.sectionHeader} style={{ marginTop: '1.5rem' }}>
+                  <h4>Your Details</h4>
+                </div>
+                <div className={styles.inputGroup} style={{ marginBottom: '0.75rem' }}>
+                  <input 
+                    type="text" 
+                    placeholder="Full Name" 
+                    className={styles.inputField} 
+                    value={formData.name}
+                    onChange={(e) => setFormData({...formData, name: e.target.value})}
+                  />
                 </div>
 
                 <button 
                   className={styles.bookBtn} 
                   onClick={handleSubmit} 
-                  style={{ width: '100%', backgroundColor: '#D4F721', color: '#111' }}
-                  disabled={!formData.name || !formData.phone || !formData.date}
+                  style={{ width: '100%', backgroundColor: '#D4F721', color: '#111', marginTop: '1.5rem' }}
+                  disabled={!formData.name || !formData.date || !formData.time}
                 >
-                  Request via WhatsApp
+                  <MessageSquare size={18} /> Request via WhatsApp
                 </button>
               </div>
             )}
