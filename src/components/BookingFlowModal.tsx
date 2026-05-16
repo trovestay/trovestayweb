@@ -62,16 +62,25 @@ export default function BookingFlowModal({ property, children }: { property: Pro
   return (
     <>
       {/* TRIGGER BUTTON */}
-      <div className={children ? '' : styles.triggerWrapper} onClick={forceOpen} style={children ? {} : { width: '100%' }}>
-        {children || (
+      {children ? (
+        React.isValidElement(children) 
+          ? React.cloneElement(children as React.ReactElement<any>, { 
+              onClick: (e: React.MouseEvent) => {
+                e.preventDefault();
+                forceOpen();
+              }
+            })
+          : <div onClick={forceOpen} style={{ cursor: 'pointer', display: 'contents' }}>{children}</div>
+      ) : (
+        <div className={styles.triggerWrapper} onClick={forceOpen} style={{ width: '100%', cursor: 'pointer' }}>
           <button 
             className={styles.bookBtn} 
             style={{ width: '100%', margin: 0 }}
           >
              <CalendarCheck size={20} /> Schedule a Visit
           </button>
-        )}
-      </div>
+        </div>
+      )}
 
       {/* MODAL BOTTOM SHEET via Portal */}
       {mounted && isOpen && createPortal(
