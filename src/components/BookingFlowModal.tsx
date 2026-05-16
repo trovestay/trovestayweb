@@ -24,12 +24,13 @@ export default function BookingFlowModal({ property, children }: { property: Pro
     return d;
   });
 
-  const timeSlots = ['09:00', '11:00', '13:00', '15:00', '17:00'];
+  const timePeriods = ['Morning', 'Afternoon', 'Evening'];
 
   // Form State
   const [formData, setFormData] = useState({
     date: dates[0].toISOString().split('T')[0],
-    time: timeSlots[0],
+    period: timePeriods[0],
+    exactTime: '10:00',
     name: '',
     message: ''
   });
@@ -61,7 +62,7 @@ export default function BookingFlowModal({ property, children }: { property: Pro
   };
 
   const handleSubmit = () => {
-    const text = `Hi, I would like to request a viewing for *${property.title}* (TRV-${property.id}).%0A%0A*Name:* ${formData.name}%0A*Date:* ${formData.date}%0A*Time:* ${formData.time}%0A*Message:* ${formData.message || '-'}`;
+    const text = `Hi, I would like to request a viewing for *${property.title}* (TRV-${property.id}).%0A%0A*Name:* ${formData.name}%0A*Date:* ${formData.date}%0A*Time:* ${formData.exactTime} (${formData.period})%0A*Message:* ${formData.message || '-'}`;
     const whatsappUrl = `https://wa.me/6285174119423?text=${text}`;
     window.open(whatsappUrl, '_blank');
     setStep(3);
@@ -161,19 +162,37 @@ export default function BookingFlowModal({ property, children }: { property: Pro
                   <h4>Select Time</h4>
                 </div>
                 <div className={styles.timeSelectorScroll}>
-                  {timeSlots.map((time, idx) => {
-                    const isSelected = formData.time === time;
+                  {timePeriods.map((period, idx) => {
+                    const isSelected = formData.period === period;
                     return (
                       <div 
                         key={idx} 
                         className={`${styles.timePill} ${isSelected ? styles.timePillActive : ''}`}
-                        onClick={() => setFormData({...formData, time: time})}
+                        onClick={() => {
+                          let defaultTime = '10:00';
+                          if (period === 'Afternoon') defaultTime = '14:00';
+                          if (period === 'Evening') defaultTime = '18:00';
+                          setFormData({...formData, period: period, exactTime: defaultTime});
+                        }}
                       >
-                        {time}
+                        {period}
                       </div>
                     );
                   })}
                 </div>
+
+                {/* Animated Exact Time Picker */}
+                {formData.period && (
+                   <div className={styles.exactTimeContainer}>
+                     <label className={styles.exactTimeLabel}>Set specific time ({formData.period})</label>
+                     <input 
+                       type="time" 
+                       className={styles.exactTimeInput}
+                       value={formData.exactTime}
+                       onChange={(e) => setFormData({...formData, exactTime: e.target.value})}
+                     />
+                   </div>
+                )}
 
                 <div className={styles.sectionHeader} style={{ marginTop: '1.5rem' }}>
                   <h4>Your Details</h4>
@@ -192,7 +211,7 @@ export default function BookingFlowModal({ property, children }: { property: Pro
                   className={styles.bookBtn} 
                   onClick={handleSubmit} 
                   style={{ width: '100%', backgroundColor: '#D4F721', color: '#111', marginTop: '1.5rem' }}
-                  disabled={!formData.name || !formData.date || !formData.time}
+                  disabled={!formData.name || !formData.date || !formData.exactTime}
                 >
                   <MessageSquare size={18} /> Request via WhatsApp
                 </button>
