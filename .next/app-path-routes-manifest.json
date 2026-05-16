@@ -1,0 +1,20 @@
+{
+  "/_not-found/page": "/_not-found",
+  "/blog/[id]/page": "/blog/[id]",
+  "/contact/page": "/contact",
+  "/list-property/page": "/list-property",
+  "/locations/page": "/locations",
+  "/page": "/",
+  "/profile/page": "/profile",
+  "/properties/page": "/properties",
+  "/properties/[id]/page": "/properties/[id]",
+  "/saved/page": "/saved",
+  "/about/page": "/about",
+  "/admin/blogs/new/page": "/admin/blogs/new",
+  "/admin/page": "/admin",
+  "/admin/blogs/page": "/admin/blogs",
+  "/admin/properties/new/page": "/admin/properties/new",
+  "/admin/properties/page": "/admin/properties",
+  "/admin/settings/page": "/admin/settings",
+  "/admin/properties/edit/[id]/page": "/admin/properties/edit/[id]"
+}

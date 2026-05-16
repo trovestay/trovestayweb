@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import {
@@ -222,7 +222,7 @@ function PropertyCardItem({ property, onUpdate, onDelete }: { property: Property
   );
 }
 
-export default function AdminProperties() {
+function AdminPropertiesContent() {
   const searchParams = useSearchParams();
   const [searchQuery, setSearchQuery] = useState(searchParams.get('search') || '');
   const [deleteConfirm, setDeleteConfirm] = useState<string | null>(null);
@@ -304,5 +304,13 @@ export default function AdminProperties() {
         </div>
       )}
     </div>
+  );
+}
+
+export default function AdminProperties() {
+  return (
+    <Suspense fallback={<div className={styles.propertiesPage} style={{ padding: '2rem' }}>Loading properties...</div>}>
+      <AdminPropertiesContent />
+    </Suspense>
   );
 }
