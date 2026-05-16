@@ -102,7 +102,7 @@ export default function BookingFlowModal({ property, children }: { property: Pro
           <div className={styles.bottomSheet} style={{ zIndex: 999999 }}>
              
             {/* Header */}
-            <div className={styles.modalHeader} style={{ marginBottom: '1.5rem' }}>
+            <div className={styles.modalHeader} style={{ marginBottom: '1rem' }}>
               <div>
                 <h3 className={styles.modalTitle}>
                   {step === 1 ? 'Request Viewing' : 'Inquiry Sent!'}
@@ -155,7 +155,7 @@ export default function BookingFlowModal({ property, children }: { property: Pro
                   })}
                 </div>
 
-                <div className={styles.sectionHeader} style={{ marginTop: '1.5rem' }}>
+                <div className={styles.sectionHeader} style={{ marginTop: '1rem' }}>
                   <h4>Select Time</h4>
                 </div>
                 
@@ -172,10 +172,10 @@ export default function BookingFlowModal({ property, children }: { property: Pro
                    />
                 </div>
 
-                <div className={styles.sectionHeader} style={{ marginTop: '1.5rem' }}>
+                <div className={styles.sectionHeader} style={{ marginTop: '1rem' }}>
                   <h4>Your Details</h4>
                 </div>
-                <div className={styles.inputGroup} style={{ marginBottom: '0.75rem' }}>
+                <div className={styles.inputGroup} style={{ marginBottom: '0.5rem' }}>
                   <input 
                     type="text" 
                     placeholder="Full Name" 
@@ -188,7 +188,7 @@ export default function BookingFlowModal({ property, children }: { property: Pro
                 <button 
                   className={styles.bookBtn} 
                   onClick={handleSubmit} 
-                  style={{ width: '100%', backgroundColor: '#D4F721', color: '#111', marginTop: '1.5rem' }}
+                  style={{ width: '100%', backgroundColor: '#D4F721', color: '#111', marginTop: '1rem' }}
                   disabled={!formData.name || !formData.date || !formData.exactTime}
                 >
                   <MessageSquare size={18} /> Request via WhatsApp
