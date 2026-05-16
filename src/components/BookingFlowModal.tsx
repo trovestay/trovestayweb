@@ -24,12 +24,9 @@ export default function BookingFlowModal({ property, children }: { property: Pro
     return d;
   });
 
-  const timePeriods = ['Morning', 'Afternoon', 'Evening'];
-
   // Form State
   const [formData, setFormData] = useState({
     date: dates[0].toISOString().split('T')[0],
-    period: timePeriods[0],
     exactTime: '10:00',
     name: '',
     message: ''
@@ -62,7 +59,7 @@ export default function BookingFlowModal({ property, children }: { property: Pro
   };
 
   const handleSubmit = () => {
-    const text = `Hi, I would like to request a viewing for *${property.title}* (TRV-${property.id}).%0A%0A*Name:* ${formData.name}%0A*Date:* ${formData.date}%0A*Time:* ${formData.exactTime} (${formData.period})%0A*Message:* ${formData.message || '-'}`;
+    const text = `Hi, I would like to request a viewing for *${property.title}* (TRV-${property.id}).%0A%0A*Name:* ${formData.name}%0A*Date:* ${formData.date}%0A*Time:* ${formData.exactTime}%0A*Message:* ${formData.message || '-'}`;
     const whatsappUrl = `https://wa.me/6285174119423?text=${text}`;
     window.open(whatsappUrl, '_blank');
     setStep(3);
@@ -158,41 +155,22 @@ export default function BookingFlowModal({ property, children }: { property: Pro
                   })}
                 </div>
 
-                <div className={styles.sectionHeader}>
+                <div className={styles.sectionHeader} style={{ marginTop: '1.5rem' }}>
                   <h4>Select Time</h4>
                 </div>
-                <div className={styles.timeSelectorScroll}>
-                  {timePeriods.map((period, idx) => {
-                    const isSelected = formData.period === period;
-                    return (
-                      <div 
-                        key={idx} 
-                        className={`${styles.timePill} ${isSelected ? styles.timePillActive : ''}`}
-                        onClick={() => {
-                          let defaultTime = '10:00';
-                          if (period === 'Afternoon') defaultTime = '14:00';
-                          if (period === 'Evening') defaultTime = '18:00';
-                          setFormData({...formData, period: period, exactTime: defaultTime});
-                        }}
-                      >
-                        {period}
-                      </div>
-                    );
-                  })}
-                </div>
-
-                {/* Animated Exact Time Picker */}
-                {formData.period && (
-                   <div className={styles.exactTimeContainer}>
-                     <label className={styles.exactTimeLabel}>Set specific time ({formData.period})</label>
-                     <input 
-                       type="time" 
-                       className={styles.exactTimeInput}
-                       value={formData.exactTime}
-                       onChange={(e) => setFormData({...formData, exactTime: e.target.value})}
-                     />
+                
+                <div className={styles.cinematicTimeWrapper}>
+                   <div className={styles.cinematicTimeDisplay}>
+                      <span className={styles.timeValue}>{formData.exactTime}</span>
+                      <span className={styles.timeLabel}>Tap to change</span>
                    </div>
-                )}
+                   <input 
+                     type="time" 
+                     className={styles.hiddenTimeInput}
+                     value={formData.exactTime}
+                     onChange={(e) => setFormData({...formData, exactTime: e.target.value})}
+                   />
+                </div>
 
                 <div className={styles.sectionHeader} style={{ marginTop: '1.5rem' }}>
                   <h4>Your Details</h4>
