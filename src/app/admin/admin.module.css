@@ -1,0 +1,451 @@
+/* ===========================
+   ADMIN LAYOUT — CORE SHELL
+   =========================== */
+
+.adminRoot {
+  display: flex;
+  min-height: 100vh;
+  background-color: #f5f5f7;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+}
+
+/* ---- SIDEBAR ---- */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 270px;
+  background: linear-gradient(180deg, #0c1015 0%, #131920 100%);
+  z-index: 1000;
+  transform: translateX(-100%);
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+}
+
+.sidebarOpen {
+  transform: translateX(0);
+}
+
+@media (min-width: 1024px) {
+  .sidebar {
+    transform: translateX(0);
+  }
+}
+
+.sidebarInner {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 1.5rem 1rem;
+}
+
+/* Sidebar Logo */
+.sidebarLogo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0 0.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.logoMark {
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #D4F721, #a8c41a);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #0c1015;
+  flex-shrink: 0;
+  letter-spacing: -0.01em;
+}
+
+.logoText {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.closeSidebarBtn {
+  display: flex;
+  margin-left: auto;
+  color: rgba(255, 255, 255, 0.5);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.25rem;
+  border-radius: 8px;
+  transition: color 0.2s, background 0.2s;
+}
+
+.closeSidebarBtn:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+@media (min-width: 1024px) {
+  .closeSidebarBtn {
+    display: none;
+  }
+}
+
+/* Sidebar Nav */
+.sidebarNav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  flex: 1;
+}
+
+.navLabel {
+  font-size: 0.68rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: rgba(255, 255, 255, 0.28);
+  padding: 0 0.75rem;
+  margin-bottom: 0.75rem;
+  font-feature-settings: 'case';
+}
+
+.navItem {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  border-radius: 12px;
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  position: relative;
+  letter-spacing: -0.005em;
+}
+
+.navItem:hover {
+  color: rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.navItemActive {
+  color: #D4F721 !important;
+  background: rgba(212, 247, 33, 0.08) !important;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.navChevron {
+  margin-left: auto;
+  opacity: 0.6;
+}
+
+/* Sidebar Footer */
+.sidebarFooter {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.userCard {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem;
+}
+
+.userAvatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  object-fit: cover;
+  border: 2px solid rgba(212, 247, 33, 0.3);
+}
+
+.userInfo {
+  display: flex;
+  flex-direction: column;
+}
+
+.userName {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #fff;
+  letter-spacing: -0.01em;
+}
+
+.userRole {
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.4);
+  letter-spacing: 0.01em;
+  font-weight: 400;
+}
+
+.logoutBtn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 0.75rem;
+  border-radius: 10px;
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 0.85rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.logoutBtn:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* ---- OVERLAY ---- */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 999;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* ---- MAIN AREA ---- */
+.mainArea {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+@media (min-width: 1024px) {
+  .mainArea {
+    margin-left: 270px;
+  }
+}
+
+/* Top Bar */
+.topBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+  background: #fff;
+  border-bottom: 1px solid #e8e8ec;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.topBarLeft {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex: 1;
+}
+
+.hamburgerBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: #f5f5f7;
+  border: none;
+  cursor: pointer;
+  color: #333;
+  transition: background 0.2s;
+}
+
+.hamburgerBtn:active {
+  background: #e8e8ec;
+}
+
+@media (min-width: 1024px) {
+  .hamburgerBtn {
+    display: none;
+  }
+}
+
+.topSearchWrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #f5f5f7;
+  border-radius: 10px;
+  padding: 0.55rem 0.85rem;
+  max-width: 320px;
+  flex: 1;
+}
+
+.topSearchIcon {
+  color: #8e8e93;
+  flex-shrink: 0;
+}
+
+.topSearchInput {
+  border: none;
+  background: none;
+  outline: none;
+  font-size: 0.88rem;
+  color: #1a1a1a;
+  width: 100%;
+  font-family: inherit;
+  letter-spacing: -0.005em;
+  font-weight: 400;
+}
+
+.topSearchInput::placeholder {
+  color: #8e8e93;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+.topBarRight {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.topNotifBtn {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: #f5f5f7;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #555;
+  transition: background 0.2s;
+}
+
+.topNotifBtn:hover {
+  background: #e8e8ec;
+}
+
+.topNotifDot {
+  position: absolute;
+  top: 9px;
+  right: 10px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #D4F721;
+  border: 2px solid #fff;
+}
+
+.topAvatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+/* Page Content */
+.pageContent {
+  flex: 1;
+  padding: 1.5rem;
+  overflow-y: auto;
+}
+
+@media (max-width: 1023px) {
+  .pageContent {
+    padding-bottom: calc(100px + env(safe-area-inset-bottom, 0px));
+  }
+}
+
+@media (min-width: 768px) {
+  .pageContent {
+    padding: 2rem;
+  }
+}
+
+@media (min-width: 1200px) {
+  .pageContent {
+    padding: 2rem 2.5rem;
+  }
+}
+
+/* ---- MOBILE BOTTOM NAV ---- */
+.mobileBottomNav {
+  position: fixed;
+  bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
+  left: 1rem;
+  right: 1rem;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0.5rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 28px;
+  z-index: 1000;
+}
+
+@media (min-width: 1024px) {
+  .mobileBottomNav {
+    display: none;
+  }
+}
+
+.bottomNavItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  color: #8e8e93;
+  text-decoration: none;
+  font-size: 0.62rem;
+  font-weight: 500;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  padding: 0.5rem 0.75rem;
+  border-radius: 20px;
+  flex: 1;
+  letter-spacing: 0.02em;
+  text-transform: none;
+}
+
+.bottomNavItem:hover {
+  color: #1a1a1a;
+}
+
+.bottomNavItemActive {
+  color: #0c1015;
+  font-weight: 600;
+  background: rgba(212, 247, 33, 0.25);
+  letter-spacing: 0;
+}
+
+.bottomNavItem svg {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.bottomNavItemActive svg {
+  color: #0c1015;
+  transform: translateY(-2px);
+}

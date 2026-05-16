@@ -1,0 +1,241 @@
+.blogsPage {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.pageHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.pageTitle {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #111;
+  margin: 0 0 0.5rem 0;
+}
+
+.pageSubtitle {
+  color: #8e8e93;
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.addBtn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #111;
+  color: #fff;
+  padding: 0.8rem 1.2rem;
+  border-radius: var(--radius-full);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: opacity 0.2s;
+}
+
+.addBtn:hover {
+  opacity: 0.8;
+}
+
+.filterBar {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+}
+
+.searchInput {
+  display: flex;
+  align-items: center;
+  background: white;
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-lg);
+  width: 300px;
+  border: 1px solid #e5e5ea;
+}
+
+.blogList {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.blogListItem {
+  display: flex;
+  align-items: center;
+  background: white;
+  padding: 1rem;
+  border-radius: 16px;
+  border: 1px solid #e5e5ea;
+  gap: 1.5rem;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.blogListItem:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.thumbnailWrapper {
+  width: 120px;
+  height: 80px;
+  border-radius: 8px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.thumbnail {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.blogInfo {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.titleRow {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.blogTitle {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #111;
+  margin: 0;
+}
+
+.statusBadge {
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 0.2rem 0.6rem;
+  border-radius: var(--radius-full);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.statusBadge.published {
+  background: #e5fce5;
+  color: #1a7f37;
+}
+
+.statusBadge.draft {
+  background: #f0f0f2;
+  color: #6e6e73;
+}
+
+.metaInfo {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  color: #8e8e93;
+  font-size: 0.85rem;
+}
+
+.metaItem {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.categoryTag {
+  background: #f5f5f7;
+  color: #111;
+  padding: 0.2rem 0.6rem;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.actionBtn {
+  background: #f5f5f7;
+  border: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #111;
+  transition: background 0.2s;
+}
+
+.actionBtn:hover {
+  background: #e5e5ea;
+}
+
+@media (max-width: 768px) {
+  .blogsPage {
+    padding: 1rem;
+    width: 100%;
+    box-sizing: border-box;
+    overflow-x: hidden;
+  }
+
+  .pageHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .filterBar {
+    flex-direction: column;
+  }
+
+  .searchInput {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .blogListItem {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1.25rem;
+  }
+
+  .thumbnailWrapper {
+    width: 100%;
+    height: 160px;
+  }
+
+  .titleRow {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .statusBadge {
+    align-self: flex-start;
+  }
+
+  .metaInfo {
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 0.25rem;
+  }
+
+  .actions {
+    width: 100%;
+    justify-content: flex-end;
+    padding-top: 1rem;
+    margin-top: 0.5rem;
+    border-top: 1px solid #f0f0f2;
+  }
+}

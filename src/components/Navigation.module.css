@@ -1,0 +1,515 @@
+.navContainer {
+  /* Used to group if needed */
+}
+
+/* Desktop Header */
+.desktopHeader {
+  display: none;
+}
+
+/* Mobile Top Bar */
+.mobileTopBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 1.5rem 1rem 1.5rem;
+  background-color: var(--color-background);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+@media (min-width: 1024px) {
+  .mobileTopBar {
+    display: none;
+  }
+}
+
+.locationPill {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: var(--color-surface);
+  padding: 0.5rem 1.25rem 0.5rem 0.75rem;
+  border-radius: var(--radius-full);
+  box-shadow: var(--shadow-sm);
+}
+
+.locationPill span {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-text-main);
+}
+
+.topAvatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: var(--shadow-sm);
+}
+
+.desktopInner {
+  display: flex;
+  padding: 0.6rem var(--spacing-md);
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-weight: 800;
+  font-size: 1.25rem;
+  letter-spacing: -0.05em;
+  color: var(--color-primary);
+  flex: 1;
+}
+
+.searchPill {
+  display: flex;
+  align-items: center;
+  background-color: var(--color-surface);
+  border-radius: var(--radius-full);
+  padding: 0.25rem 0.25rem 0.25rem 1rem;
+  box-shadow: var(--shadow-sm);
+  flex: 2;
+  max-width: 380px;
+  border: 1px solid var(--color-border);
+}
+
+.searchCategory {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-text-main);
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.divider {
+  width: 1px;
+  height: 24px;
+  background-color: var(--color-border);
+  margin: 0 1rem;
+}
+
+.searchInput {
+  border: none;
+  outline: none;
+  background: transparent;
+  width: 100%;
+  font-size: 0.95rem;
+  color: var(--color-text-main);
+}
+
+.searchInput::placeholder {
+  color: var(--color-text-muted);
+}
+
+.filterBtn {
+  width: 36px;
+  height: 36px;
+  background-color: var(--color-accent);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: transform var(--transition-fast);
+}
+
+.actionLink {
+  font-weight: 600;
+  color: var(--color-text-main);
+}
+
+.desktopActions {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  flex: 1;
+  justify-content: flex-end;
+}
+
+@media (min-width: 1024px) {
+  .desktopHeader {
+    display: block;
+    position: fixed;
+    top: 1.5rem; /* Floating gap from Safari top */
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 3rem); /* Horizontal margin gap */
+    max-width: 1400px;
+    margin: 0; /* Creates the floating card impression */
+    
+    background-color: rgba(255, 255, 255, 0.85); /* Solid white glass base */
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    z-index: 9999;
+    
+    border-radius: var(--radius-huge); /* Rounded pill shape */
+    border: 1px solid rgba(255, 255, 255, 0.5); /* Glass highlight */
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .desktopHeaderScrolled {
+    top: 1rem;
+    width: calc(100% - 6rem); /* Shrink width on scroll */
+    max-width: 1200px;
+    background-color: rgba(255, 255, 255, 0.65); /* More translucent Apple style glass */
+    backdrop-filter: blur(30px) saturate(200%);
+    -webkit-backdrop-filter: blur(30px) saturate(200%);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+    transform: translateX(-50%);
+  }
+  
+  .desktopHeaderScrolled .desktopInner {
+    padding: 0.4rem var(--spacing-md);
+  }
+  
+  .desktopHeaderScrolled .topAvatarDesktop {
+    width: 36px;
+    height: 36px;
+  }
+  
+  .desktopHeaderScrolled .darkBtn {
+    padding: 0.4rem 1.2rem;
+    font-size: 0.85rem;
+  }
+}
+
+/* Mobile Floating Dock */
+.mobileDockWrapper {
+  position: fixed;
+  bottom: 1.5rem;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  z-index: 1000;
+  pointer-events: none;
+}
+
+@media (min-width: 1024px) {
+  .mobileDockWrapper {
+    display: none;
+  }
+}
+
+.mobileDock {
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(24px) saturate(200%);
+  -webkit-backdrop-filter: blur(24px) saturate(200%);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  border-radius: var(--radius-huge);
+  padding: 0.5rem 1rem;
+  display: flex;
+  gap: 1.5rem; /* tight gap */
+  align-items: center;
+  pointer-events: auto; 
+  box-shadow: 0 10px 40px rgba(0,0,0,0.06);
+}
+
+.navItem {
+  transition: all var(--transition-fast);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  border-radius: 50%;
+}
+
+.iconWrapper {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all var(--transition-fast);
+}
+
+.searchDockBtn {
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background-color: var(--color-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: translateY(-8px);
+  box-shadow: 0 8px 24px rgba(212, 247, 33, 0.5); /* Lime green glow */
+}
+
+.searchDockBtn:hover {
+  transform: translateY(-10px) scale(1.05);
+}
+
+/* User Greeting Desktop */
+.headerLeftDesktop {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex: 1;
+}
+
+.topAvatarDesktop {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid rgba(255,255,255,0.15);
+  flex-shrink: 0;
+}
+
+.greetingBlockDesktop {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.greetingTitleDesktop {
+  font-size: 1rem;     /* Slightly larger for enhanced typography */
+  font-weight: 600;    /* Bolder font */
+  color: var(--color-text-main);
+  letter-spacing: -0.01em;
+}
+
+.locationPillDarkDesktop {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background-color: transparent;
+  padding: 0;
+  border-radius: 0;
+  border: none;
+}
+
+.locationPillDarkDesktop span {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #A0A0A5; 
+}
+
+.selectorsWrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  background-color: rgba(0, 0, 0, 0.04);
+  padding: 0.25rem;
+  border-radius: var(--radius-full);
+  border: 1px solid rgba(0, 0, 0, 0.02);
+}
+
+.selector {
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+  background-color: #fff;
+  padding: 0.35rem 0.6rem;
+  border-radius: var(--radius-full);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  transition: all var(--transition-fast);
+}
+
+.selector:hover {
+  background-color: rgba(0, 0, 0, 0.06);
+}
+
+.separator {
+  width: 1px;
+  height: 16px;
+  background-color: var(--color-primary); /* Use site color palette */
+  margin: 0 0.15rem;
+  opacity: 0.5;
+}
+
+.dropdown {
+  background: transparent;
+  color: #111;
+  border: none;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  outline: none;
+  appearance: none;
+  -webkit-appearance: none;
+  padding-right: 0.25rem;
+}
+
+.dropdown option {
+  color: #111;
+  background: #fff;
+}
+
+/* Neon Price Selector */
+.selectorPrice {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  background-color: #D4FF00;
+  padding: 0.35rem 0.8rem;
+  border-radius: var(--radius-full);
+  box-shadow: 0 2px 8px rgba(162, 230, 53, 0.4);
+  transition: transform var(--transition-fast);
+  cursor: pointer;
+  border: none;
+}
+
+.selectorPrice:active {
+  transform: scale(0.95);
+}
+
+.selectorPrice span {
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: #111;
+}
+
+/* Mobile-friendly Price Modal */
+.priceModalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 999998;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+
+.priceModalContent {
+  background: #fff;
+  width: 100%;
+  max-width: 400px;
+  border-radius: 28px;
+  padding: 2rem 1.5rem;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+  animation: modalPop 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+}
+
+@keyframes modalPop {
+  0% { transform: scale(0.95) translateY(20px); opacity: 0; }
+  100% { transform: scale(1) translateY(0); opacity: 1; }
+}
+
+.priceModalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.priceModalHeader h3 {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #111;
+  margin: 0;
+}
+
+.priceModalClose {
+  background: #f4f5f9;
+  border: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #666;
+}
+
+.priceModalApplyBtn {
+  margin-top: 2rem;
+  width: 100%;
+  background: #D4FF00;
+  color: #111;
+  border: none;
+  border-radius: 16px;
+  padding: 1rem;
+  font-weight: 700;
+  font-size: 1.05rem;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(162, 230, 53, 0.4);
+}
+
+.priceSliderContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.priceValueDisplay {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #111;
+  text-align: center;
+  letter-spacing: -0.02em;
+}
+
+.priceRangeLabels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  color: #8E8E93;
+  font-weight: 600;
+}
+
+.slider {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 8px;
+  border-radius: 4px;
+  background: #f2f2f7;
+  outline: none;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  border: 3px solid #fff;
+  transition: transform 0.1s;
+}
+
+.slider::-webkit-slider-thumb:active {
+  transform: scale(1.1);
+}
+
+/* Dark solid button */
+.darkBtn {
+  background-color: #111;
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.6rem 1.5rem;   /* Reduced size to shrink navbar height */
+  border-radius: var(--radius-full);
+  font-weight: 700;         /* Enhanced bold look */
+  font-size: 0.9rem;
+  transition: all var(--transition-fast);
+  gap: 0.5rem;
+  text-decoration: none;
+}
+
+.darkBtn:hover {
+  transform: scale(1.02);
+  background-color: #000;
+}
+
+.darkBtn:active {
+  transform: scale(0.95);
+}

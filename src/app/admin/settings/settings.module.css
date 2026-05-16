@@ -1,0 +1,139 @@
+.settingsPage {
+  padding: 1.5rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+  .settingsPage {
+    padding: 2.5rem;
+  }
+}
+
+.pageHeader {
+  margin-bottom: 1.5rem;
+  padding-left: 0.5rem;
+}
+
+.pageTitle {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: #1a1a1a;
+  letter-spacing: -0.03em;
+  margin-bottom: 0.25rem;
+}
+
+.settingsGroup {
+  margin-bottom: 2rem;
+}
+
+.groupTitle {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #8e8e93;
+  margin-left: 1rem;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.groupCard {
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.settingRow {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #f2f2f7;
+  gap: 1rem;
+}
+
+.settingRow:last-child {
+  border-bottom: none;
+}
+
+.settingIcon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.settingInfo {
+  flex: 1;
+}
+
+.settingInfo h3 {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #1a1a1a;
+  margin: 0;
+}
+
+.textBtn {
+  background: none;
+  border: none;
+  color: #007AFF;
+  font-size: 1rem;
+  font-weight: 400;
+  padding: 0;
+  cursor: pointer;
+}
+
+.textBtn:disabled {
+  color: #8e8e93;
+  cursor: default;
+}
+
+/* iOS Toggle Switch */
+.toggleSwitch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 30px;
+}
+
+.toggleSwitch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #e5e5ea;
+  transition: .4s;
+  border-radius: 34px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 2px;
+  bottom: 2px;
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+input:checked + .slider {
+  background-color: #34C759;
+}
+
+input:checked + .slider:before {
+  transform: translateX(20px);
+}

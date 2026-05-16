@@ -1,0 +1,136 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+/* Color Palette - Electric Lime Theme */
+  --color-primary: #111111;   /* Deep black */
+  --color-accent: #D4F721;    /* Electric Lime Green */
+  --color-accent-dark: #B8D91A;
+  
+  --color-background: #FFFFFF; /* Pure white background */
+  --color-surface: #FFFFFF;    /* Pure white elements for contrast */
+  
+  --color-text-main: #1A1A1A;
+  --color-text-muted: #8E8E93; /* Apple standard gray */
+  --color-border: #E5E5EA;     
+
+  /* Typography */
+  --font-family-base: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  
+  /* Space values */
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 1rem;
+  --spacing-md: 1.5rem;
+  --spacing-lg: 2rem;
+  --spacing-xl: 3rem;
+  --spacing-xxl: 5rem;
+  
+  /* Shadows */
+  --shadow-sm: 0 2px 8px -2px rgb(0 0 0 / 0.05);
+  --shadow-md: 0 8px 24px -4px rgb(0 0 0 / 0.08);
+  --shadow-lg: 0 24px 32px -8px rgb(0 0 0 / 0.12);
+
+  /* Border Radius */
+  --radius-sm: 12px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-xl: 32px;
+  --radius-huge: 40px;
+  --radius-full: 9999px;
+
+  /* Transitions */
+  --transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-default: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-family-base);
+  background-color: var(--color-background);
+  color: var(--color-text-main);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-family: inherit;
+  color: inherit;
+}
+
+ul {
+  list-style: none;
+}
+
+/* Stunning Desktop Setup */
+.container {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-md);
+}
+
+/* Universal Button Styles */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.875rem 2rem;
+  border-radius: var(--radius-full);
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all var(--transition-fast);
+  gap: 0.5rem;
+  text-decoration: none;
+}
+
+.btn-primary {
+  background-color: var(--color-accent);
+  color: #111; /* Dark text on vibrant yellow */
+  box-shadow: var(--shadow-sm);
+}
+
+.btn-primary:active {
+  transform: scale(0.95);
+}
+
+.btn-primary:hover {
+  transform: scale(1.02);
+}
+
+.btn-dark {
+  background-color: var(--color-primary);
+  color: var(--color-surface);
+}
+
+.btn-dark:active {
+  transform: scale(0.95);
+}
+
+.btn-dark:hover {
+  transform: scale(1.02);
+}
+
+.btn-outline {
+  background-color: var(--color-surface);
+  color: var(--color-text-main);
+  border: 1px solid var(--color-border);
+}

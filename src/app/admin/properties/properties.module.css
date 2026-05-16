@@ -1,0 +1,594 @@
+/* ===========================
+   ADMIN — PROPERTIES LIST
+   =========================== */
+
+.propertiesPage {
+  max-width: 1200px;
+  font-variant-numeric: lining-nums;
+}
+
+/* Page Header */
+.pageHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .pageHeader {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+}
+
+.pageTitle {
+  font-size: 1.85rem;
+  font-weight: 800;
+  color: #1a1a1a;
+  letter-spacing: -0.035em;
+  line-height: 1.15;
+}
+
+.pageSubtitle {
+  font-size: 0.88rem;
+  color: #8e8e93;
+  margin-top: 0.35rem;
+  font-weight: 400;
+  letter-spacing: -0.005em;
+}
+
+.addBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.7rem 1.25rem;
+  background: linear-gradient(135deg, #D4F721, #b8d91a);
+  color: #0c1015;
+  border-radius: 12px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 12px rgba(212, 247, 33, 0.3);
+  flex-shrink: 0;
+}
+
+.addBtn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 20px rgba(212, 247, 33, 0.4);
+}
+
+.addBtn:active {
+  transform: scale(0.97);
+}
+
+/* Toolbar */
+.toolbar {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .toolbar {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+.searchBar {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: #fff;
+  border: 1px solid #e8e8ec;
+  border-radius: 12px;
+  padding: 0.65rem 1rem;
+  flex: 1;
+  max-width: 440px;
+  transition: border-color 0.2s;
+}
+
+.searchBar:focus-within {
+  border-color: #D4F721;
+  box-shadow: 0 0 0 3px rgba(212, 247, 33, 0.15);
+}
+
+.searchIcon {
+  color: #8e8e93;
+  flex-shrink: 0;
+}
+
+.searchInput {
+  border: none;
+  background: none;
+  outline: none;
+  font-size: 0.88rem;
+  color: #1a1a1a;
+  width: 100%;
+  font-family: inherit;
+  letter-spacing: -0.005em;
+  font-weight: 400;
+}
+
+.searchInput::placeholder {
+  color: #8e8e93;
+}
+
+.resultCount {
+  font-size: 0.82rem;
+  color: #8e8e93;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+/* Grid Container */
+.propertyGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .propertyGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1100px) {
+  .propertyGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.propertyName {
+  font-weight: 600;
+  color: #1a1a1a;
+  font-size: 0.88rem;
+  white-space: nowrap;
+  letter-spacing: -0.01em;
+}
+
+.propertyId {
+  font-size: 0.7rem;
+  color: #8e8e93;
+  margin-top: 0.1rem;
+  letter-spacing: 0.01em;
+  font-variant-numeric: tabular-nums;
+}
+
+
+
+.categoryTag {
+  display: inline-block;
+  padding: 0.25rem 0.6rem;
+  border-radius: 6px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  background: #f0f0f2;
+  color: #555;
+}
+
+.badge {
+  display: inline-block;
+  padding: 0.25rem 0.6rem;
+  border-radius: 6px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.badgePublished {
+  background: rgba(52, 199, 89, 0.15);
+  color: #28a745;
+}
+
+.badgeDraft {
+  background: #f0f0f2;
+  color: #8e8e93;
+}
+
+.badgeRented {
+  background: rgba(0, 122, 255, 0.15);
+  color: #007aff;
+}
+
+.priceCell {
+  font-weight: 600;
+  color: #1a1a1a;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}
+
+.detailsCell {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.78rem;
+  color: #8e8e93;
+}
+
+.detailsCell span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+
+
+/* Action Buttons Layout */
+.cardActions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: auto;
+  padding-top: 1rem;
+  border-top: 1px dashed #e8e8ec;
+}
+
+.actionIconBtn,
+.actionIconBtnDelete {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  border: none;
+  background: #f5f5f7;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  color: #555;
+}
+
+.actionIconBtn:hover {
+  background: #e8e8ec;
+  color: #1a1a1a;
+}
+
+.actionIconBtnActive {
+  background: rgba(52, 199, 89, 0.1);
+  color: #34C759;
+}
+
+.actionIconBtnDelete {
+  color: #999;
+}
+
+.actionIconBtnDelete:hover {
+  background: rgba(255, 59, 48, 0.08);
+  color: #ff3b30;
+}
+
+.deleteConfirmRow {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.confirmDeleteBtn,
+.cancelDeleteBtn {
+  padding: 0.4rem 0.75rem;
+  border-radius: 8px;
+  border: none;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  height: 36px;
+}
+
+.confirmDeleteBtn {
+  background: #ff3b30;
+  color: #fff;
+}
+
+.cancelDeleteBtn {
+  background: #f0f0f2;
+  color: #555;
+}
+
+.emptyState {
+  padding: 3rem;
+  text-align: center;
+  color: #8e8e93;
+  font-size: 0.92rem;
+}
+
+/* Property Cards */
+.propertyCard {
+  background: #fff;
+  border-radius: 16px;
+  border: 1px solid #e8e8ec;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+}
+
+.propertyCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+}
+
+.propertyCardImg {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  display: block;
+}
+
+.imageWrap {
+  position: relative;
+  width: 100%;
+  height: 180px;
+}
+
+.imageWrap .propertyCardImg {
+  height: 100%;
+}
+
+.imageBadge {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  background: #D4F721;
+  color: #0c1015;
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 0.3rem 0.6rem;
+  border-radius: 6px;
+  white-space: nowrap;
+  box-shadow: 0 4px 10px rgba(212, 247, 33, 0.2);
+}
+
+.adminCategoryBadge {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  padding: 0.35rem 0.75rem;
+  border-radius: 12px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #111;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  z-index: 2;
+}
+
+.propertyCardBody {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.propertyCardTop {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin-bottom: 0.75rem;
+}
+
+.propertyCardMeta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.75rem;
+}
+
+.propertyCardDetails {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  font-size: 0.82rem;
+  color: #8e8e93;
+  margin-bottom: 1rem;
+}
+
+.propertyCardDetails span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+/* Contact Info Styles */
+/* Secure Contact Info Styles */
+.securePromptBox {
+  background: #f9f9fb;
+  border: 1px solid #e8e8ec;
+  border-radius: 12px;
+  padding: 1rem;
+  margin-top: 1rem;
+  animation: slideDown 0.2s ease-out;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.secureHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 0.75rem;
+}
+
+.secureInputRow {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.passcodeInput {
+  flex: 1;
+  background: #fff;
+  border: 1px solid #e5e5ea;
+  border-radius: 8px;
+  padding: 0.6rem;
+  font-size: 0.85rem;
+  font-family: inherit;
+  outline: none;
+}
+
+.passcodeInput:focus {
+  border-color: #D4F721;
+}
+
+.secureUnlockBtn {
+  background: #111;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0 1rem;
+  height: 36px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.secureFaceIdBtn {
+  background: #f0f0f2;
+  color: #111;
+  border: none;
+  border-radius: 8px;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.secureFaceIdBtn:hover {
+  background: #e5e5ea;
+}
+
+.secureDataBox {
+  background: rgba(52, 199, 89, 0.05);
+  border: 1px solid rgba(52, 199, 89, 0.2);
+  border-radius: 12px;
+  padding: 1rem;
+  margin-top: 1rem;
+  animation: fadeIn 0.2s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.secureDataHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(52, 199, 89, 0.1);
+}
+
+.editInlineBtn,
+.saveInlineBtn {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.3rem 0.6rem;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.editInlineBtn {
+  background: transparent;
+  color: #555;
+}
+.editInlineBtn:hover {
+  background: rgba(0,0,0,0.05);
+  color: #111;
+}
+
+.saveInlineBtn {
+  background: #D4F721;
+  color: #111;
+}
+
+.contactDetailsGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+}
+
+.contactDetailItem {
+  display: flex;
+  flex-direction: column;
+}
+
+.contactLabel {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #8e8e93;
+  text-transform: uppercase;
+  margin-bottom: 0.1rem;
+}
+
+.contactValue {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #111;
+}
+
+.contactSubValue {
+  font-size: 0.8rem;
+  color: #666;
+}
+
+.editFormGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.editField {
+  display: flex;
+  flex-direction: column;
+}
+
+.editField label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #8e8e93;
+  margin-bottom: 0.2rem;
+}
+
+.editField input {
+  background: #fff;
+  border: 1px solid #e5e5ea;
+  border-radius: 6px;
+  padding: 0.4rem 0.5rem;
+  font-size: 0.8rem;
+  font-family: inherit;
+  outline: none;
+}
+
+.editField input:focus {
+  border-color: #34C759;
+}

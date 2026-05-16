@@ -1,0 +1,286 @@
+.dockContainer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 2000;
+}
+
+/* Base trigger button when modal is closed */
+.triggerWrapper {
+  background: linear-gradient(to bottom, rgba(244, 245, 249, 0), rgba(244, 245, 249, 1) 20%);
+  padding: 1.5rem 1.5rem 2rem 1.5rem;
+  display: flex;
+  justify-content: center;
+  pointer-events: auto;
+}
+
+@media (min-width: 1024px) {
+  .dockContainer {
+    display: none;
+  }
+}
+
+.bookBtn {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  max-width: 500px;
+  background-color: var(--color-accent);
+  color: #111;
+  font-size: 1.15rem;
+  font-weight: 700;
+  padding: 1.25rem;
+  border-radius: 20px;
+  border: none;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  transition: transform var(--transition-fast);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.bookBtn:active {
+  transform: scale(0.98);
+}
+
+/* Modal Overlay & Sheet */
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 1999;
+  pointer-events: auto;
+  opacity: 0;
+  animation: fadeIn var(--transition-fast) forwards;
+}
+
+.bottomSheet {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: var(--color-surface);
+  border-top-left-radius: 32px;
+  border-top-right-radius: 32px;
+  padding: 1.5rem;
+  padding-bottom: max(2rem, env(safe-area-inset-bottom));
+  z-index: 2000;
+  pointer-events: auto;
+  transform: translateY(100%);
+  animation: slideUp var(--transition-default) cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.1);
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+@keyframes fadeIn {
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  to { transform: translateY(0); }
+}
+
+@media (min-width: 1024px) {
+  .bottomSheet {
+    top: 50%;
+    left: 50%;
+    bottom: auto;
+    width: 600px;
+    border-radius: 24px;
+    transform: translate(-50%, -50%);
+    animation: desktopPopIn var(--transition-fast) ease-out forwards;
+  }
+}
+
+@keyframes desktopPopIn {
+  from { opacity: 0; transform: translate(-50%, -46%) scale(0.96); }
+  to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+
+/* Modal Header */
+.modalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 2rem;
+}
+
+.modalTitle {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--color-primary);
+  letter-spacing: -0.02em;
+  margin-bottom: 0.5rem;
+}
+
+/* Step Indicator */
+.stepIndicator {
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+
+.stepDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #E5E5EA;
+  transition: all 0.3s ease;
+}
+
+.stepDotActive {
+  background-color: var(--color-accent);
+  box-shadow: 0 0 8px rgba(212, 247, 33, 0.5);
+}
+
+.stepLine {
+  width: 24px;
+  height: 2px;
+  background-color: #E5E5EA;
+}
+
+.closeBtn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: var(--color-background);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--color-border);
+  cursor: pointer;
+}
+
+/* Stage 1: Pricing */
+.pricingToggle {
+  display: flex;
+  background-color: var(--color-background);
+  border-radius: 12px;
+  padding: 0.25rem;
+  margin-bottom: 2rem;
+}
+
+.toggleOption {
+  flex: 1;
+  text-align: center;
+  padding: 0.75rem 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.toggleOptionActive {
+  background-color: var(--color-surface);
+  color: var(--color-primary);
+  box-shadow: var(--shadow-sm);
+}
+
+.priceDisplay {
+  text-align: center;
+  margin-bottom: 2rem;
+  padding: 2rem 0;
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.priceLabel {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  font-weight: 500;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.priceAmount {
+  font-size: 3rem;
+  font-weight: 900;
+  color: var(--color-primary);
+  letter-spacing: -0.04em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.2rem;
+}
+
+.priceCurrency {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-text-muted);
+  transform: translateY(-8px);
+}
+
+/* Controls */
+.inputGroup {
+  margin-bottom: 1.5rem;
+}
+
+.inputGroup label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-primary);
+  margin-bottom: 0.5rem;
+}
+
+.inputField {
+  width: 100%;
+  padding: 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  font-size: 1rem;
+  background-color: var(--color-background);
+  color: var(--color-primary);
+  outline: none;
+  font-family: inherit;
+  transition: border-color var(--transition-fast);
+}
+
+.inputField:focus {
+  border-color: var(--color-accent);
+}
+
+/* Success State */
+.successContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 2rem 0 1rem;
+}
+
+.successIcon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background-color: rgba(212, 247, 33, 0.2);
+  color: var(--color-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.successTitle {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--color-primary);
+  margin-bottom: 0.5rem;
+}
+
+.successText {
+  color: var(--color-text-muted);
+  font-size: 0.95rem;
+  margin-bottom: 2rem;
+}

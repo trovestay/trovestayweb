@@ -1,0 +1,120 @@
+.smallCard {
+  min-width: 160px;
+  width: 160px;
+  background-color: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04);
+  scroll-snap-align: center;
+  transition: all var(--transition-medium);
+}
+
+@media (min-width: 768px) {
+  .smallCard {
+    min-width: 220px;
+    width: 220px;
+  }
+}
+
+.smallCard:active {
+  transform: scale(0.98);
+}
+
+.cardLink {
+  text-decoration: none;
+  display: block;
+}
+
+.imageBox {
+  position: relative;
+  width: calc(100% - 0.5rem);
+  margin: 0.25rem;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  border-radius: 20px; /* Internal rounding for apple style */
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.bookmarkBtn {
+  position: absolute;
+  top: 0.6rem;
+  right: 0.6rem;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(12, 16, 21, 0.4);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  z-index: 2;
+}
+
+.bookmarkBtnSaved {
+  background: #D4F721;
+  box-shadow: 0 4px 10px rgba(212, 247, 33, 0.3);
+}
+
+.bookmarkBtn:hover {
+  transform: scale(1.05);
+  background: #D4F721;
+}
+
+.bookmarkBtn:active {
+  transform: scale(0.95);
+}
+
+.contentBox {
+  padding: 0.75rem 0.6rem;
+}
+
+.title {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #111;
+  margin: 0 0 0.15rem 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  letter-spacing: -0.02em;
+}
+
+.locationRow {
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.locationRow span {
+  font-size: 0.75rem;
+  color: #8E8E93;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.price {
+  font-size: 1rem;
+  font-weight: 800;
+  color: #111;
+  display: block;
+  letter-spacing: -0.02em;
+}
+
+.unit {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #8E8E93;
+}

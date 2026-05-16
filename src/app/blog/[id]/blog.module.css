@@ -1,0 +1,130 @@
+.blogLayout {
+  min-height: 100vh;
+  background-color: #fff;
+  padding-bottom: 5rem;
+}
+
+.heroSection {
+  position: relative;
+  width: 100%;
+  height: 60vh;
+  min-height: 400px;
+  max-height: 600px;
+}
+
+.heroImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.heroOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.2) 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 2rem 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .heroOverlay {
+    padding: 4rem;
+  }
+}
+
+.backBtn {
+  position: absolute;
+  top: 2rem;
+  left: 1.5rem;
+  width: 44px;
+  height: 44px;
+  background: rgba(255,255,255,0.2);
+  backdrop-filter: blur(10px);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  text-decoration: none;
+  transition: background 0.3s ease;
+}
+
+.backBtn:hover {
+  background: rgba(255,255,255,0.3);
+}
+
+.categoryBadge {
+  background: #D4F721;
+  color: #111;
+  padding: 0.4rem 1rem;
+  border-radius: var(--radius-full);
+  font-size: 0.8rem;
+  font-weight: 700;
+  width: fit-content;
+  margin-bottom: 1rem;
+}
+
+.title {
+  color: #fff;
+  font-size: 2rem;
+  font-weight: 800;
+  line-height: 1.2;
+  margin: 0 0 1rem 0;
+  max-width: 800px;
+}
+
+@media (min-width: 768px) {
+  .title {
+    font-size: 3rem;
+  }
+}
+
+.metaRow {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: rgba(255,255,255,0.8);
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.contentContainer {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem;
+}
+
+.articleBody {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: #333;
+}
+
+.articleBody p {
+  margin-bottom: 1.5rem;
+}
+
+.articleBody h2, .articleBody h3 {
+  color: #111;
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+.articleBody ul {
+  margin-bottom: 1.5rem;
+  padding-left: 1.5rem;
+}
+
+.articleBody li {
+  margin-bottom: 0.5rem;
+}
+
+.articleBody strong {
+  color: #111;
+}
