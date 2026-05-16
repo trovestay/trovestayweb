@@ -66,7 +66,8 @@ export default function BookingFlowModal({
   };
 
   const handleSubmit = () => {
-    const text = `Hi, I would like to request a viewing for *${property.title}*.%0A%0A*PROPERTY DETAILS*%0A------------------------%0A*ID:* TRV-${property.id}%0A*Link:* https://trovestayweb.vercel.app/properties/${property.id}%0A*Plan:* ${billingCycle === 'yearly' ? 'Yearly' : 'Monthly'}%0A%0A*VIEWING DETAILS*%0A------------------------%0A*Name:* ${formData.name}%0A*Date:* ${formData.date}%0A*Time:* ${formData.exactTime}`;
+    const formattedDate = new Date(formData.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+    const text = `Hi, I would like to request a viewing for *${property.title}*.%0A%0A*PROPERTY DETAILS*%0A------------------------%0A*ID:* TRV-${property.id}%0A*Link:* https://trovestayweb.vercel.app/properties/${property.id}%0A*Plan:* ${billingCycle === 'yearly' ? 'Yearly' : 'Monthly'}%0A%0A*VIEWING DETAILS*%0A------------------------%0A*Name:* ${formData.name}%0A*Date:* ${formattedDate}%0A*Time:* ${formData.exactTime}`;
     const whatsappUrl = `https://wa.me/6285174119423?text=${text}`;
     window.open(whatsappUrl, '_blank');
     setStep(3);
