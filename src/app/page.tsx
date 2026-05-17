@@ -20,6 +20,14 @@ export default function Home_Page() {
   const recommendedProperties = mockProperties.slice(0, 4);
   const rentedProperties = mockProperties.slice(4, 6);
   const [showFilters, setShowFilters] = useState(false);
+  const [filterPropertyId, setFilterPropertyId] = useState('');
+  const [filterPropertyType, setFilterPropertyType] = useState<string>('Any');
+  const [filterMinMonthly, setFilterMinMonthly] = useState<string>('');
+  const [filterMaxMonthly, setFilterMaxMonthly] = useState<string>('');
+  const [filterMinYearly, setFilterMinYearly] = useState<string>('');
+  const [filterMaxYearly, setFilterMaxYearly] = useState<string>('');
+  const [filterBedrooms, setFilterBedrooms] = useState<string>('Any');
+  const [filterAmenities, setFilterAmenities] = useState<string[]>([]);
   const [mounted, setMounted] = useState(false);
   const [rentalPeriod, setRentalPeriod] = useState<'monthly' | 'yearly'>('monthly');
   const [showPriceFilter, setShowPriceFilter] = useState(false);
@@ -68,6 +76,33 @@ export default function Home_Page() {
     if (!user) return 'Sign In';
     const firstName = user.name.split(' ')[0];
     return firstName.length > 10 ? firstName.substring(0, 8) + '...' : firstName;
+  };
+
+  const checkMatch = (p: typeof mockProperties[0]) => {
+    if (filterPropertyId && !p.id.toLowerCase().includes(filterPropertyId.toLowerCase())) return false;
+    if (filterPropertyType !== 'Any' && p.category.toLowerCase() !== filterPropertyType.toLowerCase()) return false;
+    
+    const monthlyPrice = p.price;
+    if (filterMinMonthly && monthlyPrice < Number(filterMinMonthly)) return false;
+    if (filterMaxMonthly && monthlyPrice > Number(filterMaxMonthly)) return false;
+
+    const yearlyPrice = p.priceYearly || (p.price * 11);
+    if (filterMinYearly && yearlyPrice < Number(filterMinYearly)) return false;
+    if (filterMaxYearly && yearlyPrice > Number(filterMaxYearly)) return false;
+
+    if (filterBedrooms !== 'Any') {
+      if (filterBedrooms === '4+' && p.bedrooms < 4) return false;
+      if (filterBedrooms !== '4+' && p.bedrooms !== Number(filterBedrooms)) return false;
+    }
+
+    if (filterAmenities.length > 0) {
+      if (filterAmenities.includes('Pool') && !p.hasPool) return false;
+      const mockAms = p.amenities?.map(a => a.label) || [];
+      const hasAllOtherAmenities = filterAmenities.filter(a => a !== 'Pool').every(a => mockAms.includes(a));
+      if (!hasAllOtherAmenities) return false;
+    }
+
+    return true;
   };
 
   return (
@@ -231,7 +266,10 @@ export default function Home_Page() {
               </div>
 
               <div className={styles.smallCardScrollList}>
-                {newProperties.filter(p => (rentalPeriod === 'yearly' ? p.price * 11 : p.price) <= maxPrice).map(property => (
+                {newProperties
+                  .filter(p => (rentalPeriod === 'yearly' ? (p.priceYearly || p.price * 11) : p.price) <= maxPrice)
+                  .filter(checkMatch)
+                  .map(property => (
                   <SmallPropertyCard key={property.id} property={property} rentalPeriod={rentalPeriod} />
                 ))}
               </div>
@@ -245,7 +283,10 @@ export default function Home_Page() {
               </div>
 
               <div className={styles.scrollList}>
-                {recommendedProperties.filter(p => (rentalPeriod === 'yearly' ? p.price * 11 : p.price) <= maxPrice).map(property => (
+                {recommendedProperties
+                  .filter(p => (rentalPeriod === 'yearly' ? (p.priceYearly || p.price * 11) : p.price) <= maxPrice)
+                  .filter(checkMatch)
+                  .map(property => (
                   <div key={property.id} className={styles.scrollItemWrapper}>
                     <PropertyCard property={property} rentalPeriod={rentalPeriod} />
                   </div>
@@ -261,7 +302,10 @@ export default function Home_Page() {
               </div>
 
               <div className={styles.scrollList}>
-                {rentedProperties.filter(p => (rentalPeriod === 'yearly' ? p.price * 11 : p.price) <= maxPrice).map((property) => (
+                {rentedProperties
+                  .filter(p => (rentalPeriod === 'yearly' ? (p.priceYearly || p.price * 11) : p.price) <= maxPrice)
+                  .filter(checkMatch)
+                  .map((property) => (
                   <div key={property.id} className={styles.scrollItemWrapper}>
                     <RentedPropertyCard property={property} rentalPeriod={rentalPeriod} />
                   </div>
@@ -326,22 +370,30 @@ export default function Home_Page() {
                 <h4 className={styles.filterLabel}>Property ID</h4>
                 <div className={styles.searchWrapper}>
                   <Search size={16} color="#8E8E93" />
-                  <input type="text" placeholder="e.g. TRV-1234" className={styles.priceInput} style={{ flex: 1 }} />
+                  <input 
+                    type="text" 
+                    placeholder="e.g. 1" 
+                    className={styles.priceInput} 
+                    style={{ flex: 1 }}
+                    value={filterPropertyId}
+                    onChange={(e) => setFilterPropertyId(e.target.value)}
+                  />
                 </div>
               </div>
 
               <div className={styles.filterGroup}>
                 <h4 className={styles.filterLabel}>Property Type</h4>
                 <div className={styles.categoryScroll}>
-                  <button className={`${styles.categoryPill} ${styles.categoryPillActive}`}>
-                    <Home size={16} /> Villa
-                  </button>
-                  <button className={styles.categoryPill}>
-                    <Building2 size={16} /> Apartment
-                  </button>
-                  <button className={styles.categoryPill}>
-                    <Umbrella size={16} /> Beach House
-                  </button>
+                  {['Any', 'Villa', 'Apartment', 'Beachfront', 'Jungle'].map(type => (
+                    <button 
+                      key={type}
+                      className={`${styles.categoryPill} ${filterPropertyType === type ? styles.categoryPillActive : ''}`}
+                      onClick={() => setFilterPropertyType(type)}
+                    >
+                      {type === 'Villa' ? <Home size={16} /> : type === 'Apartment' ? <Building2 size={16} /> : type !== 'Any' ? <Umbrella size={16} /> : null} 
+                      {type}
+                    </button>
+                  ))}
                 </div>
               </div>
 
@@ -351,12 +403,24 @@ export default function Home_Page() {
                   <div className={styles.priceInputs}>
                     <div className={styles.priceWrapper}>
                       <span className={styles.currency}>Rp</span>
-                      <input type="number" placeholder="Min" className={styles.priceInput} />
+                      <input 
+                        type="number" 
+                        placeholder="Min" 
+                        className={styles.priceInput}
+                        value={filterMinMonthly}
+                        onChange={(e) => setFilterMinMonthly(e.target.value)}
+                      />
                     </div>
                     <span className={styles.priceDivider}>—</span>
                     <div className={styles.priceWrapper}>
                       <span className={styles.currency}>Rp</span>
-                      <input type="number" placeholder="Max" className={styles.priceInput} />
+                      <input 
+                        type="number" 
+                        placeholder="Max" 
+                        className={styles.priceInput}
+                        value={filterMaxMonthly}
+                        onChange={(e) => setFilterMaxMonthly(e.target.value)}
+                      />
                     </div>
                   </div>
                 </div>
@@ -366,12 +430,24 @@ export default function Home_Page() {
                   <div className={styles.priceInputs}>
                     <div className={styles.priceWrapper}>
                       <span className={styles.currency}>Rp</span>
-                      <input type="number" placeholder="Min" className={styles.priceInput} />
+                      <input 
+                        type="number" 
+                        placeholder="Min" 
+                        className={styles.priceInput}
+                        value={filterMinYearly}
+                        onChange={(e) => setFilterMinYearly(e.target.value)}
+                      />
                     </div>
                     <span className={styles.priceDivider}>—</span>
                     <div className={styles.priceWrapper}>
                       <span className={styles.currency}>Rp</span>
-                      <input type="number" placeholder="Max" className={styles.priceInput} />
+                      <input 
+                        type="number" 
+                        placeholder="Max" 
+                        className={styles.priceInput}
+                        value={filterMaxYearly}
+                        onChange={(e) => setFilterMaxYearly(e.target.value)}
+                      />
                     </div>
                   </div>
                 </div>
@@ -382,7 +458,11 @@ export default function Home_Page() {
                   <h4 className={styles.filterLabel}>Bedrooms</h4>
                   <div className={styles.bedOptions}>
                     {['Any', '1', '2', '3', '4+'].map(val => (
-                      <button key={val} className={`${styles.bedBtn} ${val === 'Any' ? styles.bedBtnActive : ''}`}>
+                      <button 
+                        key={val} 
+                        className={`${styles.bedBtn} ${filterBedrooms === val ? styles.bedBtnActive : ''}`}
+                        onClick={() => setFilterBedrooms(val)}
+                      >
                         {val}
                       </button>
                     ))}
@@ -391,17 +471,44 @@ export default function Home_Page() {
 
                 <div className={styles.filterGroup}>
                   <h4 className={styles.filterLabel}>Amenities</h4>
-                  <div className={styles.bedOptions} style={{ flexWrap: 'wrap' }}>
-                    <button className={`${styles.bedBtn} ${styles.bedBtnActive}`} style={{ width: 'auto', padding: '0 1rem', borderRadius: 'var(--radius-full)' }}>Pool</button>
-                    <button className={styles.bedBtn} style={{ width: 'auto', padding: '0 1rem', borderRadius: 'var(--radius-full)' }}>WiFi</button>
-                    <button className={styles.bedBtn} style={{ width: 'auto', padding: '0 1rem', borderRadius: 'var(--radius-full)' }}>Gym</button>
+                  <div className={styles.bedOptions} style={{ flexWrap: 'wrap', gap: '8px' }}>
+                    {['Pool', 'WiFi', 'Gym', 'Parking', 'AC', 'Workspace', 'Kitchen', 'Balcony', 'Pet Friendly'].map(amenity => (
+                      <button 
+                        key={amenity}
+                        className={`${styles.bedBtn} ${filterAmenities.includes(amenity) ? styles.bedBtnActive : ''}`} 
+                        style={{ width: 'auto', padding: '0 1rem', borderRadius: 'var(--radius-full)' }}
+                        onClick={() => {
+                          if (filterAmenities.includes(amenity)) {
+                            setFilterAmenities(filterAmenities.filter(a => a !== amenity));
+                          } else {
+                            setFilterAmenities([...filterAmenities, amenity]);
+                          }
+                        }}
+                      >
+                        {amenity}
+                      </button>
+                    ))}
                   </div>
                 </div>
               </div>
             </div>
 
             <div className={styles.filterActions}>
-              <button className={styles.clearBtn} onClick={() => setShowFilters(false)}>Clear all</button>
+              <button 
+                className={styles.clearBtn} 
+                onClick={() => {
+                  setFilterPropertyId('');
+                  setFilterPropertyType('Any');
+                  setFilterMinMonthly('');
+                  setFilterMaxMonthly('');
+                  setFilterMinYearly('');
+                  setFilterMaxYearly('');
+                  setFilterBedrooms('Any');
+                  setFilterAmenities([]);
+                }}
+              >
+                Clear all
+              </button>
               <button className={styles.applyBtn} onClick={() => setShowFilters(false)}>Show properties</button>
             </div>
           </div>
