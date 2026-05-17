@@ -392,12 +392,6 @@ export default function PropertyDetail({ params }: { params: Promise<{ id: strin
                       <CalendarClock size={16} /> Request Viewing
                    </button>
                  </BookingFlowModal>
-                 <button className={styles.desktopSecondaryBtn}>
-                    <Video size={16} /> Request Virtual Tour
-                 </button>
-                 <button className={styles.desktopSecondaryOutlineBtn}>
-                    <MessageCircle size={16} /> Contact Agent
-                 </button>
                </div>
 
                {/* Trust Badges */}
