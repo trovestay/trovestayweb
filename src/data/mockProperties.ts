@@ -4,6 +4,13 @@ export interface PropertyFeature {
   pricing: 'monthly' | 'yearly' | 'both';
 }
 
+export interface NearbyPlace {
+  id: string;
+  name: string;
+  type: string;
+  distance: string;
+}
+
 export interface Property {
   id: string;
   title: string;
@@ -45,6 +52,7 @@ export interface Property {
   campaignTheme?: 'dark' | 'light';
   lat?: number;
   lng?: number;
+  nearbyPlaces?: NearbyPlace[];
 }
 
 export const mockProperties: Property[] = [
@@ -73,7 +81,13 @@ export const mockProperties: Property[] = [
     campaignTitle: 'Luxury Villas\n30% OFF',
     campaignTheme: 'dark',
     lat: -8.6478,
-    lng: 115.1385
+    lng: 115.1385,
+    nearbyPlaces: [
+      { id: '1', name: 'Finns Beach Club', type: 'Beach Club', distance: '1.2 km' },
+      { id: '2', name: 'Baked.', type: 'Cafe', distance: '500 m' },
+      { id: '3', name: 'Batu Bolong Beach', type: 'Beach', distance: '1.5 km' },
+      { id: '4', name: 'Siloam Medika', type: 'Hospital', distance: '2.0 km' }
+    ]
   },
   {
     id: '2',

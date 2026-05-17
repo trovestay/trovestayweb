@@ -10,9 +10,9 @@ import {
   Image as ImageIcon,
   Wifi, Coffee, Car, ShieldCheck, Star, Bed, Info, Zap, Trees, Wrench, Bug, Landmark,
   Tv, Dumbbell, Wind, FileText, CalendarClock, ShieldAlert,
-  Waves, Eye, Bath, Home, UserCheck, Plus, X
+  Waves, Eye, Bath, Home, UserCheck, Plus, X, MapPin
 } from 'lucide-react';
-import { PropertyFeature, mockProperties } from '../../../../../data/mockProperties';
+import { PropertyFeature, NearbyPlace, mockProperties } from '../../../../../data/mockProperties';
 import styles from '../../new/form.module.css';
 
 const categories = ['Villa', 'Apartment', 'Beachfront', 'Jungle', 'Penthouse', 'Studio'];
@@ -101,9 +101,11 @@ export default function EditProperty({ params }: { params: Promise<{ id: string 
     campaignLabel: property?.campaignLabel || '',
     campaignTitle: property?.campaignTitle || '',
     campaignTheme: property?.campaignTheme || 'dark',
+    nearbyPlaces: property?.nearbyPlaces || [] as NearbyPlace[],
   });
   
   const [saving, setSaving] = useState(false);
+  const [newPlace, setNewPlace] = useState({ name: '', type: '', distance: '' });
   const [customTexts, setCustomTexts] = useState({
     amenities: '',
     inclusions: '',
@@ -127,6 +129,23 @@ export default function EditProperty({ params }: { params: Promise<{ id: string 
     }));
     
     setCustomTexts(prev => ({ ...prev, [arrayName]: '' }));
+  };
+
+  const handleAddNearbyPlace = () => {
+    if (!newPlace.name || !newPlace.type || !newPlace.distance) return;
+    
+    setForm(prev => ({
+      ...prev,
+      nearbyPlaces: [...prev.nearbyPlaces, { ...newPlace, id: `place_${Date.now()}` }]
+    }));
+    setNewPlace({ name: '', type: '', distance: '' });
+  };
+
+  const handleRemoveNearbyPlace = (id: string) => {
+    setForm(prev => ({
+      ...prev,
+      nearbyPlaces: prev.nearbyPlaces.filter(p => p.id !== id)
+    }));
   };
 
   if (!property) return <div style={{padding: '2rem'}}>Property not found</div>;
@@ -737,6 +756,79 @@ export default function EditProperty({ params }: { params: Promise<{ id: string 
             {renderFeatureSection('Amenities', 'Select all features available at this property.', STANDARD_AMENITIES, 'amenities')}
             {renderFeatureSection('Inclusions', 'Select services included in the rent.', STANDARD_INCLUSIONS, 'inclusions')}
             {renderFeatureSection('Exclusions', 'Select items explicitly NOT included in the rent.', STANDARD_EXCLUSIONS, 'exclusions')}
+            
+            <div className={styles.section}>
+              <h2 className={styles.sectionTitle}>Places Nearby</h2>
+              <p className={styles.sectionSubtitle}>Add points of interest near this property.</p>
+              
+              <div className={styles.fieldGrid} style={{ background: '#f9f9fb', padding: '1.25rem', borderRadius: '12px', marginBottom: '1.5rem', border: '1px solid #e8e8ec' }}>
+                <div className={styles.field}>
+                  <label className={styles.label}>Place Name</label>
+                  <input
+                    type="text"
+                    value={newPlace.name}
+                    onChange={(e) => setNewPlace(prev => ({ ...prev, name: e.target.value }))}
+                    placeholder="e.g. Finns Beach Club"
+                    className={styles.input}
+                  />
+                </div>
+                <div className={styles.field}>
+                  <label className={styles.label}>Category/Type</label>
+                  <input
+                    type="text"
+                    value={newPlace.type}
+                    onChange={(e) => setNewPlace(prev => ({ ...prev, type: e.target.value }))}
+                    placeholder="e.g. Beach Club"
+                    className={styles.input}
+                  />
+                </div>
+                <div className={styles.field}>
+                  <label className={styles.label}>Distance</label>
+                  <input
+                    type="text"
+                    value={newPlace.distance}
+                    onChange={(e) => setNewPlace(prev => ({ ...prev, distance: e.target.value }))}
+                    placeholder="e.g. 1.2 km"
+                    className={styles.input}
+                  />
+                </div>
+                <div className={styles.fieldFull}>
+                  <button 
+                    type="button" 
+                    onClick={handleAddNearbyPlace}
+                    disabled={!newPlace.name || !newPlace.type || !newPlace.distance}
+                    style={{ padding: '0.8rem 1.2rem', borderRadius: '10px', background: '#111', color: '#fff', border: 'none', cursor: 'pointer', fontWeight: 600, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.4rem', opacity: (!newPlace.name || !newPlace.type || !newPlace.distance) ? 0.5 : 1 }}
+                  >
+                    <Plus size={16} /> Add Place
+                  </button>
+                </div>
+              </div>
+
+              {form.nearbyPlaces.length > 0 && (
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '0.8rem', padding: '0 1.25rem 1.25rem' }}>
+                  {form.nearbyPlaces.map(place => (
+                    <div key={place.id} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '1rem', background: '#fff', border: '1px solid #e8e8ec', borderRadius: '10px' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                        <div style={{ width: '40px', height: '40px', borderRadius: '50%', background: '#f0f0f2', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                          <MapPin size={18} color="#666" />
+                        </div>
+                        <div>
+                          <div style={{ fontWeight: 600, fontSize: '0.95rem', color: '#111' }}>{place.name}</div>
+                          <div style={{ fontSize: '0.85rem', color: '#888' }}>{place.type} • {place.distance}</div>
+                        </div>
+                      </div>
+                      <button 
+                        type="button" 
+                        onClick={() => handleRemoveNearbyPlace(place.id)}
+                        style={{ background: 'transparent', border: 'none', cursor: 'pointer', padding: '0.5rem', color: '#ff3b30' }}
+                      >
+                        <X size={18} />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
           </>
         )}
 

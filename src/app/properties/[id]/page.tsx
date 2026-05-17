@@ -317,8 +317,26 @@ export default function PropertyDetail({ params }: { params: Promise<{ id: strin
              </div>
           </section>
 
-
-
+          {/* Places Nearby */}
+          {property.nearbyPlaces && property.nearbyPlaces.length > 0 && (
+            <section className={styles.inclusionSection} style={{ marginTop: '2.5rem' }}>
+               <h2 className={styles.sectionTitle}>Places Nearby</h2>
+               <div className={styles.inclusionList} style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))' }}>
+                  {property.nearbyPlaces.map((place) => (
+                    <div key={place.id} className={styles.inclusionRow} style={{ padding: '1rem', background: '#f9f9fb', borderRadius: '12px', border: '1px solid #e8e8ec' }}>
+                       <div className={styles.inclusionLeft}>
+                          <MapPin size={18} color="#8E8E93" />
+                          <div>
+                            <div style={{ fontWeight: 600, color: '#111', fontSize: '0.95rem' }}>{place.name}</div>
+                            <div style={{ color: '#8E8E93', fontSize: '0.85rem' }}>{place.type}</div>
+                          </div>
+                       </div>
+                       <span style={{ fontWeight: 600, fontSize: '0.9rem', color: '#111' }}>{place.distance}</span>
+                    </div>
+                  ))}
+               </div>
+            </section>
+          )}
 
           {/* Reviews section deleted per user request for B2B/high-end lead gen */}
           <section className={styles.mapSection}>
