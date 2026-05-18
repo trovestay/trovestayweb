@@ -1,6 +1,4 @@
-.navContainer {
-  /* Used to group if needed */
-}
+
 
 /* Desktop Header */
 .desktopHeader {
@@ -465,6 +463,7 @@
 
 .slider {
   -webkit-appearance: none;
+  appearance: none;
   width: 100%;
   height: 8px;
   border-radius: 4px;
