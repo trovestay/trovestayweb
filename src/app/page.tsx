@@ -20,7 +20,8 @@ export default function Home_Page() {
   const recommendedProperties = mockProperties.slice(0, 4);
   const rentedProperties = mockProperties.slice(4, 6);
   const [showFilters, setShowFilters] = useState(false);
-  const [filterSearchQuery, setFilterSearchQuery] = useState('');
+  const [filterPropertyId, setFilterPropertyId] = useState('');
+  const [filterLocation, setFilterLocation] = useState('');
   const [filterPropertyType, setFilterPropertyType] = useState<string>('Any');
   const [filterMinMonthly, setFilterMinMonthly] = useState<string>('');
   const [filterMaxMonthly, setFilterMaxMonthly] = useState<string>('');
@@ -79,9 +80,10 @@ export default function Home_Page() {
   };
 
   const checkMatch = (p: typeof mockProperties[0]) => {
-    if (filterSearchQuery) {
-      const term = filterSearchQuery.toLowerCase();
-      if (!p.id.toLowerCase().includes(term) && !p.location.toLowerCase().includes(term) && !p.title.toLowerCase().includes(term)) return false;
+    if (filterPropertyId && !p.id.toLowerCase().includes(filterPropertyId.toLowerCase())) return false;
+    if (filterLocation) {
+      const term = filterLocation.toLowerCase();
+      if (!p.location.toLowerCase().includes(term) && !p.title.toLowerCase().includes(term)) return false;
     }
     if (filterPropertyType !== 'Any' && p.category.toLowerCase() !== filterPropertyType.toLowerCase()) return false;
     
@@ -369,18 +371,35 @@ export default function Home_Page() {
             </div>
 
             <div className={styles.filterScrollArea}>
-              <div className={styles.filterGroup}>
-                <h4 className={styles.filterLabel}>Property ID or Location</h4>
-                <div className={styles.searchWrapper}>
-                  <Search size={16} color="#8E8E93" />
-                  <input 
-                    type="text" 
-                    placeholder="e.g. 1 or Canggu" 
-                    className={styles.priceInput} 
-                    style={{ flex: 1 }}
-                    value={filterSearchQuery}
-                    onChange={(e) => setFilterSearchQuery(e.target.value)}
-                  />
+              <div className={styles.filterRow}>
+                <div className={styles.filterGroup} style={{ flex: 1 }}>
+                  <h4 className={styles.filterLabel}>Property ID</h4>
+                  <div className={styles.searchWrapper}>
+                    <Search size={16} color="#8E8E93" />
+                    <input 
+                      type="text" 
+                      placeholder="e.g. 1" 
+                      className={styles.priceInput} 
+                      style={{ flex: 1 }}
+                      value={filterPropertyId}
+                      onChange={(e) => setFilterPropertyId(e.target.value)}
+                    />
+                  </div>
+                </div>
+
+                <div className={styles.filterGroup} style={{ flex: 1 }}>
+                  <h4 className={styles.filterLabel}>Location</h4>
+                  <div className={styles.searchWrapper}>
+                    <Search size={16} color="#8E8E93" />
+                    <input 
+                      type="text" 
+                      placeholder="e.g. Canggu" 
+                      className={styles.priceInput} 
+                      style={{ flex: 1 }}
+                      value={filterLocation}
+                      onChange={(e) => setFilterLocation(e.target.value)}
+                    />
+                  </div>
                 </div>
               </div>
 
@@ -500,7 +519,8 @@ export default function Home_Page() {
               <button 
                 className={styles.clearBtn} 
                 onClick={() => {
-                  setFilterSearchQuery('');
+                  setFilterPropertyId('');
+                  setFilterLocation('');
                   setFilterPropertyType('Any');
                   setFilterMinMonthly('');
                   setFilterMaxMonthly('');
