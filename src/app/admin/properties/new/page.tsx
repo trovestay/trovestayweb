@@ -13,6 +13,7 @@ import {
   Waves, Eye, Bath, Home, UserCheck, Plus, X, MapPin
 } from 'lucide-react';
 import { PropertyFeature, NearbyPlace, mockProperties } from '../../../../data/mockProperties';
+import { supabase } from '../../../../lib/supabaseClient';
 import styles from './form.module.css';
 
 const categories = ['Villa', 'Apartment', 'Beachfront', 'Jungle', 'Penthouse', 'Studio'];
@@ -305,10 +306,48 @@ export default function AddProperty() {
     e.preventDefault();
     if (idError) return;
     setSaving(true);
-    await new Promise((resolve) => setTimeout(resolve, 1200));
-    console.log('New property:', form);
-    setSaving(false);
-    router.push('/admin/properties');
+    
+    try {
+      const { data, error } = await supabase
+        .from('properties')
+        .insert([
+          {
+            slug: form.id,
+            title: form.title,
+            location_name: form.location,
+            bedrooms: Number(form.bedrooms) || 0,
+            bathrooms: Number(form.bathrooms) || 0,
+            guests: Number(form.guests) || 0,
+            area_sqm: Number(form.area) || 0,
+            has_pool: form.hasPool,
+            listing_type: form.listingType,
+            monthly_price: Number(form.price) || 0,
+            yearly_price: Number(form.priceYearly) || 0,
+            sale_price: Number(form.salePrice) || 0,
+            status: form.status,
+            is_rented: form.isRented,
+            available_from: form.availableFrom ? new Date(form.availableFrom).toISOString() : null,
+            youtube_url: form.youtubeUrl,
+            is_campaign: form.isCampaign,
+            campaign_label: form.campaignLabel,
+            campaign_title: form.campaignTitle,
+            campaign_theme: form.campaignTheme,
+            description: form.description
+          }
+        ]);
+        
+      if (error) {
+        throw error;
+      }
+      
+      console.log('Successfully saved to Supabase:', data);
+      router.push('/admin/properties');
+    } catch (err) {
+      console.error('Error saving to Supabase:', err);
+      alert('Failed to save property. Check console for details.');
+    } finally {
+      setSaving(false);
+    }
   };
 
   return (

@@ -7,7 +7,8 @@ import Link from 'next/link';
 import PropertyCard from '../components/PropertyCard';
 import SmallPropertyCard from '../components/SmallPropertyCard';
 import RentedPropertyCard from '../components/RentedPropertyCard';
-import { mockProperties } from '../data/mockProperties';
+import { mockProperties, Property } from '../data/mockProperties';
+import { supabase } from '../lib/supabaseClient';
 import { mockBlogs } from '../data/mockBlogs';
 import styles from './page.module.css';
 import navStyles from '../components/Navigation.module.css';
@@ -16,9 +17,11 @@ import type { Currency } from '../context/AppContext';
 import type { Language } from '../i18n/translations';
 
 export default function Home_Page() {
-  const newProperties = mockProperties.slice(2, 6);
-  const recommendedProperties = mockProperties.slice(0, 4);
-  const rentedProperties = mockProperties.slice(4, 6);
+  const [properties, setProperties] = useState<Property[]>([]);
+  const newProperties = properties.slice(0, 4);
+  const recommendedProperties = properties.slice(0, 4);
+  const rentedProperties = properties.filter(p => p.isRented).slice(0, 4);
+  
   const [showFilters, setShowFilters] = useState(false);
   const [filterPropertyId, setFilterPropertyId] = useState('');
   const [filterLocation, setFilterLocation] = useState('');
@@ -38,6 +41,43 @@ export default function Home_Page() {
 
   useEffect(() => {
     setMounted(true);
+
+    const fetchProperties = async () => {
+      const { data, error } = await supabase
+        .from('properties')
+        .select('*')
+        .eq('status', 'published')
+        .order('created_at', { ascending: false });
+        
+      if (!error && data) {
+        const mapped = data.map((row: any) => ({
+          id: row.slug || row.id,
+          title: row.title,
+          location: row.location_name,
+          price: Number(row.monthly_price) || 0,
+          priceYearly: Number(row.yearly_price) || 0,
+          bedrooms: row.bedrooms,
+          bathrooms: row.bathrooms,
+          guests: row.guests,
+          area: row.area_sqm,
+          hasPool: row.has_pool,
+          category: 'Villa',
+          status: row.status,
+          isRented: row.is_rented,
+          imageUrl: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80',
+          listingType: row.listing_type,
+          salePrice: row.sale_price,
+          youtubeUrl: row.youtube_url,
+          isCampaign: row.is_campaign,
+          campaignLabel: row.campaign_label,
+          campaignTitle: row.campaign_title,
+          campaignTheme: row.campaign_theme,
+          description: row.description
+        }));
+        setProperties(mapped);
+      }
+    };
+    fetchProperties();
 
     const handleOpenAdvancedFilters = () => setShowFilters(true);
     window.addEventListener('openAdvancedFilters', handleOpenAdvancedFilters);

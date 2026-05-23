@@ -1,9 +1,10 @@
 'use client';
 
-import { use, useState } from 'react';
+import { use, useState, useEffect } from 'react';
 import Link from 'next/link';
 import { ArrowLeft, Bookmark, Star, MapPin, Compass, Bed, Bath, Waves, Maximize, Users, ChevronDown, Tag, Clock, Mail, ShieldCheck, UserCheck, CalendarClock, Wifi, Coffee, Car, ShieldAlert, CheckCircle, Info, Sparkles, MessageCircle, Phone, Video, Zap, Trees, Wrench, Bug, Landmark } from 'lucide-react';
-import { mockProperties } from '../../../data/mockProperties';
+import { Property } from '../../../data/mockProperties';
+import { supabase } from '../../../lib/supabaseClient';
 import BookingFlowModal from '../../../components/BookingFlowModal';
 import Map from '../../../components/Map';
 import PropertyCard from '../../../components/PropertyCard';
@@ -14,12 +15,59 @@ import { useAppContext } from '../../../context/AppContext';
 export default function PropertyDetail({ params }: { params: Promise<{ id: string }> }) {
   const { t, formatPrice, currency } = useAppContext();
   const resolvedParams = use(params);
-  const property = mockProperties.find(p => p.id === resolvedParams.id);
+  const [property, setProperty] = useState<Property | null>(null);
+  const [loading, setLoading] = useState(true);
+  
   const [isDescExpanded, setIsDescExpanded] = useState(false);
   const [isAmenitiesExpanded, setIsAmenitiesExpanded] = useState(false);
   const [billingCycle, setBillingCycle] = useState<'monthly' | 'yearly'>('monthly');
 
-  if (!property) {
+  useEffect(() => {
+    const fetchProperty = async () => {
+      setLoading(true);
+      const { data, error } = await supabase
+        .from('properties')
+        .select('*')
+        .eq('slug', resolvedParams.id)
+        .single();
+        
+      if (!error && data) {
+        setProperty({
+          id: data.slug || data.id,
+          title: data.title,
+          location: data.location_name,
+          price: Number(data.monthly_price) || 0,
+          priceYearly: Number(data.yearly_price) || 0,
+          bedrooms: data.bedrooms,
+          bathrooms: data.bathrooms,
+          guests: data.guests,
+          area: data.area_sqm,
+          hasPool: data.has_pool,
+          category: 'Villa',
+          status: data.status,
+          isRented: data.is_rented,
+          imageUrl: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80',
+          listingType: data.listing_type,
+          salePrice: data.sale_price,
+          youtubeUrl: data.youtube_url,
+          isCampaign: data.is_campaign,
+          campaignLabel: data.campaign_label,
+          campaignTitle: data.campaign_title,
+          campaignTheme: data.campaign_theme,
+          description: data.description
+        });
+      }
+      setLoading(false);
+    };
+    
+    fetchProperty();
+  }, [resolvedParams.id]);
+
+  if (loading) {
+    return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', fontFamily: 'var(--font-primary)' }}>Loading details...</div>;
+  }
+
+  if (!property && !loading) {
     notFound();
   }
 

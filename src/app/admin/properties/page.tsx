@@ -21,6 +21,7 @@ import {
   ScanFace,
 } from 'lucide-react';
 import { mockProperties, Property } from '../../../data/mockProperties';
+import { supabase } from '../../../lib/supabaseClient';
 import styles from './properties.module.css';
 
 // Individual Property Card Component
@@ -226,6 +227,8 @@ function AdminPropertiesContent() {
   const searchParams = useSearchParams();
   const [searchQuery, setSearchQuery] = useState(searchParams.get('search') || '');
   const [deleteConfirm, setDeleteConfirm] = useState<string | null>(null);
+  const [properties, setProperties] = useState<Property[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const s = searchParams.get('search');
@@ -234,24 +237,78 @@ function AdminPropertiesContent() {
     }
   }, [searchParams]);
 
-  const [properties, setProperties] = useState<Property[]>(mockProperties);
+  useEffect(() => {
+    const fetchProperties = async () => {
+      setLoading(true);
+      const { data, error } = await supabase
+        .from('properties')
+        .select('*')
+        .order('created_at', { ascending: false });
+        
+      if (error) {
+        console.error('Error fetching properties:', error);
+      } else if (data) {
+        // Map DB fields to Property interface
+        const mapped: Property[] = data.map((row: any) => ({
+          id: row.slug || row.id,
+          title: row.title,
+          location: row.location_name,
+          price: Number(row.monthly_price) || 0,
+          priceYearly: Number(row.yearly_price) || 0,
+          bedrooms: row.bedrooms,
+          bathrooms: row.bathrooms,
+          guests: row.guests,
+          area: row.area_sqm,
+          hasPool: row.has_pool,
+          category: 'Villa', // Temporary default or fetch if added to DB
+          status: row.status,
+          isRented: row.is_rented,
+          imageUrl: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80', // default for now until storage implemented
+          listingType: row.listing_type,
+          salePrice: row.sale_price,
+          youtubeUrl: row.youtube_url,
+          isCampaign: row.is_campaign,
+          campaignLabel: row.campaign_label,
+          campaignTitle: row.campaign_title,
+          campaignTheme: row.campaign_theme,
+          description: row.description,
+          ownerName: '',
+          ownerWhatsApp: '',
+          agentName: '',
+          agentWhatsApp: ''
+        }));
+        setProperties(mapped);
+      }
+      setLoading(false);
+    };
+    
+    fetchProperties();
+  }, []);
 
   const filteredProperties = properties.filter(
     (p) =>
       p.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       p.location.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      p.category.toLowerCase().includes(searchQuery.toLowerCase())
+      (p.category && p.category.toLowerCase().includes(searchQuery.toLowerCase()))
   );
 
-  const handleDelete = (id: string) => {
-    // In production, this would call the API
-    console.log('Deleting property:', id);
-    setProperties(properties.filter(p => p.id !== id));
+  const handleDelete = async (id: string) => {
+    // Attempt delete from DB using slug since we mapped slug to id
+    const { error } = await supabase.from('properties').delete().eq('slug', id);
+    if (!error) {
+      setProperties(properties.filter(p => p.id !== id));
+    } else {
+      console.error('Failed to delete:', error);
+    }
   };
 
   const handleUpdateContact = (id: string, updates: any) => {
     setProperties(properties.map(p => p.id === id ? { ...p, ...updates } : p));
   };
+
+  if (loading) {
+    return <div className={styles.propertiesPage} style={{ padding: '2rem' }}>Loading properties from database...</div>;
+  }
 
   return (
     <div className={styles.propertiesPage}>
@@ -260,7 +317,7 @@ function AdminPropertiesContent() {
         <div>
           <h1 className={styles.pageTitle}>Properties</h1>
           <p className={styles.pageSubtitle}>
-            Manage your {mockProperties.length} property listings
+            Manage your {properties.length} property listings
           </p>
         </div>
         <Link href="/admin/properties/new" className={styles.addBtn}>
