@@ -63,6 +63,16 @@ const Navigation = () => {
                 <ChevronDown size={14} style={{ position: 'absolute', right: 0, pointerEvents: 'none' }} />
              </div>
              <input type="text" placeholder="Search spaces..." className={styles.searchInput} style={{marginLeft: '1rem'}} />
+             
+             <div style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', marginRight: '0.5rem' }}>
+               <Link href="/locations" title="View Map" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '32px', height: '32px', borderRadius: '50%', color: '#8E8E93', transition: 'background-color 0.2s' }}>
+                 <MapPin size={18} />
+               </Link>
+               <Link href="/saved" title="Saved Properties" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '32px', height: '32px', borderRadius: '50%', color: '#8E8E93', transition: 'background-color 0.2s' }}>
+                 <Bookmark size={18} />
+               </Link>
+             </div>
+
              <button className={styles.filterBtn}>
                 <Search size={16} color="var(--color-primary)" />
              </button>

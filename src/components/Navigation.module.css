@@ -70,7 +70,7 @@
   padding: 0.25rem 0.25rem 0.25rem 1rem;
   box-shadow: var(--shadow-sm);
   flex: 2;
-  max-width: 380px;
+  max-width: 440px;
   border: 1px solid var(--color-border);
 }
 
