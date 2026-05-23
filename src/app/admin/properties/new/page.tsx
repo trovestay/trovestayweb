@@ -14,7 +14,7 @@ import {
 } from 'lucide-react';
 import { PropertyFeature, NearbyPlace, mockProperties } from '../../../../data/mockProperties';
 import { supabase } from '../../../../lib/supabaseClient';
-import { saveProperty } from '../../../../actions/propertyActions';
+import { saveProperty } from '../../../actions/propertyActions';
 import styles from './form.module.css';
 
 const categories = ['Villa', 'Apartment', 'Beachfront', 'Jungle', 'Penthouse', 'Studio'];

@@ -22,7 +22,7 @@ import {
 } from 'lucide-react';
 import { mockProperties, Property } from '../../../data/mockProperties';
 import { supabase } from '../../../lib/supabaseClient';
-import { deleteProperty } from '../../../actions/propertyActions';
+import { deleteProperty } from '../../actions/propertyActions';
 import styles from './properties.module.css';
 
 // Individual Property Card Component

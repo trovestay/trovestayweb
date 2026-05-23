@@ -13,7 +13,7 @@ import {
   Waves, Eye, Bath, Home, UserCheck, Plus, X, MapPin
 } from 'lucide-react';
 import { PropertyFeature, NearbyPlace, mockProperties } from '../../../../../data/mockProperties';
-import { updateProperty } from '../../../../../actions/propertyActions';
+import { updateProperty } from '../../../../actions/propertyActions';
 import styles from '../../new/form.module.css';
 
 const categories = ['Villa', 'Apartment', 'Beachfront', 'Jungle', 'Penthouse', 'Studio'];
