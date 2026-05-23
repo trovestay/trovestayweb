@@ -3,6 +3,12 @@
   padding-top: 0;
 }
 
+@media (min-width: 1024px) {
+  .homeLayout {
+    padding-bottom: 0;
+  }
+}
+
 .darkTopSection {
   background-color: var(--color-background); /* now pure white per request */
   padding: 0.5rem 0 2rem 0;

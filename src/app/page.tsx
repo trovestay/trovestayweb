@@ -345,8 +345,6 @@ export default function Home_Page() {
                 ))}
               </div>
             </section>
-
-            <div style={{ height: '100px' }}></div>
           </div>
         </div>
       </div>
