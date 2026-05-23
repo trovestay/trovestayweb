@@ -6,7 +6,7 @@ export default function Owner() {
     <div className={`container ${styles.ownerContainer}`}>
       <div className={styles.header}>
         <h1>List with TROVE STAY</h1>
-        <p>Partner with Bali's most exclusive property management platform. We handle everything from bookings to premium concierge services.</p>
+        <p>Partner with Bali&apos;s most exclusive property management platform. We handle everything from bookings to premium concierge services.</p>
       </div>
 
       <div className={styles.formContainer}>

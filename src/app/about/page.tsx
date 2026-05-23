@@ -16,7 +16,7 @@ export default function About() {
           <h2>Our Mission</h2>
           <p>
             We curate spaces that inspire. Our mission is to bridge the gap between premium design and unparalleled tropical living. 
-            Whether you're a digital nomad seeking a month-long sanctuary in Canggu, or a family looking for a beachfront estate in Uluwatu, 
+            Whether you&apos;re a digital nomad seeking a month-long sanctuary in Canggu, or a family looking for a beachfront estate in Uluwatu, 
             TROVE STAY delivers properties that meet the highest standards of luxury and comfort.
           </p>
           <p>

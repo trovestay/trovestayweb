@@ -12,9 +12,9 @@
   "/saved/page": "/saved",
   "/admin/blogs/page": "/admin/blogs",
   "/admin/blogs/new/page": "/admin/blogs/new",
-  "/admin/page": "/admin",
-  "/admin/properties/new/page": "/admin/properties/new",
   "/admin/properties/edit/[id]/page": "/admin/properties/edit/[id]",
+  "/admin/properties/new/page": "/admin/properties/new",
   "/admin/properties/page": "/admin/properties",
-  "/admin/settings/page": "/admin/settings"
+  "/admin/settings/page": "/admin/settings",
+  "/admin/page": "/admin"
 }

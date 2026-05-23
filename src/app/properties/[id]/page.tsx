@@ -3,7 +3,7 @@
 import { use, useState, useEffect } from 'react';
 import Link from 'next/link';
 import { ArrowLeft, Bookmark, Star, MapPin, Compass, Bed, Bath, Waves, Maximize, Users, ChevronDown, Tag, Clock, Mail, ShieldCheck, UserCheck, CalendarClock, Wifi, Coffee, Car, ShieldAlert, CheckCircle, Info, Sparkles, MessageCircle, Phone, Video, Zap, Trees, Wrench, Bug, Landmark } from 'lucide-react';
-import { Property } from '../../../data/mockProperties';
+import { Property, mockProperties } from '../../../data/mockProperties';
 import { supabase } from '../../../lib/supabaseClient';
 import BookingFlowModal from '../../../components/BookingFlowModal';
 import Map from '../../../components/Map';

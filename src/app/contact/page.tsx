@@ -6,7 +6,7 @@ export default function Contact() {
     <div className={`container ${styles.contactContainer}`}>
       <div className={styles.header}>
         <h1>Get in Touch.</h1>
-        <p>We're here to help you find your perfect stay or manage your premium property.</p>
+        <p>We&apos;re here to help you find your perfect stay or manage your premium property.</p>
       </div>
 
       <div className={styles.contentGrid}>
