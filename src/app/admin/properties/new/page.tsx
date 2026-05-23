@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 import { PropertyFeature, NearbyPlace, mockProperties } from '../../../../data/mockProperties';
 import { supabase } from '../../../../lib/supabaseClient';
+import { saveProperty } from '../../../../actions/propertyActions';
 import styles from './form.module.css';
 
 const categories = ['Villa', 'Apartment', 'Beachfront', 'Jungle', 'Penthouse', 'Studio'];
@@ -308,43 +309,39 @@ export default function AddProperty() {
     setSaving(true);
     
     try {
-      const { data, error } = await supabase
-        .from('properties')
-        .insert([
-          {
-            slug: form.id,
-            title: form.title,
-            location_name: form.location,
-            bedrooms: Number(form.bedrooms) || 0,
-            bathrooms: Number(form.bathrooms) || 0,
-            guests: Number(form.guests) || 0,
-            area_sqm: Number(form.area) || 0,
-            has_pool: form.hasPool,
-            listing_type: form.listingType,
-            monthly_price: Number(form.price) || 0,
-            yearly_price: Number(form.priceYearly) || 0,
-            sale_price: Number(form.salePrice) || 0,
-            status: form.status,
-            is_rented: form.isRented,
-            available_from: form.availableFrom ? new Date(form.availableFrom).toISOString() : null,
-            youtube_url: form.youtubeUrl,
-            is_campaign: form.isCampaign,
-            campaign_label: form.campaignLabel,
-            campaign_title: form.campaignTitle,
-            campaign_theme: form.campaignTheme,
-            description: form.description
-          }
-        ]);
+      const result = await saveProperty({
+        slug: form.id,
+        title: form.title,
+        location_name: form.location,
+        bedrooms: Number(form.bedrooms) || 0,
+        bathrooms: Number(form.bathrooms) || 0,
+        guests: Number(form.guests) || 0,
+        area_sqm: Number(form.area) || 0,
+        has_pool: form.hasPool,
+        listing_type: form.listingType,
+        monthly_price: Number(form.price) || 0,
+        yearly_price: Number(form.priceYearly) || 0,
+        sale_price: Number(form.salePrice) || 0,
+        status: form.status,
+        is_rented: form.isRented,
+        available_from: form.availableFrom ? new Date(form.availableFrom).toISOString() : null,
+        youtube_url: form.youtubeUrl,
+        is_campaign: form.isCampaign,
+        campaign_label: form.campaignLabel,
+        campaign_title: form.campaignTitle,
+        campaign_theme: form.campaignTheme,
+        description: form.description
+      });
         
-      if (error) {
-        throw error;
+      if (!result.success) {
+        throw new Error(result.error);
       }
       
-      console.log('Successfully saved to Supabase:', data);
+      console.log('Successfully saved property');
       router.push('/admin/properties');
-    } catch (err) {
-      console.error('Error saving to Supabase:', err);
-      alert('Failed to save property. Check console for details.');
+    } catch (err: any) {
+      console.error('Error saving property:', err);
+      alert('Failed to save property: ' + (err.message || 'Check console for details.'));
     } finally {
       setSaving(false);
     }

@@ -22,6 +22,7 @@ import {
 } from 'lucide-react';
 import { mockProperties, Property } from '../../../data/mockProperties';
 import { supabase } from '../../../lib/supabaseClient';
+import { deleteProperty } from '../../../actions/propertyActions';
 import styles from './properties.module.css';
 
 // Individual Property Card Component
@@ -293,12 +294,13 @@ function AdminPropertiesContent() {
   );
 
   const handleDelete = async (id: string) => {
-    // Attempt delete from DB using slug since we mapped slug to id
-    const { error } = await supabase.from('properties').delete().eq('slug', id);
-    if (!error) {
+    // Attempt delete from DB using server action to bypass RLS
+    const result = await deleteProperty(id);
+    if (result.success) {
       setProperties(properties.filter(p => p.id !== id));
     } else {
-      console.error('Failed to delete:', error);
+      console.error('Failed to delete:', result.error);
+      alert('Failed to delete property. Check console for details.');
     }
   };
 
