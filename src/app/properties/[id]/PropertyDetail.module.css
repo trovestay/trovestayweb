@@ -18,12 +18,7 @@
   pointer-events: none;
 }
 
-@media (min-width: 1024px) {
-  .topHeader {
-     /* Desktop uses main nav, could hide this or align it with grid */
-     display: none;
-  }
-}
+
 
 .iconBtn {
   width: 44px;
@@ -60,7 +55,7 @@
 
 @media (min-width: 1024px) {
   .carouselContainer {
-    padding-top: 7rem;
+    padding-top: 5rem;
     padding-left: 1.5rem;
     padding-right: 1.5rem;
   }
