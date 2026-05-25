@@ -63,7 +63,6 @@ export default function EditProperty({ params }: { params: Promise<{ id: string 
   const router = useRouter();
   const resolvedParams = use(params);
   
-  const [activeTab, setActiveTab] = useState('basic');
   const [idError, setIdError] = useState('');
   const [loading, setLoading] = useState(true);
 
@@ -430,16 +429,7 @@ export default function EditProperty({ params }: { params: Promise<{ id: string 
         </p>
       </div>
 
-      <div className={styles.tabsContainer}>
-        <button type="button" className={`${styles.tabBtn} ${activeTab === 'basic' ? styles.tabBtnActive : ''}`} onClick={() => setActiveTab('basic')}>Basic Info</button>
-        <button type="button" className={`${styles.tabBtn} ${activeTab === 'details' ? styles.tabBtnActive : ''}`} onClick={() => setActiveTab('details')}>Details & Media</button>
-        <button type="button" className={`${styles.tabBtn} ${activeTab === 'features' ? styles.tabBtnActive : ''}`} onClick={() => setActiveTab('features')}>Features</button>
-        <button type="button" className={`${styles.tabBtn} ${activeTab === 'contact' ? styles.tabBtnActive : ''}`} onClick={() => setActiveTab('contact')}>Contact Info</button>
-      </div>
-
       <form onSubmit={handleSubmit} className={styles.formCard}>
-        {activeTab === 'basic' && (
-          <>
             <div className={styles.section}>
               <h2 className={styles.sectionTitle}>Listing Status & ID</h2>
               <div className={styles.fieldGrid}>
@@ -667,11 +657,7 @@ export default function EditProperty({ params }: { params: Promise<{ id: string 
                 </div>
               </div>
             </div>
-          </>
-        )}
 
-        {activeTab === 'details' && (
-          <>
             <div className={styles.section}>
               <h2 className={styles.sectionTitle}>Advanced Room Details</h2>
               <div className={styles.fieldGrid}>
@@ -848,11 +834,7 @@ export default function EditProperty({ params }: { params: Promise<{ id: string 
                 </div>
               )}
             </div>
-          </>
-        )}
 
-        {activeTab === 'features' && (
-          <>
             {renderFeatureSection('Amenities', 'Select all features available at this property.', STANDARD_AMENITIES, 'amenities')}
             {renderFeatureSection('Inclusions', 'Select services included in the rent.', STANDARD_INCLUSIONS, 'inclusions')}
             {renderFeatureSection('Exclusions', 'Select items explicitly NOT included in the rent.', STANDARD_EXCLUSIONS, 'exclusions')}
@@ -929,10 +911,7 @@ export default function EditProperty({ params }: { params: Promise<{ id: string 
                 </div>
               )}
             </div>
-          </>
-        )}
 
-        {activeTab === 'contact' && (
           <div className={styles.section}>
             <h2 className={styles.sectionTitle}>Contact Information</h2>
             
@@ -1007,7 +986,6 @@ export default function EditProperty({ params }: { params: Promise<{ id: string 
               )}
             </div>
           </div>
-        )}
 
         <div className={styles.formActions}>
           <Link href="/admin/properties" className={styles.cancelBtn}>
