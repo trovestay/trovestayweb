@@ -10,7 +10,7 @@ export default function About() {
 
       <div className={styles.editorialGrid}>
         <div className={styles.imageBlock}>
-          <img src="" alt="Minimalist Bali Villa" />
+          <img src="/placeholder.jpg" alt="Minimalist Bali Villa" />
         </div>
         <div className={styles.textBlock}>
           <h2>Our Mission</h2>
@@ -28,7 +28,7 @@ export default function About() {
 
       <div className={styles.editorialGrid} style={{ direction: 'rtl' }}>
         <div className={styles.imageBlock}>
-          <img src="" alt="Beautiful details" />
+          <img src="/placeholder.jpg" alt="Beautiful details" />
         </div>
         <div className={styles.textBlock} style={{ direction: 'ltr' }}>
           <h2>The TROVE STAY Standard</h2>

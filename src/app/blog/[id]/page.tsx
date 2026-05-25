@@ -57,7 +57,7 @@ export default function BlogDetail() {
   return (
     <div className={styles.blogLayout}>
       <section className={styles.heroSection}>
-        <img src={blog.image_url || ''} alt={blog.title} className={styles.heroImg} />
+        <img src={blog.image_url || '/placeholder.jpg'} alt={blog.title} className={styles.heroImg} />
         <div className={styles.heroOverlay}>
           <Link href="/" className={styles.backBtn}>
             <ArrowLeft size={24} />

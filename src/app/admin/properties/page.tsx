@@ -264,7 +264,7 @@ function AdminPropertiesContent() {
           category: 'Villa', // Temporary default or fetch if added to DB
           status: row.status,
           isRented: row.is_rented,
-          imageUrl: '', // default for now until storage implemented
+          imageUrl: '/placeholder.jpg', // default for now until storage implemented
           listingType: row.listing_type,
           salePrice: row.sale_price,
           youtubeUrl: row.youtube_url,

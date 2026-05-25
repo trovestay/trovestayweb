@@ -65,7 +65,7 @@ export default function Home_Page() {
           category: 'Villa',
           status: row.status,
           isRented: row.is_rented,
-          imageUrl: '',
+          imageUrl: '/placeholder.jpg',
           listingType: row.listing_type,
           salePrice: row.sale_price,
           youtubeUrl: row.youtube_url,
@@ -124,7 +124,7 @@ export default function Home_Page() {
   // Simulated User Auth State
   const [user] = useState<{ name: string, avatarUrl: string } | null>({
     name: "Alexander Christopher",
-    avatarUrl: ""
+    avatarUrl: "/placeholder.jpg"
   });
 
   // Smart logic for handling long names (e.g. from Google Auth)
@@ -386,7 +386,7 @@ export default function Home_Page() {
                     <div className={styles.blogCard}>
                       <div className={styles.blogImgWrapper}>
                         <span className={styles.blogCategoryBadge}>{blog.category}</span>
-                        <img src={blog.image_url || ''} alt={blog.title} className={styles.blogImg} loading="lazy" />
+                        <img src={blog.image_url || '/placeholder.jpg'} alt={blog.title} className={styles.blogImg} loading="lazy" />
                       </div>
                       <div className={styles.blogContent}>
                         <div className={styles.blogMeta}>

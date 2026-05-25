@@ -46,7 +46,7 @@ export default function PropertyDetail({ params }: { params: Promise<{ id: strin
           category: 'Villa',
           status: data.status,
           isRented: data.is_rented,
-          imageUrl: '',
+          imageUrl: '/placeholder.jpg',
           listingType: data.listing_type,
           salePrice: data.sale_price,
           youtubeUrl: data.youtube_url,
@@ -73,10 +73,10 @@ export default function PropertyDetail({ params }: { params: Promise<{ id: strin
 
   const carouselImages = [
     property.imageUrl,
-    "",
-    "",
-    "",
-    ""
+    "/placeholder.jpg",
+    "/placeholder.jpg",
+    "/placeholder.jpg",
+    "/placeholder.jpg"
   ];
 
   const getYoutubeId = (url: string) => {

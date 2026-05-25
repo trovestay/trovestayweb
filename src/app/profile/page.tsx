@@ -15,7 +15,7 @@ export default function ProfilePage() {
   const user = {
     name: "Alexander Christopher",
     email: "alexander@example.com",
-    avatarUrl: ""
+    avatarUrl: "/placeholder.jpg"
   };
 
   const handleDownloadClick = () => {

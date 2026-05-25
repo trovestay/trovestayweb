@@ -16,8 +16,9 @@ const supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey, {
 
 export async function saveProperty(data: any) {
   try {
-    if (!supabaseServiceKey) {
-      console.warn("WARNING: SUPABASE_SERVICE_ROLE_KEY is not set. Database operations might fail if RLS is enabled.");
+    if (!process.env.SUPABASE_SERVICE_ROLE_KEY) {
+      console.warn("WARNING: SUPABASE_SERVICE_ROLE_KEY is not set.");
+      return { success: false, error: 'Configuration Error: SUPABASE_SERVICE_ROLE_KEY is missing in Vercel Environment Variables. Please add the service_role secret key in Vercel and redeploy your site.' };
     }
 
     const { error } = await supabaseAdmin

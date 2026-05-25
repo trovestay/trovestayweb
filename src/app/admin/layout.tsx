@@ -89,7 +89,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           <div className={styles.sidebarFooter}>
             <div className={styles.userCard}>
               <img
-                src=""
+                src="/placeholder.jpg"
                 alt="Admin"
                 className={styles.userAvatar}
               />
@@ -136,7 +136,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
               <span className={styles.topNotifDot} />
             </button>
             <img
-              src=""
+              src="/placeholder.jpg"
               alt="Admin"
               className={styles.topAvatar}
             />

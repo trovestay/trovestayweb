@@ -82,7 +82,7 @@ export default function AdminBlogs() {
         ) : filteredBlogs.map(blog => (
           <div key={blog.id} className={styles.blogListItem}>
             <div className={styles.thumbnailWrapper}>
-              <img src={blog.image_url || ''} alt={blog.title} className={styles.thumbnail} />
+              <img src={blog.image_url || '/placeholder.jpg'} alt={blog.title} className={styles.thumbnail} />
             </div>
             
             <div className={styles.blogInfo}>
