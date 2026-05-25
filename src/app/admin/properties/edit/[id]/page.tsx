@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, use } from 'react';
+import { useState, use, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import {
@@ -13,6 +13,7 @@ import {
   Waves, Eye, Bath, Home, UserCheck, Plus, X, MapPin
 } from 'lucide-react';
 import { PropertyFeature, NearbyPlace, mockProperties } from '../../../../../data/mockProperties';
+import { supabase } from '../../../../../lib/supabaseClient';
 import { updateProperty } from '../../../../actions/propertyActions';
 import styles from '../../new/form.module.css';
 
@@ -61,49 +62,91 @@ const STANDARD_EXCLUSIONS = [
 export default function EditProperty({ params }: { params: Promise<{ id: string }> }) {
   const router = useRouter();
   const resolvedParams = use(params);
-  const property = mockProperties.find(p => p.id === resolvedParams.id);
   
   const [activeTab, setActiveTab] = useState('basic');
   const [idError, setIdError] = useState('');
+  const [loading, setLoading] = useState(true);
 
   const [form, setForm] = useState({
-    id: property?.id || '',
-    title: property?.title || '',
-    location: property?.location || '',
-    price: property?.price || '',
-    priceYearly: property?.priceYearly || '',
-    bedrooms: property?.bedrooms || '',
-    bathrooms: property?.bathrooms || '',
-    guests: property?.guests || '',
-    area: property?.area || '',
-    floors: property?.floors || '',
-    hasPool: property?.hasPool || false,
-    hasRooftop: property?.hasRooftop || false,
-    category: property?.category || 'Villa',
-    imageUrl: property?.imageUrl || '',
-    images: property?.images || [] as string[],
-    status: property?.status || 'published',
-    isRented: property?.isRented || false,
-    availableFrom: property?.availableFrom || '',
-    description: property?.description || '',
-    amenities: (property?.amenities as PropertyFeature[]) || [] as PropertyFeature[],
-    inclusions: (property?.inclusions as PropertyFeature[]) || [] as PropertyFeature[],
-    exclusions: (property?.exclusions as PropertyFeature[]) || [] as PropertyFeature[],
-    rules: (property?.rules as PropertyFeature[]) || [] as PropertyFeature[],
-    contactType: property?.contactType || 'owner' as 'owner' | 'agent',
-    ownerName: property?.ownerName || '',
-    ownerWhatsApp: property?.ownerWhatsApp || '',
-    agentName: property?.agentName || '',
-    agentWhatsApp: property?.agentWhatsApp || '',
-    listingType: (property?.listingType as 'rent' | 'sale') || 'rent',
-    salePrice: property?.salePrice || '',
-    youtubeUrl: property?.youtubeUrl || '',
-    isCampaign: property?.isCampaign || false,
-    campaignLabel: property?.campaignLabel || '',
-    campaignTitle: property?.campaignTitle || '',
-    campaignTheme: property?.campaignTheme || 'dark',
-    nearbyPlaces: property?.nearbyPlaces || [] as NearbyPlace[],
+    id: '',
+    title: '',
+    location: '',
+    price: '',
+    priceYearly: '',
+    bedrooms: '',
+    bathrooms: '',
+    guests: '',
+    area: '',
+    floors: '',
+    hasPool: false,
+    hasRooftop: false,
+    category: 'Villa',
+    imageUrl: '',
+    coverFile: null as File | null,
+    images: [] as string[],
+    status: 'published',
+    isRented: false,
+    availableFrom: '',
+    description: '',
+    amenities: [] as PropertyFeature[],
+    inclusions: [] as PropertyFeature[],
+    exclusions: [] as PropertyFeature[],
+    rules: [] as PropertyFeature[],
+    contactType: 'owner' as 'owner' | 'agent',
+    ownerName: '',
+    ownerWhatsApp: '',
+    agentName: '',
+    agentWhatsApp: '',
+    listingType: 'rent' as 'rent' | 'sale',
+    salePrice: '',
+    youtubeUrl: '',
+    isCampaign: false,
+    campaignLabel: '',
+    campaignTitle: '',
+    campaignTheme: 'dark' as 'dark' | 'light',
+    nearbyPlaces: [] as NearbyPlace[],
   });
+
+  useEffect(() => {
+    const fetchProperty = async () => {
+      const { data, error } = await supabase
+        .from('properties')
+        .select('*')
+        .eq('slug', resolvedParams.id)
+        .single();
+
+      if (data) {
+        setForm(prev => ({
+          ...prev,
+          id: data.slug,
+          title: data.title,
+          location: data.location_name,
+          price: data.monthly_price?.toString() || '',
+          priceYearly: data.yearly_price?.toString() || '',
+          bedrooms: data.bedrooms?.toString() || '',
+          bathrooms: data.bathrooms?.toString() || '',
+          guests: data.guests?.toString() || '',
+          area: data.area_sqm?.toString() || '',
+          hasPool: data.has_pool,
+          listingType: data.listing_type || 'rent',
+          salePrice: data.sale_price?.toString() || '',
+          status: data.status,
+          isRented: data.is_rented,
+          availableFrom: data.available_from || '',
+          youtubeUrl: data.youtube_url || '',
+          isCampaign: data.is_campaign || false,
+          campaignLabel: data.campaign_label || '',
+          campaignTitle: data.campaign_title || '',
+          campaignTheme: data.campaign_theme || 'dark',
+          description: data.description || '',
+          imageUrl: data.image_url || '',
+        }));
+      }
+      setLoading(false);
+    };
+
+    fetchProperty();
+  }, [resolvedParams.id]);
   
   const [saving, setSaving] = useState(false);
   const [newPlace, setNewPlace] = useState({ name: '', type: '', distance: '' });
@@ -149,7 +192,8 @@ export default function EditProperty({ params }: { params: Promise<{ id: string 
     }));
   };
 
-  if (!property) return <div style={{padding: '2rem'}}>Property not found</div>;
+  if (loading) return <div style={{padding: '2rem'}}>Loading...</div>;
+  if (!form.id) return <div style={{padding: '2rem'}}>Property not found</div>;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value, type } = e.target;
@@ -169,7 +213,7 @@ export default function EditProperty({ params }: { params: Promise<{ id: string 
     const file = e.target.files?.[0];
     if (file) {
       const url = URL.createObjectURL(file);
-      setForm(prev => ({ ...prev, imageUrl: url }));
+      setForm(prev => ({ ...prev, imageUrl: url, coverFile: file }));
     }
   };
 
@@ -314,6 +358,27 @@ export default function EditProperty({ params }: { params: Promise<{ id: string 
     setSaving(true);
     
     try {
+      let finalImageUrl = form.imageUrl;
+
+      if (form.coverFile) {
+        const fileExt = form.coverFile.name.split('.').pop();
+        const fileName = `${form.id}-${Date.now()}.${fileExt}`;
+
+        const { error: uploadError } = await supabase.storage
+          .from('properties')
+          .upload(fileName, form.coverFile);
+
+        if (uploadError) {
+          throw new Error('Image upload failed: ' + uploadError.message);
+        }
+
+        const { data: { publicUrl } } = supabase.storage
+          .from('properties')
+          .getPublicUrl(fileName);
+          
+        finalImageUrl = publicUrl;
+      }
+
       const result = await updateProperty(resolvedParams.id, {
         title: form.title,
         location_name: form.location,
@@ -334,7 +399,8 @@ export default function EditProperty({ params }: { params: Promise<{ id: string 
         campaign_label: form.campaignLabel,
         campaign_title: form.campaignTitle,
         campaign_theme: form.campaignTheme,
-        description: form.description
+        description: form.description,
+        image_url: finalImageUrl
       });
 
       if (!result.success) {
