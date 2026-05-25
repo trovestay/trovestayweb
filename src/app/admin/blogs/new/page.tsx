@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { ArrowLeft, Save, Upload } from 'lucide-react';
-import { saveBlog } from '../../actions/blogActions';
+import { saveBlog } from '../../../actions/blogActions';
 import styles from '../../properties/new/form.module.css';
 
 export default function NewBlog() {
