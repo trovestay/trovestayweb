@@ -42,7 +42,7 @@ const Navigation = () => {
       <header className={`${styles.desktopHeader} ${isScrolled ? styles.desktopHeaderScrolled : ''}`}>
         <div className={`container ${styles.desktopInner}`}>
           <div className={styles.headerLeftDesktop}>
-             <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&q=80" alt="Profile" className={styles.topAvatarDesktop} />
+             <img src="" alt="Profile" className={styles.topAvatarDesktop} />
              <div className={styles.greetingBlockDesktop}>
                 <h2 className={styles.greetingTitleDesktop}>{mounted ? getGreeting() : 'Welcome'}, Alex</h2>
                 {pathname === '/' && (

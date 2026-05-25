@@ -1,16 +1,49 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { ArrowLeft, Clock, User } from 'lucide-react';
-import { mockBlogs } from '../../../data/mockBlogs';
+import { supabase } from '../../../lib/supabaseClient';
 import styles from './blog.module.css';
 
 export default function BlogDetail() {
   const { id } = useParams();
   const router = useRouter();
   
-  const blog = mockBlogs.find(b => b.id === id);
+  const [blog, setBlog] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchBlog = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('blogs')
+          .select('*')
+          .eq('id', id)
+          .single();
+          
+        if (error) throw error;
+        setBlog(data);
+      } catch (error) {
+        console.error('Error fetching blog:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (id) {
+      fetchBlog();
+    }
+  }, [id]);
+
+  if (loading) {
+    return (
+      <div style={{ padding: '4rem', textAlign: 'center' }}>
+        <p style={{ color: '#8e8e93' }}>Loading article...</p>
+      </div>
+    );
+  }
 
   if (!blog) {
     return (
@@ -24,7 +57,7 @@ export default function BlogDetail() {
   return (
     <div className={styles.blogLayout}>
       <section className={styles.heroSection}>
-        <img src={blog.imageUrl} alt={blog.title} className={styles.heroImg} />
+        <img src={blog.image_url || ''} alt={blog.title} className={styles.heroImg} />
         <div className={styles.heroOverlay}>
           <Link href="/" className={styles.backBtn}>
             <ArrowLeft size={24} />
@@ -49,9 +82,9 @@ export default function BlogDetail() {
           />
         ) : (
           <div className={styles.articleBody}>
-            {blog.content.split('\n\n').map((paragraph, idx) => (
+            {blog.content.split('\n\n').map((paragraph: string, idx: number) => (
               <p key={idx}>
-                {paragraph.split('\n').map((line, i) => (
+                {paragraph.split('\n').map((line: string, i: number) => (
                   <span key={i}>
                     {line}
                     {i !== paragraph.split('\n').length - 1 && <br />}

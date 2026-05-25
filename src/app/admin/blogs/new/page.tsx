@@ -2,10 +2,13 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { ArrowLeft, Save, Upload } from 'lucide-react';
-import styles from '../../properties/new/form.module.css'; // Reusing the Apple-style form styles
+import { saveBlog } from '../../actions/blogActions';
+import styles from '../../properties/new/form.module.css';
 
 export default function NewBlog() {
+  const router = useRouter();
   const [form, setForm] = useState({
     title: '',
     category: '',
@@ -13,10 +16,12 @@ export default function NewBlog() {
     summary: '',
     content: '',
     imageUrl: '',
+    author: 'Admin', // Default author
     status: 'published' as 'published' | 'draft',
   });
   
   const [saving, setSaving] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -25,19 +30,32 @@ export default function NewBlog() {
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
+      // In a real app, you would upload to Supabase Storage and get the public URL.
+      // For now, if they pick a local file, it generates a blob URL which won't persist across devices.
+      // Using a placeholder or requiring a direct URL would be better for a robust setup,
+      // but we'll keep the existing UX structure for now and maybe suggest improvements later.
       const url = URL.createObjectURL(e.target.files[0]);
       setForm(prev => ({ ...prev, imageUrl: url }));
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSaving(true);
-    // Simulate save
-    setTimeout(() => {
+    setErrorMsg('');
+    
+    try {
+      const result = await saveBlog(form);
+      if (result.success) {
+        router.push('/admin/blogs');
+      } else {
+        setErrorMsg(result.error || 'Failed to save blog post');
+        setSaving(false);
+      }
+    } catch (err: any) {
+      setErrorMsg(err.message || 'An unexpected error occurred');
       setSaving(false);
-      window.location.href = '/admin/blogs';
-    }, 1000);
+    }
   };
 
   return (
@@ -54,6 +72,11 @@ export default function NewBlog() {
       </div>
 
       <form onSubmit={handleSubmit} className={styles.formCard}>
+        {errorMsg && (
+          <div style={{ padding: '1rem', background: '#ffebee', color: '#c62828', borderRadius: '8px', marginBottom: '1.5rem', border: '1px solid #ffcdd2' }}>
+            {errorMsg}
+          </div>
+        )}
         {/* Publishing Settings */}
         <div className={styles.section}>
           <h2 className={styles.sectionTitle}>Publishing Settings</h2>

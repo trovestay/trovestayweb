@@ -18,6 +18,7 @@ import type { Language } from '../i18n/translations';
 
 export default function Home_Page() {
   const [properties, setProperties] = useState<Property[]>([]);
+  const [blogs, setBlogs] = useState<any[]>([]);
   const newProperties = properties.slice(0, 4);
   const recommendedProperties = properties.slice(0, 4);
   const rentedProperties = properties.filter(p => p.isRented).slice(0, 4);
@@ -64,7 +65,7 @@ export default function Home_Page() {
           category: 'Villa',
           status: row.status,
           isRented: row.is_rented,
-          imageUrl: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80',
+          imageUrl: '',
           listingType: row.listing_type,
           salePrice: row.sale_price,
           youtubeUrl: row.youtube_url,
@@ -77,7 +78,21 @@ export default function Home_Page() {
         setProperties(mapped);
       }
     };
+    
+    const fetchBlogs = async () => {
+      const { data, error } = await supabase
+        .from('blogs')
+        .select('*')
+        .eq('status', 'published')
+        .order('created_at', { ascending: false });
+        
+      if (!error && data) {
+        setBlogs(data);
+      }
+    };
+
     fetchProperties();
+    fetchBlogs();
 
     const handleOpenAdvancedFilters = () => setShowFilters(true);
     window.addEventListener('openAdvancedFilters', handleOpenAdvancedFilters);
@@ -109,7 +124,7 @@ export default function Home_Page() {
   // Simulated User Auth State
   const [user] = useState<{ name: string, avatarUrl: string } | null>({
     name: "Alexander Christopher",
-    avatarUrl: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&q=80"
+    avatarUrl: ""
   });
 
   // Smart logic for handling long names (e.g. from Google Auth)
@@ -366,12 +381,12 @@ export default function Home_Page() {
               </div>
 
               <div className={styles.blogScroll}>
-                {mockBlogs.filter(b => b.status === 'published').map(blog => (
+                {blogs.map(blog => (
                   <Link href={`/blog/${blog.id}`} key={blog.id} style={{ textDecoration: 'none' }}>
                     <div className={styles.blogCard}>
                       <div className={styles.blogImgWrapper}>
                         <span className={styles.blogCategoryBadge}>{blog.category}</span>
-                        <img src={blog.imageUrl} alt={blog.title} className={styles.blogImg} loading="lazy" />
+                        <img src={blog.image_url || ''} alt={blog.title} className={styles.blogImg} loading="lazy" />
                       </div>
                       <div className={styles.blogContent}>
                         <div className={styles.blogMeta}>

@@ -10,17 +10,17 @@ export default function About() {
 
       <div className={styles.editorialGrid}>
         <div className={styles.imageBlock}>
-          <img src="https://images.unsplash.com/photo-1618221118493-9cfa1a1c00da?w=1200&q=80" alt="Minimalist Bali Villa" />
+          <img src="" alt="Minimalist Bali Villa" />
         </div>
         <div className={styles.textBlock}>
           <h2>Our Mission</h2>
           <p>
-            We curate spaces that inspire. Our mission is to bridge the gap between premium design and unparalleled tropical living. 
-            Whether you&apos;re a digital nomad seeking a month-long sanctuary in Canggu, or a family looking for a beachfront estate in Uluwatu, 
+            We curate spaces that inspire. Our mission is to bridge the gap between premium design and unparalleled tropical living.
+            Whether you&apos;re a digital nomad seeking a month-long sanctuary in Canggu, or a family looking for a beachfront estate in Uluwatu,
             TROVE STAY delivers properties that meet the highest standards of luxury and comfort.
           </p>
           <p>
-            Every home in our collection undergoes a rigorous vetting process, ensuring that the architecture, interior design, 
+            Every home in our collection undergoes a rigorous vetting process, ensuring that the architecture, interior design,
             and amenities reflect the modern, minimal, and premium aesthetic our global clients expect.
           </p>
         </div>
@@ -28,12 +28,12 @@ export default function About() {
 
       <div className={styles.editorialGrid} style={{ direction: 'rtl' }}>
         <div className={styles.imageBlock}>
-          <img src="https://images.unsplash.com/photo-1540518614846-7eded433c457?w=1200&q=80" alt="Beautiful details" />
+          <img src="" alt="Beautiful details" />
         </div>
         <div className={styles.textBlock} style={{ direction: 'ltr' }}>
           <h2>The TROVE STAY Standard</h2>
           <p>
-            It’s not just about a place to sleep; it’s about the experience. We believe in high-end glassmorphism seamlessly blended with 
+            It’s not just about a place to sleep; it’s about the experience. We believe in high-end glassmorphism seamlessly blended with
             natural stone and teakwood. We believe in soft shadows, abundant natural light, and the quiet luxury of a well-designed space.
           </p>
           <p>

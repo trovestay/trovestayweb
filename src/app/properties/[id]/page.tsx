@@ -46,7 +46,7 @@ export default function PropertyDetail({ params }: { params: Promise<{ id: strin
           category: 'Villa',
           status: data.status,
           isRented: data.is_rented,
-          imageUrl: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80',
+          imageUrl: '',
           listingType: data.listing_type,
           salePrice: data.sale_price,
           youtubeUrl: data.youtube_url,
@@ -73,10 +73,10 @@ export default function PropertyDetail({ params }: { params: Promise<{ id: strin
 
   const carouselImages = [
     property.imageUrl,
-    "https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80",
-    "https://images.unsplash.com/photo-1524758631624-e2822e304c36?w=800&q=80",
-    "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80",
-    "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&q=80"
+    "",
+    "",
+    "",
+    ""
   ];
 
   const getYoutubeId = (url: string) => {
