@@ -78,6 +78,7 @@ export default function AddProperty() {
     hasRooftop: false,
     category: 'Villa',
     imageUrl: '',
+    coverFile: null as File | null,
     images: [] as string[],
     status: 'published',
     isRented: false,
@@ -164,7 +165,7 @@ export default function AddProperty() {
     const file = e.target.files?.[0];
     if (file) {
       const url = URL.createObjectURL(file);
-      setForm(prev => ({ ...prev, imageUrl: url }));
+      setForm(prev => ({ ...prev, imageUrl: url, coverFile: file }));
     }
   };
 
@@ -309,6 +310,27 @@ export default function AddProperty() {
     setSaving(true);
     
     try {
+      let finalImageUrl = '';
+
+      if (form.coverFile) {
+        const fileExt = form.coverFile.name.split('.').pop();
+        const fileName = `${form.id}-${Date.now()}.${fileExt}`;
+
+        const { error: uploadError } = await supabase.storage
+          .from('properties')
+          .upload(fileName, form.coverFile);
+
+        if (uploadError) {
+          throw new Error('Image upload failed: ' + uploadError.message);
+        }
+
+        const { data: { publicUrl } } = supabase.storage
+          .from('properties')
+          .getPublicUrl(fileName);
+          
+        finalImageUrl = publicUrl;
+      }
+
       const result = await saveProperty({
         slug: form.id,
         title: form.title,
@@ -318,6 +340,7 @@ export default function AddProperty() {
         guests: Number(form.guests) || 0,
         area_sqm: Number(form.area) || 0,
         has_pool: form.hasPool,
+        image_url: finalImageUrl,
         listing_type: form.listingType,
         monthly_price: Number(form.price) || 0,
         yearly_price: Number(form.priceYearly) || 0,

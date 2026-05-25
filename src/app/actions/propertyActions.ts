@@ -45,7 +45,8 @@ export async function saveProperty(data: any) {
           campaign_label: data.campaign_label,
           campaign_title: data.campaign_title,
           campaign_theme: data.campaign_theme,
-          description: data.description
+          description: data.description,
+          image_url: data.image_url
         }
       ]);
 
@@ -89,7 +90,8 @@ export async function updateProperty(id: string, data: any) {
         campaign_label: data.campaign_label,
         campaign_title: data.campaign_title,
         campaign_theme: data.campaign_theme,
-        description: data.description
+        description: data.description,
+        image_url: data.image_url
       })
       .eq('slug', id);
 
