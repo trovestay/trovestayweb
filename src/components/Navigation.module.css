@@ -105,16 +105,45 @@
   color: var(--color-text-muted);
 }
 
-.filterBtn {
+.iconActionBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 36px;
   height: 36px;
-  background-color: var(--color-accent);
+  border-radius: 50%;
+  color: #8E8E93;
+  transition: all 0.2s;
+  background-color: transparent;
+}
+
+.iconActionBtn:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+  color: #111;
+  transform: scale(1.05);
+}
+
+.filterBtn {
+  width: 46px;
+  height: 46px;
+  background-color: #D4FF00; /* Vibrant lime/yellow green */
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  transition: transform var(--transition-fast);
+  transition: all var(--transition-fast);
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(212, 255, 0, 0.3); /* Subtle glow matching the vibe */
+}
+
+.filterBtn:hover {
+  transform: scale(1.05);
+}
+
+.filterBtn:active {
+  transform: scale(0.95);
 }
 
 .actionLink {

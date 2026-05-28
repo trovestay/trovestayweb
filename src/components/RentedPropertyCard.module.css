@@ -47,12 +47,10 @@
 .imageOverlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    to bottom,
-    rgba(12, 16, 21, 0.4) 0%,
-    rgba(12, 16, 21, 0) 40%,
-    rgba(12, 16, 21, 0.2) 100%
-  );
+  background: linear-gradient(to bottom,
+      rgba(12, 16, 21, 0.4) 0%,
+      rgba(12, 16, 21, 0) 40%,
+      rgba(12, 16, 21, 0.2) 100%);
   z-index: 1;
 }
 

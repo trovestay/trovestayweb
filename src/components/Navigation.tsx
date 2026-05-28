@@ -64,17 +64,17 @@ const Navigation = () => {
              </div>
              <input type="text" placeholder="Search spaces..." className={styles.searchInput} style={{marginLeft: '1rem'}} />
              
-             <div style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', marginRight: '0.5rem' }}>
-               <Link href="/locations" title="View Map" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '32px', height: '32px', borderRadius: '50%', color: '#8E8E93', transition: 'background-color 0.2s' }}>
-                 <MapPin size={18} />
+             <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginRight: '0.75rem' }}>
+               <Link href="/locations" title="View Map" className={styles.iconActionBtn}>
+                 <MapPin size={20} strokeWidth={2.25} />
                </Link>
-               <Link href="/saved" title="Saved Properties" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '32px', height: '32px', borderRadius: '50%', color: '#8E8E93', transition: 'background-color 0.2s' }}>
-                 <Bookmark size={18} />
+               <Link href="/saved" title="Saved Properties" className={styles.iconActionBtn}>
+                 <Bookmark size={20} strokeWidth={2.25} />
                </Link>
              </div>
 
              <button className={styles.filterBtn}>
-                <Search size={16} color="var(--color-primary)" />
+                <Search size={20} strokeWidth={2.5} color="#111" />
              </button>
           </div>
 
