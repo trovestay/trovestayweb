@@ -6,12 +6,14 @@ import { usePathname } from 'next/navigation';
 import { Home, Compass, Heart, User, Search, SlidersHorizontal, ChevronDown, Bell, MapPin, Bookmark, Globe } from 'lucide-react';
 import styles from './Navigation.module.css';
 import { useAppContext } from '../context/AppContext';
+import { useAuth } from '../context/AuthContext';
 import type { Currency } from '../context/AppContext';
 import type { Language } from '../i18n/translations';
 
 const Navigation = () => {
   const pathname = usePathname();
   const { language, setLanguage, currency, setCurrency, t } = useAppContext();
+  const { user } = useAuth();
 
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -42,9 +44,21 @@ const Navigation = () => {
       <header className={`${styles.desktopHeader} ${isScrolled ? styles.desktopHeaderScrolled : ''}`}>
         <div className={`container ${styles.desktopInner}`}>
           <div className={styles.headerLeftDesktop}>
-             <img src="/placeholder.jpg" alt="Profile" className={styles.topAvatarDesktop} />
+             {user ? (
+               <Link href="/profile" className={styles.avatarLink}>
+                 <div className={styles.topAvatarDesktopContainer}>
+                   <User size={20} color="#111" />
+                 </div>
+               </Link>
+             ) : (
+               <Link href="/login" className={styles.avatarLink}>
+                 <div className={styles.topAvatarDesktopContainer}>
+                   <User size={20} color="#111" />
+                 </div>
+               </Link>
+             )}
              <div className={styles.greetingBlockDesktop}>
-                <h2 className={styles.greetingTitleDesktop}>{mounted ? getGreeting() : 'Welcome'}, Alex</h2>
+                <h2 className={styles.greetingTitleDesktop}>{mounted ? getGreeting() : 'Welcome'}, {user ? user.email?.split('@')[0] || 'User' : 'Guest'}</h2>
                 {pathname === '/' && (
                   <div className={styles.locationPillDarkDesktop}>
                       <MapPin size={12} color="#D4F721" />

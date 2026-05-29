@@ -3,6 +3,7 @@ import './globals.css';
 import LayoutShell from '../components/LayoutShell';
 import PWAProvider from '../components/PWAProvider';
 import { AppProvider } from '../context/AppContext';
+import { AuthProvider } from '../context/AuthContext';
 
 export const viewport: Viewport = {
   themeColor: '#0c1015',
@@ -32,9 +33,11 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <PWAProvider>
-          <AppProvider>
-            <LayoutShell>{children}</LayoutShell>
-          </AppProvider>
+          <AuthProvider>
+            <AppProvider>
+              <LayoutShell>{children}</LayoutShell>
+            </AppProvider>
+          </AuthProvider>
         </PWAProvider>
       </body>
     </html>

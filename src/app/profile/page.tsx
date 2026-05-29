@@ -3,21 +3,24 @@
 import { useState } from 'react';
 import { usePWA } from '../../components/PWAProvider';
 import { User, Download, LogOut, ChevronRight, Home, Smartphone, Apple, Compass, Heart, Share, PlusSquare, X } from 'lucide-react';
+import { useAuth } from '../../context/AuthContext';
+import { useRouter } from 'next/navigation';
+import { supabase } from '../../lib/supabaseClient';
 import Link from 'next/link';
 import styles from './Profile.module.css';
-
 export default function ProfilePage() {
   const { canInstall, installPWA } = usePWA();
   const isInstalled = false; // Mocked as true if window.matchMedia('(display-mode: standalone)').matches
   const [showIosGuide, setShowIosGuide] = useState(false);
 
-  // Mock user data
-  const user = {
-    name: "Alexander Christopher",
-    email: "alexander@example.com",
-    avatarUrl: "/placeholder.jpg"
-  };
+  const { user, loading } = useAuth();
+  const router = useRouter();
 
+  // Redirect to login if not authenticated
+  if (!loading && !user) {
+    router.push('/login');
+    return null;
+  }
   const handleDownloadClick = () => {
     const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as any).MSStream;
     if (isIOS && !isInstalled) {
@@ -34,9 +37,11 @@ export default function ProfilePage() {
   return (
     <div className={styles.profileContainer}>
       <header className={styles.profileHeader}>
-        <img src={user.avatarUrl} alt={user.name} className={styles.avatarLarge} />
-        <h1 className={styles.userName}>{user.name}</h1>
-        <p className={styles.userEmail}>{user.email}</p>
+        <div className={styles.avatarContainerLarge}>
+          <User size={48} color="#111" />
+        </div>
+        <h1 className={styles.userName}>{user?.email?.split('@')[0] || 'User'}</h1>
+        <p className={styles.userEmail}>{user?.email}</p>
       </header>
 
       <div className={styles.profileContent}>
@@ -70,7 +75,13 @@ export default function ProfilePage() {
         
 
         
-        <button className={styles.logoutBtn}>
+        <button 
+          className={styles.logoutBtn} 
+          onClick={async () => {
+            await supabase.auth.signOut();
+            router.push('/login');
+          }}
+        >
           <LogOut size={20} color="#FF3B30" />
           <span>Log Out</span>
         </button>

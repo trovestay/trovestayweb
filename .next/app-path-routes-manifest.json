@@ -3,18 +3,18 @@
   "/about/page": "/about",
   "/blog/[id]/page": "/blog/[id]",
   "/contact/page": "/contact",
+  "/list-property/page": "/list-property",
   "/locations/page": "/locations",
+  "/page": "/",
   "/profile/page": "/profile",
   "/properties/[id]/page": "/properties/[id]",
   "/properties/page": "/properties",
   "/saved/page": "/saved",
-  "/list-property/page": "/list-property",
-  "/page": "/",
   "/admin/blogs/new/page": "/admin/blogs/new",
   "/admin/blogs/page": "/admin/blogs",
-  "/admin/page": "/admin",
   "/admin/properties/edit/[id]/page": "/admin/properties/edit/[id]",
-  "/admin/properties/new/page": "/admin/properties/new",
   "/admin/properties/page": "/admin/properties",
-  "/admin/settings/page": "/admin/settings"
+  "/admin/settings/page": "/admin/settings",
+  "/admin/properties/new/page": "/admin/properties/new",
+  "/admin/page": "/admin"
 }
