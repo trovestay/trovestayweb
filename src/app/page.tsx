@@ -289,7 +289,7 @@ export default function Home_Page() {
             <section className={styles.heroArea}>
               <div className={styles.campaignListWrapper}>
                 <div className={styles.campaignList}>
-                  {mockProperties.filter(p => p.isCampaign).map(campaign => (
+                  {properties.filter(p => p.isCampaign).map(campaign => (
                     <div key={campaign.id} className={`${styles.campaignCard} ${campaign.campaignTheme === 'dark' ? styles.campaignCardDark : styles.campaignCardLight}`}>
                       <Link href={`/properties/${campaign.id}`} style={{ width: '100%', height: '100%', position: 'absolute', zIndex: 10, cursor: 'pointer' }}></Link>
                       <img src={campaign.imageUrl} alt={campaign.campaignTitle?.replace('\n', ' ')} className={styles.campaignBg} loading="lazy" />
