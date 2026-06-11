@@ -1,49 +1,104 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import {
   Building2,
   TrendingUp,
   DollarSign,
-  Star,
+  Activity,
   Plus,
   ExternalLink,
   Download,
   ArrowUpRight,
   ArrowDownRight,
+  MapPin
 } from 'lucide-react';
 import Link from 'next/link';
-import { mockProperties } from '../../data/mockProperties';
+import { supabase } from '../../../lib/supabaseClient';
 import styles from './dashboard.module.css';
 
-const stats = [
-  {
-    label: 'Total Properties',
-    value: mockProperties.length.toString(),
-    change: '+2 this month',
-    trend: 'up',
-    icon: Building2,
-    gradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-  },
-  {
-    label: 'Active Listings',
-    value: mockProperties.length.toString(),
-    change: '100% active',
-    trend: 'up',
-    icon: TrendingUp,
-    gradient: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
-  },
-
-
-];
+interface PropertyData {
+  id: string;
+  title: string;
+  location: string;
+  price: number;
+  status: string;
+  imageUrl: string;
+  created_at: string;
+}
 
 export default function AdminDashboard() {
+  const [properties, setProperties] = useState<PropertyData[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchProperties = async () => {
+      setLoading(true);
+      const { data, error } = await supabase
+        .from('properties')
+        .select('*')
+        .order('created_at', { ascending: false });
+        
+      if (error) {
+        console.error('Error fetching properties:', error);
+      } else if (data) {
+        const mapped: PropertyData[] = data.map((row: any) => ({
+          id: row.slug || row.id,
+          title: row.title,
+          location: row.location_name || 'Bali, Indonesia',
+          price: Number(row.monthly_price) || 0,
+          status: row.status || 'Active',
+          imageUrl: row.image_url || '/placeholder.jpg',
+          created_at: row.created_at,
+        }));
+        setProperties(mapped);
+      }
+      setLoading(false);
+    };
+    
+    fetchProperties();
+  }, []);
+
+  const totalProperties = properties.length;
+  const activeProperties = properties.filter(p => p.status.toLowerCase() === 'published' || p.status.toLowerCase() === 'active').length;
+  const activePercentage = totalProperties > 0 ? Math.round((activeProperties / totalProperties) * 100) : 0;
+  
+  const avgPrice = totalProperties > 0 ? properties.reduce((acc, curr) => acc + curr.price, 0) / totalProperties : 0;
+
+  const stats = [
+    {
+      label: 'Total Properties',
+      value: loading ? '...' : totalProperties.toString(),
+      change: 'All time',
+      trend: 'up',
+      icon: Building2,
+      gradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+    },
+    {
+      label: 'Active Listings',
+      value: loading ? '...' : activeProperties.toString(),
+      change: `${activePercentage}% active`,
+      trend: 'up',
+      icon: Activity,
+      gradient: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+    },
+    {
+      label: 'Average Price / mo',
+      value: loading ? '...' : `Rp ${(avgPrice / 1000000).toFixed(1)}M`,
+      change: 'Market average',
+      trend: 'up',
+      icon: DollarSign,
+      gradient: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
+    }
+  ];
+
   return (
     <div className={styles.dashboard}>
       {/* Page Header */}
       <div className={styles.pageHeader}>
         <div>
-          <h1 className={styles.pageTitle}>Dashboard</h1>
-          <p className={styles.pageSubtitle}>Welcome back, Alex. Here&apos;s your property overview.</p>
+          <h1 className={styles.pageTitle}>Dashboard Overview</h1>
+          <p className={styles.pageSubtitle}>Welcome back. Here&apos;s your property performance at a glance.</p>
         </div>
         <div className={styles.headerActions}>
           <Link href="/admin/properties/new" className={styles.addBtn}>
@@ -95,37 +150,54 @@ export default function AdminDashboard() {
                   <th>Property</th>
                   <th className={styles.mobileHide}>Location</th>
                   <th>Price</th>
-
                   <th className={styles.mobileHide}>Status</th>
                 </tr>
               </thead>
               <tbody>
-                {mockProperties.slice(0, 5).map((property) => (
-                  <tr key={property.id}>
-                    <td>
-                      <div className={styles.propertyCell}>
-                        <div className={styles.imageWrap}>
-                          <img
-                            src={property.imageUrl}
-                            alt={property.title}
-                            className={styles.tableThumbnail}
-                          />
-                          <span className={styles.imageBadge}>TRV-{property.id}</span>
-                        </div>
-                        <div>
-                          <div className={styles.propertyName}>{property.title}</div>
-                          <div className={styles.propertyId}>TRV-{property.id}</div>
-                        </div>
-                      </div>
-                    </td>
-                    <td className={`${styles.locationCell} ${styles.mobileHide}`}>{property.location}</td>
-                    <td className={styles.priceCell}>Rp {property.price.toLocaleString('id-ID')}/mo</td>
-
-                    <td className={styles.mobileHide}>
-                      <span className={styles.statusBadge}>Active</span>
+                {loading ? (
+                  <tr>
+                    <td colSpan={4} style={{ textAlign: 'center', padding: '2rem', color: '#8e8e93' }}>
+                      Loading properties...
                     </td>
                   </tr>
-                ))}
+                ) : properties.length === 0 ? (
+                  <tr>
+                    <td colSpan={4} style={{ textAlign: 'center', padding: '2rem', color: '#8e8e93' }}>
+                      No properties found. Add one to get started.
+                    </td>
+                  </tr>
+                ) : (
+                  properties.slice(0, 5).map((property) => (
+                    <tr key={property.id}>
+                      <td>
+                        <div className={styles.propertyCell}>
+                          <div className={styles.imageWrap}>
+                            <img
+                              src={property.imageUrl}
+                              alt={property.title}
+                              className={styles.tableThumbnail}
+                            />
+                            <span className={styles.imageBadge}>TRV</span>
+                          </div>
+                          <div>
+                            <div className={styles.propertyName}>{property.title}</div>
+                            <div className={styles.propertyId}>ID: {property.id.substring(0,8)}...</div>
+                          </div>
+                        </div>
+                      </td>
+                      <td className={`${styles.locationCell} ${styles.mobileHide}`}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '4px', color: '#555' }}>
+                          <MapPin size={12} color="#8e8e93" />
+                          {property.location}
+                        </div>
+                      </td>
+                      <td className={styles.priceCell}>Rp {property.price.toLocaleString('id-ID')}</td>
+                      <td className={styles.mobileHide}>
+                        <span className={styles.statusBadge}>{property.status}</span>
+                      </td>
+                    </tr>
+                  ))
+                )}
               </tbody>
             </table>
           </div>
