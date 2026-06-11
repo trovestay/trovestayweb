@@ -14,7 +14,7 @@ import {
   MapPin
 } from 'lucide-react';
 import Link from 'next/link';
-import { supabase } from '../../../lib/supabaseClient';
+import { supabase } from '../../lib/supabaseClient';
 import styles from './dashboard.module.css';
 
 interface PropertyData {
