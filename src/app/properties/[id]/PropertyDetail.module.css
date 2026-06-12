@@ -956,7 +956,8 @@
 @media (min-width: 1024px) {
   .mobileStickyBottom {
     bottom: 2rem;
-    left: 2rem;
+    left: 50%;
+    transform: translateX(calc(-50% - 210px));
     width: auto;
     min-width: 450px;
     padding: 1rem 1.5rem;
@@ -1226,34 +1227,43 @@
 }
 
 /* Sticky bottom bar styles are now defined earlier in this file for both mobile and desktop */
-@media (max-width: 1023px) {
-  
-  .mobileStickyPrice {
-    display: flex;
-    flex-direction: row;
-    align-items: baseline;
-    gap: 0.25rem;
-  }
-  
-  .mobileStickyPrice strong {
-    font-size: 1.05rem;
-    font-weight: 800;
-    color: #111;
-  }
-  
-  .mobileStickyPrice span {
-    font-size: 0.75rem;
-    color: #666;
-    font-weight: 500;
-  }
-  
-  .mobileStickyBtn {
-    background: #D4FF00;
-    color: #111;
-    border: none;
-    padding: 0.75rem 1.25rem;
-    border-radius: 12px;
-    font-weight: 700;
-    font-size: 0.95rem;
-  }
+
+.mobileStickyPrice {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  gap: 0.25rem;
+}
+
+.mobileStickyPrice strong {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #111;
+}
+
+.mobileStickyPrice span {
+  font-size: 0.75rem;
+  color: #666;
+  font-weight: 500;
+}
+
+.mobileStickyBtn {
+  background: var(--color-primary, #D4FF00);
+  color: #111;
+  border: none;
+  padding: 0.75rem 1.25rem;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.mobileStickyBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(212, 255, 0, 0.4);
+}
+
+.mobileStickyBtn:active {
+  transform: translateY(0);
 }

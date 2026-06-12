@@ -402,18 +402,28 @@ export default function PropertyDetail({ params }: { params: Promise<{ id: strin
           <div className={styles.mobileSpacer}></div>
         </div>
 
-        {/* Right Column (Desktop Sticky Booking Widget) */}
+        {/* Right Column (Desktop Sidebar Similar Properties) */}
         <div className={styles.rightColumn}>
-           <div className={styles.stickyWidget}>
-               
-               {/* Booking Widget features moved to floating bottom bar */}
-               {/* Sidebar Similar Properties (Up Next) */}
-               <div className={styles.sidebarSimilarList} style={{ display: 'none' /* Will be unhidden via css for desktop */ }}>
-                  <h3 className={styles.sidebarSimilarTitle}>Similar Properties</h3>
-                  {mockProperties.filter(p => p.id !== property.id).slice(0, 4).map(similarProperty => (
-                     <PropertyCard key={similarProperty.id} property={similarProperty} />
-                  ))}
-               </div>
+           <div className={styles.sidebarSimilarList} style={{ display: 'none' /* Will be unhidden via css for desktop */ }}>
+              <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '0.5rem' }}>
+                 <div className={styles.billingToggle}>
+                    <button 
+                      className={billingCycle === 'monthly' ? styles.toggleBtnActive : styles.toggleBtn}
+                      onClick={() => setBillingCycle('monthly')}
+                    >
+                      Monthly
+                    </button>
+                    <button 
+                      className={billingCycle === 'yearly' ? styles.toggleBtnActive : styles.toggleBtn}
+                      onClick={() => setBillingCycle('yearly')}
+                    >
+                      Yearly
+                    </button>
+                 </div>
+              </div>
+              {mockProperties.filter(p => p.id !== property.id).slice(0, 4).map(similarProperty => (
+                 <PropertyCard key={similarProperty.id} property={similarProperty} />
+              ))}
            </div>
         </div>
       </main>
