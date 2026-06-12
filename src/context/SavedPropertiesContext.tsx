@@ -12,6 +12,7 @@ const SavedPropertiesContext = createContext<SavedPropertiesContextType | undefi
 
 export function SavedPropertiesProvider({ children }: { children: React.ReactNode }) {
   const [savedIds, setSavedIds] = useState<string[]>([]);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   // Load from localStorage on mount
   useEffect(() => {
@@ -23,16 +24,18 @@ export function SavedPropertiesProvider({ children }: { children: React.ReactNod
     } catch (e) {
       console.error('Failed to load saved properties from localStorage', e);
     }
+    setIsLoaded(true);
   }, []);
 
   // Save to localStorage whenever savedIds changes
   useEffect(() => {
+    if (!isLoaded) return;
     try {
       localStorage.setItem('trovestay_saved_properties', JSON.stringify(savedIds));
     } catch (e) {
       console.error('Failed to save properties to localStorage', e);
     }
-  }, [savedIds]);
+  }, [savedIds, isLoaded]);
 
   const toggleSave = (id: string) => {
     setSavedIds(prev => 
