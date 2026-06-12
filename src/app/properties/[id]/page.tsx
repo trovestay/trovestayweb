@@ -405,7 +405,8 @@ export default function PropertyDetail({ params }: { params: Promise<{ id: strin
         {/* Right Column (Desktop Sidebar Similar Properties) */}
         <div className={styles.rightColumn}>
            <div className={styles.sidebarSimilarList} style={{ display: 'none' /* Will be unhidden via css for desktop */ }}>
-              <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '0.5rem' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
+                 <h3 className={styles.sidebarSimilarTitle} style={{ margin: 0 }}>Similar Properties</h3>
                  <div className={styles.billingToggle}>
                     <button 
                       className={billingCycle === 'monthly' ? styles.toggleBtnActive : styles.toggleBtn}
