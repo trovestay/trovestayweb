@@ -66,8 +66,8 @@ export default function AdminDashboard() {
       {/* Page Header */}
       <div className={styles.pageHeader}>
         <div>
-          <h1 className={styles.pageTitle}>Dashboard Overview</h1>
-          <p className={styles.pageSubtitle}>Welcome back. Here&apos;s your property performance at a glance.</p>
+          <h1 className={styles.pageTitle}>Properties</h1>
+          <p className={styles.pageSubtitle}>Manage your property listings.</p>
         </div>
         <div className={styles.headerActions}>
           <Link href="/admin/properties/new" className={styles.addBtn}>
