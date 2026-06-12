@@ -60,37 +60,6 @@ export default function AdminDashboard() {
   }, []);
 
   const totalProperties = properties.length;
-  const activeProperties = properties.filter(p => p.status.toLowerCase() === 'published' || p.status.toLowerCase() === 'active').length;
-  const activePercentage = totalProperties > 0 ? Math.round((activeProperties / totalProperties) * 100) : 0;
-  
-  const avgPrice = totalProperties > 0 ? properties.reduce((acc, curr) => acc + curr.price, 0) / totalProperties : 0;
-
-  const stats = [
-    {
-      label: 'Total Properties',
-      value: loading ? '...' : totalProperties.toString(),
-      change: 'All time',
-      trend: 'up',
-      icon: Building2,
-      gradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-    },
-    {
-      label: 'Active Listings',
-      value: loading ? '...' : activeProperties.toString(),
-      change: `${activePercentage}% active`,
-      trend: 'up',
-      icon: Activity,
-      gradient: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
-    },
-    {
-      label: 'Average Price / mo',
-      value: loading ? '...' : `Rp ${(avgPrice / 1000000).toFixed(1)}M`,
-      change: 'Market average',
-      trend: 'up',
-      icon: DollarSign,
-      gradient: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
-    }
-  ];
 
   return (
     <div className={styles.dashboard}>
@@ -108,30 +77,6 @@ export default function AdminDashboard() {
         </div>
       </div>
 
-      {/* Stats Grid */}
-      <div className={styles.statsGrid}>
-        {stats.map((stat) => {
-          const Icon = stat.icon;
-          return (
-            <div key={stat.label} className={styles.statCard}>
-              <div className={styles.statTop}>
-                <div
-                  className={styles.statIconWrap}
-                  style={{ background: stat.gradient }}
-                >
-                  <Icon size={20} color="#fff" />
-                </div>
-                <div className={`${styles.statTrend} ${stat.trend === 'up' ? styles.trendUp : styles.trendDown}`}>
-                  {stat.trend === 'up' ? <ArrowUpRight size={14} /> : <ArrowDownRight size={14} />}
-                  <span>{stat.change}</span>
-                </div>
-              </div>
-              <div className={styles.statValue}>{stat.value}</div>
-              <div className={styles.statLabel}>{stat.label}</div>
-            </div>
-          );
-        })}
-      </div>
 
       {/* Recent Properties + Quick Actions */}
       <div className={styles.bottomGrid}>

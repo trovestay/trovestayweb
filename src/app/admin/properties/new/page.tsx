@@ -62,6 +62,7 @@ const STANDARD_EXCLUSIONS = [
 export default function AddProperty() {
   const router = useRouter();
   const [idError, setIdError] = useState('');
+  const [activeTab, setActiveTab] = useState<'basic' | 'features' | 'media' | 'contact'>('basic');
   
   const [form, setForm] = useState({
     id: '',
@@ -383,8 +384,29 @@ export default function AddProperty() {
         </p>
       </div>
 
+      <div className={styles.tabsContainer}>
+        {[
+          { id: 'basic', label: 'Basic Info', icon: Info },
+          { id: 'features', label: 'Features', icon: Star },
+          { id: 'media', label: 'Media', icon: ImageIcon },
+          { id: 'contact', label: 'Contact', icon: UserCheck }
+        ].map(tab => (
+          <button
+            key={tab.id}
+            type="button"
+            className={`${styles.tabButton} ${activeTab === tab.id ? styles.tabButtonActive : ''}`}
+            onClick={() => setActiveTab(tab.id as any)}
+          >
+            <tab.icon size={16} />
+            <span>{tab.label}</span>
+          </button>
+        ))}
+      </div>
+
       <form onSubmit={handleSubmit} className={styles.formCard}>
         {/* Listing Status & Basic Info */}
+        {activeTab === 'basic' && (
+          <div className={styles.tabContentFade}>
             <div className={styles.section}>
               <h2 className={styles.sectionTitle}>Listing Status & ID</h2>
               <div className={styles.fieldGrid}>
@@ -714,8 +736,12 @@ export default function AddProperty() {
                 </div>
               </div>
             </div>
+          </div>
+        )}
 
         {/* Features */}
+        {activeTab === 'features' && (
+          <div className={styles.tabContentFade}>
             {renderFeatureSection('Amenities', 'Select all features available at this property.', STANDARD_AMENITIES, 'amenities')}
             {renderFeatureSection('Inclusions', 'Select services included in the rent.', STANDARD_INCLUSIONS, 'inclusions')}
             {renderFeatureSection('Exclusions', 'Select items explicitly NOT included in the rent.', STANDARD_EXCLUSIONS, 'exclusions')}
@@ -793,8 +819,12 @@ export default function AddProperty() {
                 </div>
               )}
             </div>
+          </div>
+        )}
 
         {/* Contact Info */}
+        {activeTab === 'contact' && (
+          <div className={styles.tabContentFade}>
           <div className={styles.section}>
             <h2 className={styles.sectionTitle}>Contact Information</h2>
             
@@ -883,31 +913,39 @@ export default function AddProperty() {
               </div>
             </div>
           </div>
+          </div>
+        )}
 
+        {/* Property Images */}
+        {activeTab === 'media' && (
+          <div className={styles.tabContentFade}>
           <div className={styles.section}>
             <h2 className={styles.sectionTitle}>Property Images</h2>
             
             <div className={styles.fieldFull}>
               <label className={styles.label}>Cover Image</label>
-              <div style={{ padding: '0 1.25rem 1.25rem' }}>
-                <label className={styles.uploadDropzone} style={{ margin: 0 }}>
-                  <input 
-                    type="file" 
-                    accept="image/*" 
-                    onChange={handleCoverImageUpload} 
-                  />
-                  <Upload className={styles.uploadIcon} size={28} />
-                  <span className={styles.uploadText}>Click to upload cover</span>
-                  <span className={styles.uploadSubtext}>Recommended size: 1920x1080px</span>
-                </label>
+              <div className={styles.imageCardContainer}>
+                {form.imageUrl ? (
+                  <div className={styles.coverPreviewCard}>
+                    <img src={form.imageUrl} alt="Cover Preview" className={styles.coverPreviewImg} />
+                    <label className={styles.changeCoverOverlay}>
+                      <input type="file" accept="image/*" onChange={handleCoverImageUpload} />
+                      <Upload size={18} />
+                      <span>Change Cover</span>
+                    </label>
+                  </div>
+                ) : (
+                  <label className={styles.simpleUploadCard}>
+                    <input type="file" accept="image/*" onChange={handleCoverImageUpload} />
+                    <div className={styles.uploadContent}>
+                      <div className={styles.uploadIconCircle}><ImageIcon size={24} /></div>
+                      <div className={styles.uploadText}>Click to upload cover image</div>
+                      <div className={styles.uploadSubtext}>1920x1080px recommended</div>
+                    </div>
+                  </label>
+                )}
               </div>
             </div>
-
-            {form.imageUrl && (
-              <div className={styles.imagePreview}>
-                <img src={form.imageUrl} alt="Cover Preview" className={styles.previewImg} />
-              </div>
-            )}
 
             <div className={styles.fieldFull}>
               <label className={styles.label}>YouTube Video URL (Optional)</label>
@@ -927,42 +965,33 @@ export default function AddProperty() {
             </div>
 
             <div className={styles.fieldFull}>
-              <label className={styles.label}>Gallery Images (Max 10)</label>
-              <div style={{ padding: '0 1.25rem 1.25rem' }}>
-                <label className={styles.uploadDropzone} style={{ margin: 0 }}>
-                  <input 
-                    type="file" 
-                    accept="image/*" 
-                    multiple 
-                    onChange={handleGalleryImageUpload}
-                    disabled={form.images.length >= 10}
-                  />
-                  <ImageIcon className={styles.uploadIcon} size={28} />
-                  <span className={styles.uploadText}>
-                    {form.images.length >= 10 ? 'Maximum 10 images reached' : 'Click to upload gallery images'}
-                  </span>
-                  <span className={styles.uploadSubtext}>Upload up to {10 - form.images.length} more</span>
-                </label>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
+                <label className={styles.label} style={{ margin: 0 }}>Gallery Images</label>
+                <span className={styles.imageCounter}>{form.images.length} / 10</span>
               </div>
-            </div>
-
-            {form.images.length > 0 && (
-              <div className={styles.imageThumbnailGrid}>
+              
+              <div className={styles.galleryGridContainer}>
                 {form.images.map((img, idx) => (
-                  <div key={idx} className={styles.thumbnailItem}>
-                    <img src={img} alt={`Gallery ${idx}`} className={styles.thumbnailImg} />
-                    <button 
-                      type="button" 
-                      className={styles.removeImageBtn} 
-                      onClick={() => removeGalleryImage(idx)}
-                    >
+                  <div key={idx} className={styles.galleryItemCard}>
+                    <img src={img} alt={`Gallery ${idx}`} className={styles.galleryImg} />
+                    <button type="button" className={styles.removeGalleryBtn} onClick={() => removeGalleryImage(idx)}>
                       <X size={14} />
                     </button>
                   </div>
                 ))}
+                
+                {form.images.length < 10 && (
+                  <label className={styles.galleryUploadCard}>
+                    <input type="file" accept="image/*" multiple onChange={handleGalleryImageUpload} />
+                    <Plus size={24} color="#b0b0b5" />
+                    <span className={styles.galleryUploadText}>Add Photo</span>
+                  </label>
+                )}
               </div>
-            )}
+            </div>
           </div>
+          </div>
+        )}
 
         <div className={styles.formActions}>
           <Link href="/admin/properties" className={styles.cancelBtn}>
