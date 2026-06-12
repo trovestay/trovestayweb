@@ -411,7 +411,7 @@ export default function PropertyDetail({ params }: { params: Promise<{ id: strin
                <div className={styles.sidebarSimilarList} style={{ display: 'none' /* Will be unhidden via css for desktop */ }}>
                   <h3 className={styles.sidebarSimilarTitle}>Similar Properties</h3>
                   {mockProperties.filter(p => p.id !== property.id).slice(0, 4).map(similarProperty => (
-                     <SmallPropertyCard key={similarProperty.id} property={similarProperty} rentalPeriod={billingCycle} />
+                     <PropertyCard key={similarProperty.id} property={similarProperty} />
                   ))}
                </div>
            </div>
