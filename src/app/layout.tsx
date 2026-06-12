@@ -4,6 +4,7 @@ import LayoutShell from '../components/LayoutShell';
 import PWAProvider from '../components/PWAProvider';
 import { AppProvider } from '../context/AppContext';
 import { AuthProvider } from '../context/AuthContext';
+import { SavedPropertiesProvider } from '../context/SavedPropertiesContext';
 
 export const viewport: Viewport = {
   themeColor: '#0c1015',
@@ -35,7 +36,9 @@ export default function RootLayout({
         <PWAProvider>
           <AuthProvider>
             <AppProvider>
-              <LayoutShell>{children}</LayoutShell>
+              <SavedPropertiesProvider>
+                <LayoutShell>{children}</LayoutShell>
+              </SavedPropertiesProvider>
             </AppProvider>
           </AuthProvider>
         </PWAProvider>

@@ -4,12 +4,12 @@ import Link from 'next/link';
 import { Bookmark, MapPin } from 'lucide-react';
 import styles from './SmallPropertyCard.module.css';
 import type { Property } from '../data/mockProperties';
-import { useState } from 'react';
 import { useAppContext } from '../context/AppContext';
+import { useSavedProperties } from '../context/SavedPropertiesContext';
 
 export default function SmallPropertyCard({ property, rentalPeriod = 'monthly' }: { property: Property, rentalPeriod?: 'monthly' | 'yearly' }) {
   const { t, formatPrice } = useAppContext();
-  const [isSaved, setIsSaved] = useState(false);
+  const { isSaved, toggleSave } = useSavedProperties();
   const displayPrice = rentalPeriod === 'yearly' ? property.price * 11 : property.price;
   const displayUnit = rentalPeriod === 'yearly' ? t('yearly') : t('monthly');
 
@@ -19,10 +19,10 @@ export default function SmallPropertyCard({ property, rentalPeriod = 'monthly' }
         <div className={styles.imageBox}>
            <img src={property.imageUrl} alt={property.title} className={styles.image} loading="lazy" />
            <button 
-             className={`${styles.bookmarkBtn} ${isSaved ? styles.bookmarkBtnSaved : ''}`} 
-             onClick={(e) => { e.preventDefault(); setIsSaved(!isSaved); }}
+             className={`${styles.bookmarkBtn} ${isSaved(property.id) ? styles.bookmarkBtnSaved : ''}`} 
+             onClick={(e) => { e.preventDefault(); toggleSave(property.id); }}
            >
-              <Bookmark size={14} fill={isSaved ? '#111' : 'transparent'} color={isSaved ? '#111' : '#fff'} strokeWidth={isSaved ? 0 : 2} />
+              <Bookmark size={14} fill={isSaved(property.id) ? '#111' : 'transparent'} color={isSaved(property.id) ? '#111' : '#fff'} strokeWidth={isSaved(property.id) ? 0 : 2} />
            </button>
         </div>
         <div className={styles.contentBox}>

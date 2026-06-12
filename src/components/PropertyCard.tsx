@@ -6,10 +6,11 @@ import { useState } from 'react';
 import styles from './PropertyCard.module.css';
 import type { Property } from '../data/mockProperties';
 import { useAppContext } from '../context/AppContext';
+import { useSavedProperties } from '../context/SavedPropertiesContext';
 
 export default function PropertyCard({ property, rentalPeriod = 'monthly' }: { property: Property, rentalPeriod?: 'monthly' | 'yearly' }) {
   const { t, formatPrice } = useAppContext();
-  const [isSaved, setIsSaved] = useState(false);
+  const { isSaved, toggleSave } = useSavedProperties();
   const displayPrice = rentalPeriod === 'yearly' ? property.price * 11 : property.price;
   const displayUnit = rentalPeriod === 'yearly' ? t('yearly') : t('monthly');
 
@@ -26,10 +27,10 @@ export default function PropertyCard({ property, rentalPeriod = 'monthly' }: { p
           </div>
           
           <button 
-            className={`${styles.bookmarkBtn} ${isSaved ? styles.bookmarkBtnSaved : ''}`} 
-            onClick={(e) => { e.preventDefault(); setIsSaved(!isSaved); }}
+            className={`${styles.bookmarkBtn} ${isSaved(property.id) ? styles.bookmarkBtnSaved : ''}`} 
+            onClick={(e) => { e.preventDefault(); toggleSave(property.id); }}
           >
-             <Bookmark size={16} fill={isSaved ? '#111' : 'transparent'} color={isSaved ? '#111' : '#fff'} strokeWidth={isSaved ? 0 : 2} />
+             <Bookmark size={16} fill={isSaved(property.id) ? '#111' : 'transparent'} color={isSaved(property.id) ? '#111' : '#fff'} strokeWidth={isSaved(property.id) ? 0 : 2} />
           </button>
         </div>
 

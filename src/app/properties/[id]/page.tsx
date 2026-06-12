@@ -12,9 +12,11 @@ import SmallPropertyCard from '../../../components/SmallPropertyCard';
 import styles from './PropertyDetail.module.css';
 import { notFound } from 'next/navigation';
 import { useAppContext } from '../../../context/AppContext';
+import { useSavedProperties } from '../../../context/SavedPropertiesContext';
 
 export default function PropertyDetail({ params }: { params: Promise<{ id: string }> }) {
   const { t, formatPrice, currency } = useAppContext();
+  const { isSaved, toggleSave } = useSavedProperties();
   const resolvedParams = use(params);
   const [property, setProperty] = useState<Property | null>(null);
   const [loading, setLoading] = useState(true);
@@ -98,8 +100,8 @@ export default function PropertyDetail({ params }: { params: Promise<{ id: strin
         <Link href="/" className={styles.iconBtn}>
            <ArrowLeft size={20} color="var(--color-primary)" />
         </Link>
-        <button className={styles.iconBtn}>
-           <Bookmark size={20} color="var(--color-primary)" fill="transparent" />
+        <button className={styles.iconBtn} onClick={() => toggleSave(property.id)}>
+           <Bookmark size={20} color={isSaved(property.id) ? '#111' : "var(--color-primary)"} fill={isSaved(property.id) ? '#111' : "transparent"} strokeWidth={isSaved(property.id) ? 0 : 2} />
         </button>
       </header>
 

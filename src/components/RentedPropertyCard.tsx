@@ -2,13 +2,14 @@
 
 import { Bookmark, Star, ArrowRight, Bed, Bath, Waves, Maximize, CalendarClock } from 'lucide-react';
 import Link from 'next/link';
-import { useState } from 'react';
 import styles from './RentedPropertyCard.module.css';
 import type { Property } from '../data/mockProperties';
 import { useAppContext } from '../context/AppContext';
+import { useSavedProperties } from '../context/SavedPropertiesContext';
 
 export default function RentedPropertyCard({ property, rentalPeriod = 'monthly' }: { property: Property, rentalPeriod?: 'monthly' | 'yearly' }) {
   const { t, formatPrice } = useAppContext();
+  const { isSaved, toggleSave } = useSavedProperties();
   const availableMonth = property.availableFrom || 'Soon';
   const displayPrice = rentalPeriod === 'yearly' ? property.price * 11 : property.price;
   const displayUnit = rentalPeriod === 'yearly' ? t('yearly') : t('monthly');
@@ -41,6 +42,13 @@ export default function RentedPropertyCard({ property, rentalPeriod = 'monthly' 
                <span className={styles.featureDot}>•</span>
                <span className={styles.propertyCode}>ID: TRV-{property.id}</span>
             </div>
+            
+            <button 
+              className={`${styles.bookmarkBtn} ${isSaved(property.id) ? styles.bookmarkBtnSaved : ''}`} 
+              onClick={(e) => { e.preventDefault(); toggleSave(property.id); }}
+            >
+               <Bookmark size={16} fill={isSaved(property.id) ? '#111' : 'transparent'} color={isSaved(property.id) ? '#111' : '#fff'} strokeWidth={isSaved(property.id) ? 0 : 2} />
+            </button>
           </div>
         </div>
       </Link>
