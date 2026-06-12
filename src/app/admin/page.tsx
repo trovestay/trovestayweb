@@ -185,31 +185,7 @@ export default function AdminDashboard() {
             </div>
           </div>
 
-          {/* Recent Inquiries */}
-          <div className={styles.card}>
-            <div className={styles.cardHeader}>
-              <h2 className={styles.cardTitle}>Recent Inquiries</h2>
-              <Link href="/admin/inquiries" className={styles.viewAllLink}>
-                View All <ArrowUpRight size={14} />
-              </Link>
-            </div>
-            <div className={styles.inquiryList}>
-              {[
-                { name: 'Sarah Jenkins', time: '2 hours ago', prop: 'The Glass House Villa' },
-                { name: 'Michael Chen', time: '5 hours ago', prop: 'Ocean View Penthouse' },
-                { name: 'Emma Watson', time: '1 day ago', prop: 'Tropical Modernist Haven' },
-              ].map((inq, i) => (
-                <div key={i} className={styles.inquiryItem}>
-                  <div className={styles.inquiryAvatar}>{inq.name.charAt(0)}</div>
-                  <div className={styles.inquiryInfo}>
-                    <div className={styles.inquiryName}>{inq.name}</div>
-                    <div className={styles.inquiryMeta}>{inq.prop}</div>
-                  </div>
-                  <div className={styles.inquiryTime}>{inq.time}</div>
-                </div>
-              ))}
-            </div>
-          </div>
+
         </div>
       </div>
     </div>

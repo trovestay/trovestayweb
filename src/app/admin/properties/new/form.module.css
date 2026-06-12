@@ -100,10 +100,14 @@
 }
 
 .tabButtonActive {
-  background: #1a1a1a;
-  border-color: #1a1a1a;
-  color: #fff;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  background: linear-gradient(135deg, #D4F721, #b8d91a);
+  border-color: #b8d91a;
+  color: #0c1015 !important;
+  box-shadow: 0 4px 12px rgba(212, 247, 33, 0.2);
+}
+
+.tabButtonActive svg {
+  color: #0c1015 !important;
 }
 
 .tabContentFade {
