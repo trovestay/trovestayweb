@@ -35,78 +35,38 @@
   font-size: 1rem;
 }
 
-.form {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
-
-.inputGroup {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.label {
-  font-size: 0.9rem;
+.googleBtn {
+  width: 100%;
+  padding: 0.85rem;
+  background-color: #fff;
+  color: #3c4043;
+  border: 1px solid #dadce0;
+  border-radius: 4px;
+  font-size: 1rem;
   font-weight: 500;
-  color: var(--color-text-secondary);
-}
-
-.inputWrapper {
-  position: relative;
+  cursor: pointer;
   display: flex;
   align-items: center;
+  justify-content: center;
+  margin-top: 1.5rem;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+  font-family: "Google Sans", arial, sans-serif;
+  letter-spacing: 0.25px;
 }
 
-.icon {
-  position: absolute;
-  left: 1rem;
-  color: var(--color-text-secondary);
+.googleBtn:hover {
+  background-color: #f8f9fa;
+  box-shadow: 0 1px 2px 0 rgba(60,64,67,0.30), 0 1px 3px 1px rgba(60,64,67,0.15);
 }
 
-.input {
-  width: 100%;
-  padding: 1rem 1rem 1rem 3rem;
-  background-color: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
-  color: var(--color-text);
-  font-size: 1rem;
-  transition: all 0.2s ease;
+.googleBtn:active {
+  background-color: #f1f3f4;
 }
 
-.input:focus {
-  outline: none;
-  border-color: var(--color-primary);
-  background-color: rgba(255, 255, 255, 0.05);
-}
-
-.submitBtn {
-  width: 100%;
-  padding: 1.1rem;
-  background-color: var(--color-primary);
-  color: #111;
-  border: none;
-  border-radius: 12px;
-  font-size: 1.05rem;
-  font-weight: 600;
-  cursor: pointer;
-  margin-top: 1rem;
-  transition: opacity 0.2s ease, transform 0.1s ease;
-}
-
-.submitBtn:hover {
-  opacity: 0.9;
-}
-
-.submitBtn:active {
-  transform: scale(0.98);
-}
-
-.submitBtn:disabled {
-  opacity: 0.5;
+.googleBtn:disabled {
+  opacity: 0.6;
   cursor: not-allowed;
+  box-shadow: none;
 }
 
 .error {
@@ -117,25 +77,4 @@
   font-size: 0.9rem;
   text-align: center;
   margin-bottom: 1rem;
-}
-
-.toggleText {
-  text-align: center;
-  margin-top: 2rem;
-  color: var(--color-text-secondary);
-  font-size: 0.95rem;
-}
-
-.toggleBtn {
-  background: none;
-  border: none;
-  color: var(--color-primary);
-  font-weight: 600;
-  cursor: pointer;
-  margin-left: 0.5rem;
-  font-size: inherit;
-}
-
-.toggleBtn:hover {
-  text-decoration: underline;
 }
