@@ -2,12 +2,13 @@
 
 import { use, useState, useEffect } from 'react';
 import Link from 'next/link';
-import { ArrowLeft, Bookmark, Star, MapPin, Compass, Bed, Bath, Waves, Maximize, Users, ChevronDown, Tag, Clock, Mail, ShieldCheck, UserCheck, CalendarClock, Wifi, Coffee, Car, ShieldAlert, CheckCircle, Info, Sparkles, MessageCircle, Phone, Video, Zap, Trees, Wrench, Bug, Landmark } from 'lucide-react';
+import { ArrowLeft, Bookmark, Star, MapPin, Compass, Bed, Bath, Waves, Maximize, Users, ChevronDown, Tag, Clock, Mail, ShieldCheck, UserCheck, CalendarClock, Wifi, Coffee, Car, ShieldAlert, CheckCircle, Info, Sparkles, MessageCircle, Phone, Video, Zap, Trees, Wrench, Bug, Landmark, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Property, mockProperties } from '../../../data/mockProperties';
 import { supabase } from '../../../lib/supabaseClient';
 import BookingFlowModal from '../../../components/BookingFlowModal';
 import Map from '../../../components/Map';
 import PropertyCard from '../../../components/PropertyCard';
+import SmallPropertyCard from '../../../components/SmallPropertyCard';
 import styles from './PropertyDetail.module.css';
 import { notFound } from 'next/navigation';
 import { useAppContext } from '../../../context/AppContext';
@@ -21,6 +22,7 @@ export default function PropertyDetail({ params }: { params: Promise<{ id: strin
   const [isDescExpanded, setIsDescExpanded] = useState(false);
   const [isAmenitiesExpanded, setIsAmenitiesExpanded] = useState(false);
   const [billingCycle, setBillingCycle] = useState<'monthly' | 'yearly'>('monthly');
+  const [currentMediaIndex, setCurrentMediaIndex] = useState(0);
 
   useEffect(() => {
     const fetchProperty = async () => {
@@ -122,36 +124,6 @@ export default function PropertyDetail({ params }: { params: Promise<{ id: strin
                  )
                ))}
             </div>
-
-            {/* Desktop Photo Grid */}
-            <div className={styles.desktopPhotoGrid}>
-              <div className={`${styles.gridImgWrapper} ${styles.gridHero}`}>
-                {videoId ? (
-                   <iframe 
-                     src={`https://www.youtube.com/embed/${videoId}?autoplay=0&rel=0`}
-                     title="YouTube video player"
-                     frameBorder="0"
-                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                     allowFullScreen
-                     style={{ width: '100%', height: '100%', position: 'absolute', top: 0, left: 0, borderRadius: '24px 0 0 24px' }}
-                   ></iframe>
-                ) : (
-                  <img src={carouselImages[0]} alt="Hero" className={styles.gridImg} />
-                )}
-              </div>
-              <div className={styles.gridImgWrapper}>
-                <img src={carouselImages[1]} alt="Gallery 1" className={styles.gridImg} />
-              </div>
-              <div className={styles.gridImgWrapper}>
-                <img src={carouselImages[2]} alt="Gallery 2" className={styles.gridImg} style={{ borderTopRightRadius: '24px' }} />
-              </div>
-              <div className={styles.gridImgWrapper}>
-                <img src={carouselImages[3]} alt="Gallery 3" className={styles.gridImg} />
-              </div>
-              <div className={styles.gridImgWrapper}>
-                <img src={carouselImages[4]} alt="Gallery 4" className={styles.gridImg} style={{ borderBottomRightRadius: '24px' }} />
-              </div>
-            </div>
          </div>
       </div>
 
@@ -159,6 +131,35 @@ export default function PropertyDetail({ params }: { params: Promise<{ id: strin
         
         {/* Left Column (Content) */}
         <div className={styles.leftColumn}>
+
+          {/* Desktop Media Player (YouTube Style) */}
+          <div className={styles.desktopMediaContainer}>
+             <button 
+               className={`${styles.mediaNavBtn} ${styles.mediaNavLeft}`}
+               onClick={() => setCurrentMediaIndex((prev) => (prev === 0 ? carouselImages.length - 1 : prev - 1))}
+             >
+               <ChevronLeft size={24} color="#111" />
+             </button>
+             <button 
+               className={`${styles.mediaNavBtn} ${styles.mediaNavRight}`}
+               onClick={() => setCurrentMediaIndex((prev) => (prev === carouselImages.length - 1 ? 0 : prev + 1))}
+             >
+               <ChevronRight size={24} color="#111" />
+             </button>
+
+             {currentMediaIndex === 0 && videoId ? (
+                <iframe 
+                  src={`https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`}
+                  title="YouTube video player"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  className={styles.mediaItem}
+                ></iframe>
+             ) : (
+                <img src={carouselImages[currentMediaIndex]} alt="Property View" className={styles.mediaItem} />
+             )}
+          </div>
 
           {/* Title & Specs Row */}
           <div className={styles.headerInfo}>
@@ -466,19 +467,34 @@ export default function PropertyDetail({ params }: { params: Promise<{ id: strin
                      </div>
                   </div>
                </div>
+               {/* Sidebar Similar Properties (Up Next) */}
+               <div className={styles.sidebarSimilarList} style={{ display: 'none' /* Will be unhidden via css for desktop */ }}>
+                  <h3 className={styles.sidebarSimilarTitle}>Similar Properties</h3>
+                  {mockProperties.filter(p => p.id !== property.id && (p.category === property.category || p.location === property.location)).slice(0, 3).map(similarProperty => (
+                     <SmallPropertyCard key={similarProperty.id} property={similarProperty} rentalPeriod={billingCycle} />
+                  ))}
+               </div>
            </div>
         </div>
       </main>
 
-      {/* Similar Properties Section */}
-      <div className="container" style={{ padding: '0 1.5rem 6rem 1.5rem' }}>
-        <h2 style={{ fontSize: '1.5rem', fontWeight: 800, marginBottom: '1.5rem', color: '#111', letterSpacing: '-0.02em' }}>Similar Properties</h2>
-        <div style={{ display: 'flex', gap: '1.5rem', overflowX: 'auto', paddingBottom: '1rem', scrollSnapType: 'x mandatory', scrollbarWidth: 'none', WebkitOverflowScrolling: 'touch' }}>
-           {mockProperties.filter(p => p.id !== property.id && (p.category === property.category || p.location === property.location)).slice(0, 3).map(similarProperty => (
-              <div key={similarProperty.id} style={{ minWidth: '320px', width: '320px', scrollSnapAlign: 'start' }}>
-                 <PropertyCard property={similarProperty} />
-              </div>
-           ))}
+      {/* Similar Properties Section (Mobile Only) */}
+      <div className="container" style={{ padding: '0 1.5rem 6rem 1.5rem', display: 'block' /* Will be hidden via css for desktop */ }}>
+        <style dangerouslySetInnerHTML={{__html: `
+          @media (min-width: 1024px) {
+            .mobile-similar { display: none !important; }
+            .${styles.sidebarSimilarList} { display: flex !important; }
+          }
+        `}} />
+        <div className="mobile-similar">
+          <h2 style={{ fontSize: '1.5rem', fontWeight: 800, margin: '2rem 0 1.5rem 0', color: '#111', letterSpacing: '-0.02em' }}>Similar Properties</h2>
+          <div style={{ display: 'flex', gap: '1.5rem', overflowX: 'auto', paddingBottom: '1rem', scrollSnapType: 'x mandatory', scrollbarWidth: 'none', WebkitOverflowScrolling: 'touch' }}>
+             {mockProperties.filter(p => p.id !== property.id && (p.category === property.category || p.location === property.location)).slice(0, 3).map(similarProperty => (
+                <div key={similarProperty.id} style={{ minWidth: '320px', width: '320px', scrollSnapAlign: 'start' }}>
+                   <PropertyCard property={similarProperty} />
+                </div>
+             ))}
+          </div>
         </div>
       </div>
 

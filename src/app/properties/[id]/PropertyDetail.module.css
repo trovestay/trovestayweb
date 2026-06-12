@@ -75,7 +75,8 @@
   display: none;
 }
 
-.desktopPhotoGrid {
+/* Desktop Media Layout (YouTube Style) */
+.desktopMediaContainer {
   display: none;
 }
 
@@ -83,35 +84,76 @@
   .carouselScroll {
     display: none;
   }
-  .desktopPhotoGrid {
-    display: grid;
-    grid-template-columns: 2fr 1fr 1fr;
-    grid-template-rows: 250px 250px;
-    gap: 8px;
+  .desktopMediaContainer {
+    display: block;
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
     border-radius: 24px;
     overflow: hidden;
+    margin-bottom: 2rem;
+    background-color: #000;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.08);
   }
-  .gridHero {
-    grid-column: 1;
-    grid-row: 1 / span 2;
-    width: 100%;
-    height: 100%;
-  }
-  .gridImgWrapper {
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-  }
-  .gridImg {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.5s ease;
-    cursor: pointer;
-  }
-  .gridImg:hover {
-    transform: scale(1.05);
-  }
+}
+
+.mediaItem {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: opacity 0.3s ease;
+}
+
+.mediaNavBtn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  z-index: 10;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  transition: all var(--transition-fast);
+}
+
+.mediaNavBtn:hover {
+  background-color: #fff;
+  transform: translateY(-50%) scale(1.05);
+}
+
+.mediaNavBtn:active {
+  transform: translateY(-50%) scale(0.95);
+}
+
+.mediaNavLeft {
+  left: 1rem;
+}
+
+.mediaNavRight {
+  right: 1rem;
+}
+
+/* Vertical Similar Properties in Sidebar */
+.sidebarSimilarList {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.sidebarSimilarTitle {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #111;
+  margin-bottom: 1rem;
 }
 
 .carouselImage {
