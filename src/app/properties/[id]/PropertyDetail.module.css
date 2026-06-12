@@ -937,21 +937,25 @@
 }
 
 /* Mobile Bottom Action Dock */
-.actionDockMobile {
+.mobileStickyBottom {
   position: fixed;
   bottom: 0;
   left: 0;
   width: 100%;
-  background: linear-gradient(to bottom, rgba(244, 245, 249, 0), rgba(244, 245, 249, 1) 20%);
-  padding: 1.5rem 1.5rem 2rem 1.5rem;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  padding: 1rem 1.5rem;
+  box-shadow: 0 -4px 24px rgba(0,0,0,0.06);
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
+  align-items: center;
   z-index: 100;
+  border-top: 1px solid rgba(0,0,0,0.05);
 }
 
 @media (min-width: 1024px) {
-  .actionDockMobile {
-    display: none;
+  .mobileStickyBottom {
+    padding: 1rem 4rem; /* More padding on desktop */
   }
 }
 

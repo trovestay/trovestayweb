@@ -406,71 +406,11 @@ export default function PropertyDetail({ params }: { params: Promise<{ id: strin
         <div className={styles.rightColumn}>
            <div className={styles.stickyWidget}>
                
-               {/* Live Rates Header */}
-               <div className={styles.widgetLiveRates}>
-                  <div className={styles.liveRatesLeft}>
-                     <div className={styles.greenDot}></div>
-                     <div className={styles.liveRatesText}>
-                        <strong>{t('liveRates')}</strong>
-                        <span>{t('verifiedVia')}</span>
-                     </div>
-                  </div>
-                  <div className={styles.currencySelect}>
-                     {currency} <ChevronDown size={14} />
-                  </div>
-               </div>
-
-               {/* Price Area */}
-               <div className={styles.widgetPriceArea}>
-                  <div className={styles.priceLabel}>
-                     <Tag size={12} color="#8E8E93" />
-                     <span>{billingCycle === 'yearly' ? t('yearlyRent') : t('monthlyRent')}</span>
-                  </div>
-                  <div className={styles.widgetPriceLarge}>
-                     <strong>{formatPrice(billingCycle === 'yearly' ? property.price * 10 : property.price)}</strong> <span>{billingCycle === 'yearly' ? t('yearly') : t('monthly')}</span>
-                  </div>
-                  <p className={styles.priceDisclaimer}>
-                     * {billingCycle === 'yearly' ? 'Yearly rent excludes utilities. 1-month deposit required.' : 'Monthly rent includes pool & garden maintenance.'}
-                  </p>
-               </div>
-
-               {/* Lead Gen Booking Actions */}
-               <div className={styles.leadGenActions}>
-                 <BookingFlowModal property={property} billingCycle={billingCycle}>
-                   <button className={styles.desktopBookBtn}>
-                      <CalendarClock size={16} /> Request Viewing
-                   </button>
-                 </BookingFlowModal>
-               </div>
-
-               {/* Trust Badges */}
-               <div className={styles.trustBadges}>
-                  <div className={styles.trustBadge}>
-                     <ShieldCheck size={18} color="#D4FF00" className={styles.trustIcon} style={{ background: '#111' }} />
-                     <div className={styles.trustText}>
-                        <strong>Secure Booking Guarantee</strong>
-                        <span>Your payment and identity are fully protected by our secure platform.</span>
-                     </div>
-                  </div>
-                  <div className={styles.trustBadge}>
-                     <CheckCircle size={18} color="#333" className={styles.trustIcon} />
-                     <div className={styles.trustText}>
-                        <strong>Verified Listing</strong>
-                        <span>Personally inspected for quality assurance and accuracy.</span>
-                     </div>
-                  </div>
-                  <div className={styles.trustBadge}>
-                     <UserCheck size={18} color="#333" className={styles.trustIcon} />
-                     <div className={styles.trustText}>
-                        <strong>Direct Service</strong>
-                        <span>Direct communication with the listing agent. No intermediaries.</span>
-                     </div>
-                  </div>
-               </div>
+               {/* Booking Widget features moved to floating bottom bar */}
                {/* Sidebar Similar Properties (Up Next) */}
                <div className={styles.sidebarSimilarList} style={{ display: 'none' /* Will be unhidden via css for desktop */ }}>
                   <h3 className={styles.sidebarSimilarTitle}>Similar Properties</h3>
-                  {mockProperties.filter(p => p.id !== property.id && (p.category === property.category || p.location === property.location)).slice(0, 3).map(similarProperty => (
+                  {mockProperties.filter(p => p.id !== property.id).slice(0, 4).map(similarProperty => (
                      <SmallPropertyCard key={similarProperty.id} property={similarProperty} rentalPeriod={billingCycle} />
                   ))}
                </div>
@@ -489,7 +429,7 @@ export default function PropertyDetail({ params }: { params: Promise<{ id: strin
         <div className="mobile-similar">
           <h2 style={{ fontSize: '1.5rem', fontWeight: 800, margin: '2rem 0 1.5rem 0', color: '#111', letterSpacing: '-0.02em' }}>Similar Properties</h2>
           <div style={{ display: 'flex', gap: '1.5rem', overflowX: 'auto', paddingBottom: '1rem', scrollSnapType: 'x mandatory', scrollbarWidth: 'none', WebkitOverflowScrolling: 'touch' }}>
-             {mockProperties.filter(p => p.id !== property.id && (p.category === property.category || p.location === property.location)).slice(0, 3).map(similarProperty => (
+             {mockProperties.filter(p => p.id !== property.id).slice(0, 4).map(similarProperty => (
                 <div key={similarProperty.id} style={{ minWidth: '320px', width: '320px', scrollSnapAlign: 'start' }}>
                    <PropertyCard property={similarProperty} />
                 </div>
