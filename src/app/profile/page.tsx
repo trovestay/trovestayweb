@@ -21,6 +21,10 @@ export default function ProfilePage() {
     router.push('/login');
     return null;
   }
+
+  const userMetadata = user?.user_metadata || {};
+  const avatarUrl = userMetadata.avatar_url || userMetadata.picture;
+  const fullName = userMetadata.full_name || userMetadata.name || (user?.email?.split('@')[0] || 'User');
   const handleDownloadClick = () => {
     const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as any).MSStream;
     if (isIOS && !isInstalled) {
@@ -38,9 +42,13 @@ export default function ProfilePage() {
     <div className={styles.profileContainer}>
       <header className={styles.profileHeader}>
         <div className={styles.avatarContainerLarge}>
-          <User size={48} color="#111" />
+          {avatarUrl ? (
+            <img src={avatarUrl} alt="Profile" className={styles.avatarLarge} />
+          ) : (
+            <User size={48} color="#111" />
+          )}
         </div>
-        <h1 className={styles.userName}>{user?.email?.split('@')[0] || 'User'}</h1>
+        <h1 className={styles.userName}>{fullName}</h1>
         <p className={styles.userEmail}>{user?.email}</p>
       </header>
 
