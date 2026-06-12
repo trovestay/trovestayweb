@@ -13,6 +13,7 @@ import { mockBlogs } from '../data/mockBlogs';
 import styles from './page.module.css';
 import navStyles from '../components/Navigation.module.css';
 import { useAppContext } from '../context/AppContext';
+import { useAuth } from '../context/AuthContext';
 import type { Currency } from '../context/AppContext';
 import type { Language } from '../i18n/translations';
 
@@ -121,16 +122,18 @@ export default function Home_Page() {
     console.log('Searching...');
   };
 
-  // Simulated User Auth State
-  const [user] = useState<{ name: string, avatarUrl: string } | null>({
-    name: "Alexander Christopher",
-    avatarUrl: "/placeholder.jpg"
-  });
+  // Actual User Auth State
+  const { user: authUser } = useAuth();
+  
+  const userMetadata = authUser?.user_metadata || {};
+  const avatarUrl = userMetadata.avatar_url || userMetadata.picture || null;
+  const fullName = userMetadata.full_name || userMetadata.name || (authUser?.email?.split('@')[0]) || null;
 
   // Smart logic for handling long names (e.g. from Google Auth)
   const getDisplayTitle = () => {
-    if (!user) return 'Sign In';
-    const firstName = user.name.split(' ')[0];
+    if (!authUser) return 'Sign In';
+    if (!fullName) return 'User';
+    const firstName = fullName.split(' ')[0];
     return firstName.length > 10 ? firstName.substring(0, 8) + '...' : firstName;
   };
 
@@ -188,15 +191,15 @@ export default function Home_Page() {
             {/* Custom Home Header */}
             <header className={styles.homeHeader}>
               <div className={styles.headerLeft}>
-                {user ? (
-                  <img src={user.avatarUrl} alt="Profile" className={styles.topAvatar} />
+                {avatarUrl ? (
+                  <img src={avatarUrl} alt="Profile" className={styles.topAvatar} style={{ objectFit: 'cover', borderRadius: '50%' }} />
                 ) : (
                   <div className={styles.topAvatarPlaceholder}>
                     <User size={20} color="#8E8E93" />
                   </div>
                 )}
                 <div className={styles.greetingBlock}>
-                  <span className={styles.greetingSubtitle}>{user && mounted ? getGreeting() : 'Welcome to Trovestay'}</span>
+                  <span className={styles.greetingSubtitle}>{authUser && mounted ? getGreeting() : 'Welcome to Trovestay'}</span>
                   <h2 className={styles.greetingTitle}>{mounted ? getDisplayTitle() : 'Sign In'}</h2>
                 </div>
               </div>
