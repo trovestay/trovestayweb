@@ -1218,27 +1218,8 @@
   background-color: #f4f5f9;
 }
 
-/* Mobile Sticky Bottom CTA */
-.mobileStickyBottom {
-  display: none;
-}
-
+/* Sticky bottom bar styles are now defined earlier in this file for both mobile and desktop */
 @media (max-width: 1023px) {
-  .mobileStickyBottom {
-    display: flex;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background: #fff;
-    border-top: 1px solid #e5e5ea;
-    padding: 1rem 1.5rem;
-    padding-bottom: calc(1rem + env(safe-area-inset-bottom));
-    align-items: center;
-    justify-content: space-between;
-    z-index: 99;
-    box-shadow: 0 -4px 20px rgba(0,0,0,0.05);
-  }
   
   .mobileStickyPrice {
     display: flex;
