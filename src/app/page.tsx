@@ -165,6 +165,18 @@ export default function Home_Page() {
     return true;
   };
 
+  const filteredNewProperties = newProperties
+    .filter(p => (rentalPeriod === 'yearly' ? (p.priceYearly || p.price * 11) : p.price) <= maxPrice)
+    .filter(checkMatch);
+
+  const filteredRecommendedProperties = recommendedProperties
+    .filter(p => (rentalPeriod === 'yearly' ? (p.priceYearly || p.price * 11) : p.price) <= maxPrice)
+    .filter(checkMatch);
+
+  const filteredRentedProperties = rentedProperties
+    .filter(p => (rentalPeriod === 'yearly' ? (p.priceYearly || p.price * 11) : p.price) <= maxPrice)
+    .filter(checkMatch);
+
   return (
     <>
       <div className={styles.homeLayout}>
@@ -319,87 +331,86 @@ export default function Home_Page() {
           <div className="container">
 
             {/* New Listings (Small Cards) */}
-            <section className={styles.horizontalSection}>
-              <div className={styles.sectionHeader}>
-                <h2 className={styles.sectionTitle}>{t('newListing')}</h2>
-                <MoreHorizontal size={20} color="#A0A0A5" />
-              </div>
+            {filteredNewProperties.length > 0 && (
+              <section className={styles.horizontalSection}>
+                <div className={styles.sectionHeader}>
+                  <h2 className={styles.sectionTitle}>{t('newListing')}</h2>
+                  <MoreHorizontal size={20} color="#A0A0A5" />
+                </div>
 
-              <div className={styles.smallCardScrollList}>
-                {newProperties
-                  .filter(p => (rentalPeriod === 'yearly' ? (p.priceYearly || p.price * 11) : p.price) <= maxPrice)
-                  .filter(checkMatch)
-                  .map(property => (
-                  <SmallPropertyCard key={property.id} property={property} rentalPeriod={rentalPeriod} />
-                ))}
-              </div>
-            </section>
+                <div className={styles.smallCardScrollList}>
+                  {filteredNewProperties.map(property => (
+                    <SmallPropertyCard key={property.id} property={property} rentalPeriod={rentalPeriod} />
+                  ))}
+                </div>
+              </section>
+            )}
 
             {/* Curated Stays Area */}
-            <section className={styles.horizontalSection}>
-              <div className={styles.filterHeaderRow}>
-                <h2 className={styles.sectionTitle}>{t('curatedStays')}</h2>
-                <MoreHorizontal size={20} color="#A0A0A5" />
-              </div>
+            {filteredRecommendedProperties.length > 0 && (
+              <section className={styles.horizontalSection}>
+                <div className={styles.filterHeaderRow}>
+                  <h2 className={styles.sectionTitle}>{t('curatedStays')}</h2>
+                  <MoreHorizontal size={20} color="#A0A0A5" />
+                </div>
 
-              <div className={styles.scrollList}>
-                {recommendedProperties
-                  .filter(p => (rentalPeriod === 'yearly' ? (p.priceYearly || p.price * 11) : p.price) <= maxPrice)
-                  .filter(checkMatch)
-                  .map(property => (
-                  <div key={property.id} className={styles.scrollItemWrapper}>
-                    <PropertyCard property={property} rentalPeriod={rentalPeriod} />
-                  </div>
-                ))}
-              </div>
-            </section>
+                <div className={styles.scrollList}>
+                  {filteredRecommendedProperties.map(property => (
+                    <div key={property.id} className={styles.scrollItemWrapper}>
+                      <PropertyCard property={property} rentalPeriod={rentalPeriod} />
+                    </div>
+                  ))}
+                </div>
+              </section>
+            )}
 
             {/* Rented Area */}
-            <section className={styles.horizontalSection}>
-              <div className={styles.filterHeaderRow}>
-                <h2 className={styles.sectionTitle}>{t('recentlyRented')}</h2>
-                <MoreHorizontal size={20} color="#A0A0A5" />
-              </div>
+            {filteredRentedProperties.length > 0 && (
+              <section className={styles.horizontalSection}>
+                <div className={styles.filterHeaderRow}>
+                  <h2 className={styles.sectionTitle}>{t('recentlyRented')}</h2>
+                  <MoreHorizontal size={20} color="#A0A0A5" />
+                </div>
 
-              <div className={styles.scrollList}>
-                {rentedProperties
-                  .filter(p => (rentalPeriod === 'yearly' ? (p.priceYearly || p.price * 11) : p.price) <= maxPrice)
-                  .filter(checkMatch)
-                  .map((property) => (
-                  <div key={property.id} className={styles.scrollItemWrapper}>
-                    <RentedPropertyCard property={property} rentalPeriod={rentalPeriod} />
-                  </div>
-                ))}
-              </div>
-            </section>
+                <div className={styles.scrollList}>
+                  {filteredRentedProperties.map((property) => (
+                    <div key={property.id} className={styles.scrollItemWrapper}>
+                      <RentedPropertyCard property={property} rentalPeriod={rentalPeriod} />
+                    </div>
+                  ))}
+                </div>
+              </section>
+            )}
 
             {/* Blog Section */}
-            <section className={styles.blogSection}>
-              <div className={styles.blogHeader}>
-                <h2 className={styles.sectionTitle}>Insights & Lifestyle</h2>
-                <Link href="/blog" style={{ color: '#8E8E93', textDecoration: 'none', fontSize: '0.9rem', fontWeight: 600 }}>View All</Link>
-              </div>
+            {blogs.length > 0 && (
+              <section className={styles.blogSection}>
+                <div className={styles.blogHeader}>
+                  <h2 className={styles.sectionTitle}>Insights & Lifestyle</h2>
+                  <Link href="/blog" style={{ color: '#8E8E93', textDecoration: 'none', fontSize: '0.9rem', fontWeight: 600 }}>View All</Link>
+                </div>
 
-              <div className={styles.blogScroll}>
-                {blogs.map(blog => (
-                  <Link href={`/blog/${blog.id}`} key={blog.id} style={{ textDecoration: 'none' }}>
-                    <div className={styles.blogCard}>
-                      <div className={styles.blogImgWrapper}>
-                        <span className={styles.blogCategoryBadge}>{blog.category}</span>
-                        <img src={blog.image_url || '/placeholder.jpg'} alt={blog.title} className={styles.blogImg} loading="lazy" />
-                      </div>
-                      <div className={styles.blogContent}>
-                        <div className={styles.blogMeta}>
-                          <span>{blog.date}</span>
+                <div className={styles.blogScroll}>
+                  {blogs.map(blog => (
+                    <Link href={`/blog/${blog.id}`} key={blog.id} style={{ textDecoration: 'none' }}>
+                      <div className={styles.blogCard}>
+                        <div className={styles.blogImgWrapper}>
+                          <span className={styles.blogCategoryBadge}>{blog.category}</span>
+                          <img src={blog.image_url || '/placeholder.jpg'} alt={blog.title} className={styles.blogImg} loading="lazy" />
                         </div>
-                        <h3 className={styles.blogTitle}>{blog.title}</h3>
-                        <p className={styles.blogSummary}>{blog.summary}</p>
+                        <div className={styles.blogContent}>
+                          <div className={styles.blogMeta}>
+                            <span>{blog.date}</span>
+                          </div>
+                          <h3 className={styles.blogTitle}>{blog.title}</h3>
+                          <p className={styles.blogSummary}>{blog.summary}</p>
+                        </div>
                       </div>
-                    </div>
-                  </Link>
-                ))}
-              </div>
-            </section>
+                    </Link>
+                  ))}
+                </div>
+              </section>
+            )}
           </div>
         </div>
       </div>
