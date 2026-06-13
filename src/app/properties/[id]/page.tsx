@@ -479,8 +479,8 @@ export default function PropertyDetail({ params }: { params: Promise<{ id: strin
                     </button>
                  </div>
               </div>
-              {mockProperties.filter(p => p.id !== property.id).slice(0, 4).map(similarProperty => (
-                 <PropertyCard key={similarProperty.id} property={similarProperty} />
+              {mockProperties.filter(p => p.id !== property.id).slice(0, 6).map(similarProperty => (
+                 <SmallPropertyCard key={similarProperty.id} property={similarProperty} rentalPeriod={billingCycle} />
               ))}
            </div>
         </div>
