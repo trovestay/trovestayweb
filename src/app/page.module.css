@@ -594,8 +594,8 @@
 
 .campaignCard {
   position: relative;
-  min-width: 280px;
-  width: 280px;
+  min-width: calc(100vw - 3rem);
+  width: calc(100vw - 3rem);
   aspect-ratio: 16 / 10;
   border-radius: 24px;
   overflow: hidden;
