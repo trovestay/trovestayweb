@@ -329,12 +329,10 @@ export default function Home_Page() {
                          <img src={campaign.imageUrl} alt={campaign.campaignTitle?.replace('\n', ' ')} className={styles.campaignBg} loading="lazy" />
                       )}
 
-                      {index !== 0 && (
-                        <div className={styles.campaignTopRightAccent}>
-                          <button className={styles.accentBtn}><Heart size={16} color="#fff" /></button>
-                          <button className={styles.accentBtn}><ArrowUpRight size={16} color="#fff" /></button>
-                        </div>
-                      )}
+                      <div className={styles.campaignTopRightAccent} style={{ zIndex: 15 }}>
+                        <button className={styles.accentBtn}><Heart size={16} color="#fff" /></button>
+                        <button className={styles.accentBtnPrimary}><ArrowUpRight size={16} color="#111" /></button>
+                      </div>
                       <div className={`${styles.campaignOverlay} ${index === 0 ? styles.campaignOverlayFadeOut : ''}`}>
                         {index === 0 ? (
                            <Link href={`/properties/${campaign.id}`} style={{ textDecoration: 'none', display: 'flex', flexDirection: 'column', height: '100%', justifyContent: 'space-between' }}>

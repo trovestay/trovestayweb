@@ -798,6 +798,26 @@
   background-color: rgba(0, 0, 0, 0.5);
 }
 
+.accentBtnPrimary {
+  position: relative;
+  z-index: 5;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: none;
+  background-color: var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform var(--transition-fast);
+  box-shadow: 0 4px 12px rgba(212, 255, 0, 0.3);
+}
+
+.accentBtnPrimary:hover {
+  transform: scale(1.05);
+}
+
 .accentBtn:active {
   transform: scale(0.92);
 }
