@@ -15,7 +15,7 @@ export default function LayoutShell({ children }: { children: React.ReactNode })
 
   return (
     <>
-      {!isPropertyDetails && <Navigation />}
+      <Navigation />
       <main>{children}</main>
       <Footer />
     </>

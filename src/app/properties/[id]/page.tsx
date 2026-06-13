@@ -68,7 +68,57 @@ export default function PropertyDetail({ params }: { params: Promise<{ id: strin
   }, [resolvedParams.id]);
 
   if (loading) {
-    return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', fontFamily: 'var(--font-primary)' }}>Loading details...</div>;
+    return (
+      <div className={styles.detailLayout} style={{ background: 'var(--color-background)', minHeight: '100vh' }}>
+        <div className="mobile-only-skeleton" style={{ position: 'absolute', top: '1rem', width: '100%', padding: '0 1.5rem', display: 'flex', justifyContent: 'space-between', zIndex: 10 }}>
+           <div style={{ width: 44, height: 44, borderRadius: '50%', background: '#e5e5ea', animation: 'pulse 1.5s infinite' }}></div>
+           <div style={{ width: 44, height: 44, borderRadius: '50%', background: '#e5e5ea', animation: 'pulse 1.5s infinite' }}></div>
+        </div>
+        
+        <div className="desktop-only-skeleton" style={{ height: '8rem' }}></div>
+
+        <main className={`container ${styles.desktopGrid}`}>
+          <div className={styles.leftColumn}>
+            <div className="skeleton-image" style={{ width: '100%', background: '#e5e5ea', animation: 'pulse 1.5s infinite', marginBottom: '2rem' }}></div>
+            
+            <div style={{ padding: '0 1.5rem' }} className="skeleton-content-padding">
+              <div style={{ width: '25%', height: 24, background: '#e5e5ea', borderRadius: 8, marginBottom: '0.75rem', animation: 'pulse 1.5s infinite' }}></div>
+              <div style={{ width: '70%', height: 36, background: '#e5e5ea', borderRadius: 8, marginBottom: '1.25rem', animation: 'pulse 1.5s infinite' }}></div>
+              
+              <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '2rem', flexWrap: 'wrap' }}>
+                <div style={{ width: 80, height: 32, background: '#e5e5ea', borderRadius: 16, animation: 'pulse 1.5s infinite' }}></div>
+                <div style={{ width: 80, height: 32, background: '#e5e5ea', borderRadius: 16, animation: 'pulse 1.5s infinite' }}></div>
+                <div style={{ width: 80, height: 32, background: '#e5e5ea', borderRadius: 16, animation: 'pulse 1.5s infinite' }}></div>
+                <div style={{ width: 80, height: 32, background: '#e5e5ea', borderRadius: 16, animation: 'pulse 1.5s infinite' }}></div>
+              </div>
+
+              <div style={{ width: '100%', height: 100, background: '#e5e5ea', borderRadius: 12, marginBottom: '2rem', animation: 'pulse 1.5s infinite' }}></div>
+              <div style={{ width: '100%', height: 150, background: '#e5e5ea', borderRadius: 12, marginBottom: '2rem', animation: 'pulse 1.5s infinite' }}></div>
+            </div>
+          </div>
+          <div className={styles.rightColumn}>
+            <div className="desktop-only-skeleton" style={{ width: '100%', height: 400, background: '#e5e5ea', borderRadius: 24, animation: 'pulse 1.5s infinite' }}></div>
+          </div>
+        </main>
+        <style dangerouslySetInnerHTML={{__html: `
+          @keyframes pulse {
+            0% { opacity: 0.6; }
+            50% { opacity: 0.3; }
+            100% { opacity: 0.6; }
+          }
+          .skeleton-image { aspect-ratio: 16/9; border-radius: 0; }
+          @media (min-width: 1024px) {
+            .mobile-only-skeleton { display: none !important; }
+            .skeleton-image { border-radius: 24px; }
+            .skeleton-content-padding { padding: 0 !important; }
+          }
+          @media (max-width: 1023px) {
+            .desktop-only-skeleton { display: none !important; }
+            main.container { padding-left: 0; padding-right: 0; }
+          }
+        `}} />
+      </div>
+    );
   }
 
   if (!property && !loading) {
@@ -200,7 +250,12 @@ export default function PropertyDetail({ params }: { params: Promise<{ id: strin
                        </div>
                      )}
                    </div>
-                   <h1 className={styles.title}>{property.title}</h1>
+                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
+                     <h1 className={styles.title}>{property.title}</h1>
+                     <button className="desktop-only-save-btn" onClick={() => toggleSave(property.id)} style={{ background: 'var(--color-surface)', border: '1px solid rgba(0,0,0,0.05)', cursor: 'pointer', display: 'none', padding: '0.5rem', borderRadius: '50%', width: '44px', height: '44px', alignItems: 'center', justifyContent: 'center', boxShadow: 'var(--shadow-sm)', transition: 'transform 0.2s' }}>
+                        <Bookmark size={20} color={isSaved(property.id) ? '#111' : "var(--color-primary)"} fill={isSaved(property.id) ? '#111' : "transparent"} strokeWidth={isSaved(property.id) ? 0 : 2} />
+                     </button>
+                   </div>
                 </div>
                 
                  <div className={styles.locationPill}>
@@ -437,6 +492,7 @@ export default function PropertyDetail({ params }: { params: Promise<{ id: strin
           @media (min-width: 1024px) {
             .mobile-similar { display: none !important; }
             .${styles.sidebarSimilarList} { display: flex !important; }
+            .desktop-only-save-btn { display: flex !important; }
           }
         `}} />
         <div className="mobile-similar">
