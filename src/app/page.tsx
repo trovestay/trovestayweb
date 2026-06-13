@@ -331,7 +331,7 @@ export default function Home_Page() {
 
                       <div className={styles.campaignTopRightAccent} style={{ zIndex: 15 }}>
                         <button className={styles.accentBtn}><Heart size={16} color="#fff" /></button>
-                        <button className={styles.accentBtnPrimary}><ArrowUpRight size={16} color="#111" /></button>
+                        <button className={styles.accentBtnApple}><ArrowUpRight size={16} color="#111" /></button>
                       </div>
                       <div className={`${styles.campaignOverlay} ${index === 0 ? styles.campaignOverlayFadeOut : ''}`}>
                         {index === 0 ? (

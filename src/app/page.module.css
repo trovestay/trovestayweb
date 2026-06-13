@@ -798,23 +798,26 @@
   background-color: rgba(0, 0, 0, 0.5);
 }
 
-.accentBtnPrimary {
+.accentBtnApple {
   position: relative;
   z-index: 5;
   width: 34px;
   height: 34px;
   border-radius: 50%;
-  border: none;
-  background-color: var(--color-primary);
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  background-color: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: transform var(--transition-fast);
-  box-shadow: 0 4px 12px rgba(212, 255, 0, 0.3);
+  transition: transform var(--transition-fast), background-color var(--transition-fast);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0,0,0,0.05);
 }
 
-.accentBtnPrimary:hover {
+.accentBtnApple:hover {
+  background-color: #fff;
   transform: scale(1.05);
 }
 
