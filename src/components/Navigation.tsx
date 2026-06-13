@@ -41,7 +41,8 @@ const Navigation = () => {
       {/* Mobile Top App Bar removed per user request for sub-pages */}
 
       {/* Desktop Sticky Header with Central Search Pill */}
-      <header className={`${styles.desktopHeader} ${isScrolled ? styles.desktopHeaderScrolled : ''}`}>
+      {!pathname.startsWith('/locations') && !pathname.startsWith('/profile') && (
+        <header className={`${styles.desktopHeader} ${isScrolled ? styles.desktopHeaderScrolled : ''}`}>
         <div className={`container ${styles.desktopInner}`}>
           <div className={styles.headerLeftDesktop}>
              {user ? (
@@ -119,6 +120,7 @@ const Navigation = () => {
           </div>
         </div>
       </header>
+      )}
 
       {/* Mobile Floating Dock (Hidden on Property Details to prevent overlap) */}
       {!pathname.startsWith('/properties') && (

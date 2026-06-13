@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { usePWA } from '../../components/PWAProvider';
-import { User, Download, LogOut, ChevronRight, Home, Smartphone, Apple, Compass, Heart, Share, PlusSquare, X } from 'lucide-react';
+import { User, Download, LogOut, ChevronRight, Home, Smartphone, Apple, Compass, Heart, Share, PlusSquare, X, ArrowLeft } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { useRouter } from 'next/navigation';
 import { supabase } from '../../lib/supabaseClient';
@@ -41,6 +41,9 @@ export default function ProfilePage() {
   return (
     <div className={styles.profileContainer}>
       <header className={styles.profileHeader}>
+        <Link href="/" className={styles.returnBtn}>
+           <ArrowLeft size={20} color="#111" />
+        </Link>
         <div className={styles.avatarContainerLarge}>
           {avatarUrl ? (
             <img src={avatarUrl} alt="Profile" className={styles.avatarLarge} />
