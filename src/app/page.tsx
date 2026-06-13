@@ -17,6 +17,13 @@ import { useAuth } from '../context/AuthContext';
 import type { Currency } from '../context/AppContext';
 import type { Language } from '../i18n/translations';
 
+const getYouTubeId = (url: string) => {
+  if (!url) return '';
+  const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|shorts\/|watch\?v=|&v=)([^#&?]*).*/;
+  const match = url.match(regExp);
+  return (match && match[2].length === 11) ? match[2] : url; // Fallback to raw string if it's already an ID
+};
+
 export default function Home_Page() {
   const [properties, setProperties] = useState<Property[]>([]);
   const [blogs, setBlogs] = useState<any[]>([]);
@@ -308,10 +315,10 @@ export default function Home_Page() {
                     <div key={campaign.id} className={`${styles.campaignCard} ${campaign.campaignTheme === 'dark' ? styles.campaignCardDark : styles.campaignCardLight}`} style={{ borderRadius: '28px', overflow: 'hidden' }}>
                       <Link href={`/properties/${campaign.id}`} style={{ width: '100%', height: '100%', position: 'absolute', zIndex: 10, cursor: 'pointer' }}></Link>
                       
-                      {index === 0 && campaign.youtubeUrl ? (
+                      {index === 0 && campaign.youtubeUrl && getYouTubeId(campaign.youtubeUrl) ? (
                          <div style={{ width: '100%', height: '100%', position: 'absolute', top: 0, left: 0, overflow: 'hidden', zIndex: -2 }}>
                            <iframe 
-                              src={`https://www.youtube.com/embed/${campaign.youtubeUrl.split('v=')[1]?.split('&')[0]}?autoplay=1&mute=1&loop=1&playlist=${campaign.youtubeUrl.split('v=')[1]?.split('&')[0]}&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1`} 
+                              src={`https://www.youtube.com/embed/${getYouTubeId(campaign.youtubeUrl)}?autoplay=1&mute=1&loop=1&playlist=${getYouTubeId(campaign.youtubeUrl)}&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1`} 
                               style={{ width: '300%', height: '150%', position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', pointerEvents: 'none', border: 'none' }}
                               allow="autoplay; encrypted-media" 
                            />
@@ -320,10 +327,12 @@ export default function Home_Page() {
                          <img src={campaign.imageUrl} alt={campaign.campaignTitle?.replace('\n', ' ')} className={styles.campaignBg} loading="lazy" />
                       )}
 
-                      <div className={styles.campaignTopRightAccent}>
-                        <button className={styles.accentBtn}><Heart size={16} color="#fff" /></button>
-                        <button className={styles.accentBtn}><ArrowUpRight size={16} color="#fff" /></button>
-                      </div>
+                      {index !== 0 && (
+                        <div className={styles.campaignTopRightAccent}>
+                          <button className={styles.accentBtn}><Heart size={16} color="#fff" /></button>
+                          <button className={styles.accentBtn}><ArrowUpRight size={16} color="#fff" /></button>
+                        </div>
+                      )}
                       <div className={styles.campaignOverlay}>
                         <span className={campaign.campaignTheme === 'dark' ? styles.campaignBadge : styles.campaignBadgeDark}>{campaign.campaignLabel}</span>
                         {index !== 0 && (
