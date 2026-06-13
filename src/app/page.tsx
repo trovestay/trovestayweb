@@ -313,17 +313,18 @@ export default function Home_Page() {
                 <div className={styles.campaignList}>
                   {properties.filter(p => p.isCampaign).map((campaign, index) => (
                     <div key={campaign.id} className={`${styles.campaignCard} ${campaign.campaignTheme === 'dark' ? styles.campaignCardDark : styles.campaignCardLight}`} style={{ borderRadius: '28px', overflow: 'hidden' }}>
-                      <Link href={`/properties/${campaign.id}`} style={{ width: '100%', height: '100%', position: 'absolute', zIndex: 10, cursor: 'pointer' }}></Link>
+                      {index !== 0 && (
+                         <Link href={`/properties/${campaign.id}`} style={{ width: '100%', height: '100%', position: 'absolute', zIndex: 10, cursor: 'pointer' }}></Link>
+                      )}
                       
                       {index === 0 && campaign.youtubeUrl && getYouTubeId(campaign.youtubeUrl) ? (
-                         <div style={{ width: '100%', height: '100%', position: 'absolute', top: 0, left: 0, overflow: 'hidden', zIndex: -2 }}>
+                         <div style={{ width: '100%', height: '100%', position: 'absolute', top: 0, left: 0, overflow: 'hidden', zIndex: 0, background: '#000' }}>
                            <iframe 
-                              src={`https://www.youtube.com/embed/${getYouTubeId(campaign.youtubeUrl)}?autoplay=1&mute=1&loop=1&playlist=${getYouTubeId(campaign.youtubeUrl)}&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&disablekb=1&fs=0`} 
-                              style={{ width: '300%', height: '150%', position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', pointerEvents: 'none', border: 'none' }}
-                              allow="autoplay; encrypted-media" 
+                              src={`https://www.youtube.com/embed/${getYouTubeId(campaign.youtubeUrl)}?autoplay=1&mute=1&loop=1&playlist=${getYouTubeId(campaign.youtubeUrl)}&controls=1&showinfo=0&rel=0&modestbranding=1&playsinline=1`} 
+                              style={{ width: '100%', height: '100%', position: 'absolute', top: 0, left: 0, border: 'none' }}
+                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                              allowFullScreen
                            />
-                           {/* Invisible overlay to block all touch events on mobile */}
-                           <div style={{ position: 'absolute', inset: 0, zIndex: 10, background: 'transparent' }} />
                          </div>
                       ) : (
                          <img src={campaign.imageUrl} alt={campaign.campaignTitle?.replace('\n', ' ')} className={styles.campaignBg} loading="lazy" />
@@ -335,13 +336,26 @@ export default function Home_Page() {
                           <button className={styles.accentBtn}><ArrowUpRight size={16} color="#fff" /></button>
                         </div>
                       )}
-                      <div className={styles.campaignOverlay}>
-                        <span className={campaign.campaignTheme === 'dark' ? styles.campaignBadge : styles.campaignBadgeDark}>{campaign.campaignLabel}</span>
-                        <h3 className={campaign.campaignTheme === 'dark' ? styles.campaignTitle : styles.campaignTitleDark} style={index === 0 ? { textShadow: '0 2px 12px rgba(0,0,0,0.8)' } : undefined}>
-                          {campaign.campaignTitle?.split('\n').map((line, i) => (
-                            <span key={i}>{line}<br /></span>
-                          ))}
-                        </h3>
+                      <div className={`${styles.campaignOverlay} ${index === 0 ? styles.campaignOverlayFadeOut : ''}`}>
+                        {index === 0 ? (
+                           <Link href={`/properties/${campaign.id}`} style={{ textDecoration: 'none', display: 'flex', flexDirection: 'column', height: '100%', justifyContent: 'space-between' }}>
+                              <span className={campaign.campaignTheme === 'dark' ? styles.campaignBadge : styles.campaignBadgeDark} style={{ alignSelf: 'flex-start' }}>{campaign.campaignLabel}</span>
+                              <h3 className={campaign.campaignTheme === 'dark' ? styles.campaignTitle : styles.campaignTitleDark} style={{ textShadow: '0 2px 12px rgba(0,0,0,0.8)' }}>
+                                {campaign.campaignTitle?.split('\n').map((line, i) => (
+                                  <span key={i}>{line}<br /></span>
+                                ))}
+                              </h3>
+                           </Link>
+                        ) : (
+                           <>
+                              <span className={campaign.campaignTheme === 'dark' ? styles.campaignBadge : styles.campaignBadgeDark}>{campaign.campaignLabel}</span>
+                              <h3 className={campaign.campaignTheme === 'dark' ? styles.campaignTitle : styles.campaignTitleDark}>
+                                {campaign.campaignTitle?.split('\n').map((line, i) => (
+                                  <span key={i}>{line}<br /></span>
+                                ))}
+                              </h3>
+                           </>
+                        )}
                       </div>
                     </div>
                   ))}
