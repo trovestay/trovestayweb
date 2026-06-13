@@ -318,13 +318,14 @@ export default function Home_Page() {
                       )}
                       
                       {index === 0 && campaign.youtubeUrl && getYouTubeId(campaign.youtubeUrl) ? (
-                         <div style={{ width: '100%', height: '100%', position: 'absolute', top: 0, left: 0, overflow: 'hidden', zIndex: 0, background: '#000' }}>
+                         <div style={{ width: '100%', height: '100%', position: 'absolute', top: 0, left: 0, overflow: 'hidden', zIndex: 0 }}>
                            <iframe 
-                              src={`https://www.youtube.com/embed/${getYouTubeId(campaign.youtubeUrl)}?autoplay=1&mute=1&loop=1&playlist=${getYouTubeId(campaign.youtubeUrl)}&controls=1&showinfo=0&rel=0&modestbranding=1&playsinline=1`} 
-                              style={{ width: '100%', height: '100%', position: 'absolute', top: 0, left: 0, border: 'none' }}
-                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                              allowFullScreen
+                              src={`https://www.youtube.com/embed/${getYouTubeId(campaign.youtubeUrl)}?autoplay=1&mute=1&loop=1&playlist=${getYouTubeId(campaign.youtubeUrl)}&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&disablekb=1&fs=0`} 
+                              style={{ width: '300%', height: '150%', position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', pointerEvents: 'none', border: 'none' }}
+                              allow="autoplay; encrypted-media" 
                            />
+                           {/* Invisible overlay to block all touch events on mobile */}
+                           <div style={{ position: 'absolute', inset: 0, zIndex: 10, background: 'transparent' }} />
                          </div>
                       ) : (
                          <img src={campaign.imageUrl} alt={campaign.campaignTitle?.replace('\n', ' ')} className={styles.campaignBg} loading="lazy" />
