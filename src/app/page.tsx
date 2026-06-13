@@ -304,21 +304,40 @@ export default function Home_Page() {
             <section className={styles.heroArea}>
               <div className={styles.campaignListWrapper}>
                 <div className={styles.campaignList}>
-                  {properties.filter(p => p.isCampaign).map(campaign => (
-                    <div key={campaign.id} className={`${styles.campaignCard} ${campaign.campaignTheme === 'dark' ? styles.campaignCardDark : styles.campaignCardLight}`}>
+                  {properties.filter(p => p.isCampaign).map((campaign, index) => (
+                    <div key={campaign.id} className={`${styles.campaignCard} ${campaign.campaignTheme === 'dark' ? styles.campaignCardDark : styles.campaignCardLight}`} style={{ borderRadius: '28px', overflow: 'hidden' }}>
                       <Link href={`/properties/${campaign.id}`} style={{ width: '100%', height: '100%', position: 'absolute', zIndex: 10, cursor: 'pointer' }}></Link>
-                      <img src={campaign.imageUrl} alt={campaign.campaignTitle?.replace('\n', ' ')} className={styles.campaignBg} loading="lazy" />
+                      
+                      {index === 0 && campaign.youtubeUrl ? (
+                         <div style={{ width: '100%', height: '100%', position: 'absolute', top: 0, left: 0, overflow: 'hidden', zIndex: -2 }}>
+                           <iframe 
+                              src={`https://www.youtube.com/embed/${campaign.youtubeUrl.split('v=')[1]?.split('&')[0]}?autoplay=1&mute=1&loop=1&playlist=${campaign.youtubeUrl.split('v=')[1]?.split('&')[0]}&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1`} 
+                              style={{ width: '300%', height: '150%', position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', pointerEvents: 'none', border: 'none' }}
+                              allow="autoplay; encrypted-media" 
+                           />
+                         </div>
+                      ) : (
+                         <img src={campaign.imageUrl} alt={campaign.campaignTitle?.replace('\n', ' ')} className={styles.campaignBg} loading="lazy" />
+                      )}
+
                       <div className={styles.campaignTopRightAccent}>
                         <button className={styles.accentBtn}><Heart size={16} color="#fff" /></button>
                         <button className={styles.accentBtn}><ArrowUpRight size={16} color="#fff" /></button>
                       </div>
                       <div className={styles.campaignOverlay}>
                         <span className={campaign.campaignTheme === 'dark' ? styles.campaignBadge : styles.campaignBadgeDark}>{campaign.campaignLabel}</span>
-                        <h3 className={campaign.campaignTheme === 'dark' ? styles.campaignTitle : styles.campaignTitleDark}>
-                          {campaign.campaignTitle?.split('\n').map((line, i) => (
-                            <span key={i}>{line}<br /></span>
-                          ))}
-                        </h3>
+                        {index !== 0 && (
+                          <h3 className={campaign.campaignTheme === 'dark' ? styles.campaignTitle : styles.campaignTitleDark}>
+                            {campaign.campaignTitle?.split('\n').map((line, i) => (
+                              <span key={i}>{line}<br /></span>
+                            ))}
+                          </h3>
+                        )}
+                        {index === 0 && (
+                          <h3 className={campaign.campaignTheme === 'dark' ? styles.campaignTitle : styles.campaignTitleDark} style={{ alignSelf: 'center', marginBottom: '1rem', textShadow: '0 2px 12px rgba(0,0,0,0.5)' }}>
+                            {campaign.campaignTitle?.replace('\n', ' ')}
+                          </h3>
+                        )}
                       </div>
                     </div>
                   ))}
