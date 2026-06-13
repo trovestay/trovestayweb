@@ -498,7 +498,7 @@ export default function PropertyDetail({ params }: { params: Promise<{ id: strin
         `}} />
         <div className="mobile-similar">
           <h2 style={{ fontSize: '1.5rem', fontWeight: 800, margin: '2rem 0 1.5rem 0', color: '#111', letterSpacing: '-0.02em' }}>Similar Properties</h2>
-          <div style={{ display: 'flex', gap: '1.5rem', overflowX: 'auto', paddingBottom: '1rem', scrollSnapType: 'x mandatory', scrollbarWidth: 'none', WebkitOverflowScrolling: 'touch' }}>
+          <div style={{ display: 'flex', gap: '1rem', overflowX: 'auto', paddingBottom: '1rem', scrollSnapType: 'x mandatory', scrollbarWidth: 'none', WebkitOverflowScrolling: 'touch' }}>
              {mockProperties.filter(p => p.id !== property.id).slice(0, 4).map(similarProperty => (
                 <div key={similarProperty.id} style={{ minWidth: '320px', width: '320px', scrollSnapAlign: 'start' }}>
                    <PropertyCard property={similarProperty} />

@@ -8,7 +8,7 @@
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease;
   border: 1px solid rgba(0, 0, 0, 0.03);
   cursor: pointer;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
 }
 
 .card:hover {
@@ -20,16 +20,16 @@
   text-decoration: none;
   display: block;
   color: inherit;
-  padding: 1rem;
+  padding: 0.85rem;
 }
 
 .imageWrapper {
   position: relative;
   width: 100%;
   aspect-ratio: 16 / 10;
-  border-radius: 16px;
+  border-radius: 12px;
   overflow: hidden;
-  margin-bottom: 1rem;
+  margin-bottom: 0.85rem;
 }
 
 .cardImage {
@@ -83,22 +83,28 @@
 }
 
 .locationRow {
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   color: #8E8E93;
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.6rem;
   display: flex;
   align-items: center;
-  gap: 0.4rem;
+  gap: 0.3rem;
 }
 
 .featuresRow {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.4rem;
   font-size: 0.8rem;
   color: #4A4A4A;
   font-weight: 600;
-  margin-bottom: 1rem;
+  margin-bottom: 0.85rem;
+}
+
+.featureItem {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
 }
 
 .featureDot {
@@ -110,7 +116,7 @@
   justify-content: space-between;
   align-items: center;
   border-top: 1px solid rgba(0, 0, 0, 0.04);
-  padding-top: 0.75rem;
+  padding-top: 0.6rem;
 }
 
 .priceCol {

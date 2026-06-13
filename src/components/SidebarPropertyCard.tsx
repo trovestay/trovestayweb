@@ -1,6 +1,6 @@
 'use client';
 
-import { Bookmark, MapPin } from 'lucide-react';
+import { Bookmark, MapPin, Bed, Bath, Maximize } from 'lucide-react';
 import Link from 'next/link';
 import styles from './SidebarPropertyCard.module.css';
 import type { Property } from '../data/mockProperties';
@@ -34,11 +34,11 @@ export default function SidebarPropertyCard({ property, rentalPeriod = 'monthly'
            </div>
            
            <div className={styles.featuresRow}>
-              <span>{property.bedrooms} Bed</span>
+              <div className={styles.featureItem}><Bed size={14} color="#8E8E93" /> <span>{property.bedrooms} Bed</span></div>
               <span className={styles.featureDot}>•</span>
-              <span>{property.bathrooms} Bath</span>
+              <div className={styles.featureItem}><Bath size={14} color="#8E8E93" /> <span>{property.bathrooms} Bath</span></div>
               <span className={styles.featureDot}>•</span>
-              <span>{property.area} m²</span>
+              <div className={styles.featureItem}><Maximize size={14} color="#8E8E93" /> <span>{property.area} m²</span></div>
            </div>
            
            <div className={styles.footerRow}>
