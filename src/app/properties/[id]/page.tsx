@@ -9,6 +9,7 @@ import BookingFlowModal from '../../../components/BookingFlowModal';
 import Map from '../../../components/Map';
 import PropertyCard from '../../../components/PropertyCard';
 import SmallPropertyCard from '../../../components/SmallPropertyCard';
+import SidebarPropertyCard from '../../../components/SidebarPropertyCard';
 import styles from './PropertyDetail.module.css';
 import { notFound } from 'next/navigation';
 import { useAppContext } from '../../../context/AppContext';
@@ -479,8 +480,8 @@ export default function PropertyDetail({ params }: { params: Promise<{ id: strin
                     </button>
                  </div>
               </div>
-              {mockProperties.filter(p => p.id !== property.id).slice(0, 6).map(similarProperty => (
-                 <SmallPropertyCard key={similarProperty.id} property={similarProperty} rentalPeriod={billingCycle} />
+              {mockProperties.filter(p => p.id !== property.id).slice(0, 4).map(similarProperty => (
+                 <SidebarPropertyCard key={similarProperty.id} property={similarProperty} rentalPeriod={billingCycle} />
               ))}
            </div>
         </div>
