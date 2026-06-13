@@ -510,9 +510,12 @@ export default function PropertyDetail({ params }: { params: Promise<{ id: strin
 
       {/* Sticky Bottom CTA Mobile */}
       <div className={styles.mobileStickyBottom}>
-         <div className={styles.mobileStickyPrice}>
-            <strong>{formatPrice(billingCycle === 'yearly' ? property.price * 10 : property.price)}</strong>
-            <span>{billingCycle === 'yearly' ? t('yearly') : t('monthly')}</span>
+         <div className={styles.mobileStickyPriceBlock}>
+            <span className={styles.mobileStickyPriceLabel}>Total Price</span>
+            <div className={styles.mobileStickyPrice}>
+               <strong>{formatPrice(billingCycle === 'yearly' ? property.price * 10 : property.price)}</strong>
+               <span>{billingCycle === 'yearly' ? t('yearly') : t('monthly')}</span>
+            </div>
          </div>
          <BookingFlowModal property={property} billingCycle={billingCycle}>
            <button className={styles.mobileStickyBtn}>

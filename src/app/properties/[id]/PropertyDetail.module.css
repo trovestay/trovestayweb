@@ -1249,6 +1249,20 @@
 
 /* Sticky bottom bar styles are now defined earlier in this file for both mobile and desktop */
 
+.mobileStickyPriceBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.mobileStickyPriceLabel {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #8E8E93;
+  letter-spacing: 0.05em;
+}
+
 .mobileStickyPrice {
   display: flex;
   flex-direction: row;
@@ -1257,32 +1271,34 @@
 }
 
 .mobileStickyPrice strong {
-  font-size: 1.05rem;
+  font-size: 1.25rem;
   font-weight: 800;
   color: #111;
+  letter-spacing: -0.02em;
 }
 
 .mobileStickyPrice span {
-  font-size: 0.75rem;
+  font-size: 0.8rem;
   color: #666;
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .mobileStickyBtn {
-  background: #D4FF00;
-  color: #111;
+  background: #111;
+  color: #D4FF00;
   border: none;
-  padding: 0.75rem 1.25rem;
-  border-radius: 12px;
+  padding: 0.85rem 1.5rem;
+  border-radius: 16px;
   font-weight: 700;
   font-size: 0.95rem;
   cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .mobileStickyBtn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(212, 255, 0, 0.4);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.15);
 }
 
 .mobileStickyBtn:active {

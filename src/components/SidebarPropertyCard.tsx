@@ -34,11 +34,11 @@ export default function SidebarPropertyCard({ property, rentalPeriod = 'monthly'
            </div>
            
            <div className={styles.featuresRow}>
-              <div className={styles.featureItem}><Bed size={14} color="#8E8E93" /> <span>{property.bedrooms} Bed</span></div>
+              <div className={styles.featureItem}><Bed size={16} strokeWidth={1.5} color="#8E8E93" /> <span>{property.bedrooms} Bed</span></div>
               <span className={styles.featureDot}>•</span>
-              <div className={styles.featureItem}><Bath size={14} color="#8E8E93" /> <span>{property.bathrooms} Bath</span></div>
+              <div className={styles.featureItem}><Bath size={16} strokeWidth={1.5} color="#8E8E93" /> <span>{property.bathrooms} Bath</span></div>
               <span className={styles.featureDot}>•</span>
-              <div className={styles.featureItem}><Maximize size={14} color="#8E8E93" /> <span>{property.area} m²</span></div>
+              <div className={styles.featureItem}><Maximize size={16} strokeWidth={1.5} color="#8E8E93" /> <span>{property.area} m²</span></div>
            </div>
            
            <div className={styles.footerRow}>
