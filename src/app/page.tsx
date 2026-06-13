@@ -319,7 +319,7 @@ export default function Home_Page() {
                          <div style={{ width: '100%', height: '100%', position: 'absolute', top: 0, left: 0, overflow: 'hidden', zIndex: 0, background: '#000' }}>
                            <iframe 
                               src={`https://www.youtube.com/embed/${getYouTubeId(campaign.youtubeUrl)}?autoplay=1&mute=1&loop=1&playlist=${getYouTubeId(campaign.youtubeUrl)}&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&disablekb=1&fs=0`} 
-                              style={{ width: '140%', height: '140%', position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', pointerEvents: 'none', border: 'none' }}
+                              style={{ width: '180%', height: '180%', position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', pointerEvents: 'none', border: 'none' }}
                               allow="autoplay; encrypted-media" 
                            />
                            {/* Invisible overlay with 1% opacity to strictly block all touch events on iOS Safari */}
