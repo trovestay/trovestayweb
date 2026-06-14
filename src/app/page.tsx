@@ -1,8 +1,8 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
-import { Search, Heart, User, Globe, ArrowUpRight, ArrowDownUp, ChevronDown, MoreHorizontal, Home, Building2, Umbrella, X } from 'lucide-react';
+import { Search, Heart, User, Globe, ArrowUpRight, ArrowDownUp, ChevronDown, ChevronLeft, ChevronRight, MoreHorizontal, Home, Building2, Umbrella, X } from 'lucide-react';
 import Link from 'next/link';
 import PropertyCard from '../components/PropertyCard';
 import SmallPropertyCard from '../components/SmallPropertyCard';
@@ -47,6 +47,15 @@ export default function Home_Page() {
   const [maxPrice, setMaxPrice] = useState<number>(500000000);
 
   const { language, setLanguage, currency, setCurrency, t, formatPrice } = useAppContext();
+
+  const campaignListRef = useRef<HTMLDivElement>(null);
+
+  const scrollCampaign = (direction: 'left' | 'right') => {
+    if (campaignListRef.current) {
+      const scrollAmount = window.innerWidth * 0.7; // scroll by ~1 card width
+      campaignListRef.current.scrollBy({ left: direction === 'left' ? -scrollAmount : scrollAmount, behavior: 'smooth' });
+    }
+  };
 
   useEffect(() => {
     setMounted(true);
@@ -306,11 +315,20 @@ export default function Home_Page() {
 
             {/* Top Category Pills */}
             <section className={styles.topCategoriesSection}></section>
+          </div>
 
-            {/* Campaign Area */}
-            <section className={styles.heroArea}>
-              <div className={styles.campaignListWrapper}>
-                <div className={styles.campaignList}>
+          {/* Campaign Area (Full Bleed) */}
+          <section className={styles.heroArea}>
+            <div className={styles.campaignCarouselControls}>
+              <button className={styles.carouselBtn} onClick={() => scrollCampaign('left')} aria-label="Previous Campaign">
+                <ChevronLeft size={24} color="#111" />
+              </button>
+              <button className={styles.carouselBtn} onClick={() => scrollCampaign('right')} aria-label="Next Campaign">
+                <ChevronRight size={24} color="#111" />
+              </button>
+            </div>
+            <div className={styles.campaignListWrapper}>
+              <div className={styles.campaignList} ref={campaignListRef}>
                   {properties.filter(p => p.isCampaign).map((campaign, index) => (
                     <div key={campaign.id} className={`${styles.campaignCard} ${campaign.campaignTheme === 'dark' ? styles.campaignCardDark : styles.campaignCardLight}`} style={{ borderRadius: '28px', overflow: 'hidden' }}>
                       <Link href={`/properties/${campaign.id}`} style={{ width: '100%', height: '100%', position: 'absolute', zIndex: 5, cursor: 'pointer' }}></Link>
@@ -335,23 +353,29 @@ export default function Home_Page() {
                       </div>
                       <div className={`${styles.campaignOverlay} ${index === 0 ? styles.campaignOverlayFadeOut : ''}`}>
                         {index === 0 ? (
-                           <Link href={`/properties/${campaign.id}`} style={{ textDecoration: 'none', display: 'flex', flexDirection: 'column', height: '100%', justifyContent: 'space-between' }}>
+                           <Link href={`/properties/${campaign.id}`} style={{ textDecoration: 'none', display: 'flex', flexDirection: 'column', height: '100%', justifyContent: 'space-between', zIndex: 20 }}>
                               <span className={campaign.campaignTheme === 'dark' ? styles.campaignBadge : styles.campaignBadgeDark} style={{ alignSelf: 'flex-start' }}>{campaign.campaignLabel}</span>
-                              <h3 className={campaign.campaignTheme === 'dark' ? styles.campaignTitle : styles.campaignTitleDark} style={{ textShadow: '0 2px 12px rgba(0,0,0,0.8)' }}>
-                                {campaign.campaignTitle?.split('\n').map((line, i) => (
-                                  <span key={i}>{line}<br /></span>
-                                ))}
-                              </h3>
+                              <div className={styles.campaignBottomRow}>
+                                <h3 className={campaign.campaignTheme === 'dark' ? styles.campaignTitle : styles.campaignTitleDark} style={{ textShadow: '0 2px 12px rgba(0,0,0,0.8)' }}>
+                                  {campaign.campaignTitle?.split('\n').map((line, i) => (
+                                    <span key={i}>{line}<br /></span>
+                                  ))}
+                                </h3>
+                                <div className={styles.viewDetailBtn}>View Detail</div>
+                              </div>
                            </Link>
                         ) : (
-                           <>
+                           <Link href={`/properties/${campaign.id}`} style={{ textDecoration: 'none', display: 'flex', flexDirection: 'column', height: '100%', justifyContent: 'space-between', zIndex: 20 }}>
                               <span className={campaign.campaignTheme === 'dark' ? styles.campaignBadge : styles.campaignBadgeDark}>{campaign.campaignLabel}</span>
-                              <h3 className={campaign.campaignTheme === 'dark' ? styles.campaignTitle : styles.campaignTitleDark}>
-                                {campaign.campaignTitle?.split('\n').map((line, i) => (
-                                  <span key={i}>{line}<br /></span>
-                                ))}
-                              </h3>
-                           </>
+                              <div className={styles.campaignBottomRow}>
+                                <h3 className={campaign.campaignTheme === 'dark' ? styles.campaignTitle : styles.campaignTitleDark}>
+                                  {campaign.campaignTitle?.split('\n').map((line, i) => (
+                                    <span key={i}>{line}<br /></span>
+                                  ))}
+                                </h3>
+                                <div className={styles.viewDetailBtn}>View Detail</div>
+                              </div>
+                           </Link>
                         )}
                       </div>
                     </div>
@@ -359,8 +383,6 @@ export default function Home_Page() {
                 </div>
               </div>
             </section>
-
-          </div>
         </div>
 
         {/* Light Curved Overlapping Body */}

@@ -606,22 +606,119 @@
 @media (min-width: 1024px) {
   .campaignList {
     gap: 2rem;
+    padding: 0 1.5rem; /* give space for the floating look */
   }
   .campaignCard {
-    min-width: 70vw;
-    width: 70vw;
-    max-width: 1000px;
-    aspect-ratio: 21 / 9;
-    border-radius: 32px;
-    transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.5s ease;
+    min-width: calc(100vw - 3rem);
+    width: calc(100vw - 3rem);
+    max-width: none;
+    height: 75vh;
+    border-radius: 40px;
+    transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.6s ease;
   }
   .campaignCard:hover {
-    transform: scale(1.02) translateY(-6px);
-    box-shadow: 0 24px 48px rgba(0, 0, 0, 0.25), 0 0 40px rgba(255, 255, 255, 0.1);
+    transform: scale(1.01);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3), 0 0 40px rgba(255, 255, 255, 0.1);
   }
   .campaignCard:hover .campaignBg {
-    transform: scale(1.05);
+    transform: scale(1.03);
   }
+}
+
+/* Carousel Controls */
+.heroArea {
+  position: relative;
+  margin-bottom: 2rem;
+}
+
+.campaignCarouselControls {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .campaignCarouselControls {
+    display: flex;
+    justify-content: space-between;
+    position: absolute;
+    top: 50%;
+    left: 2rem;
+    right: 2rem;
+    transform: translateY(-50%);
+    z-index: 50;
+    pointer-events: none; /* Let clicks pass through except on buttons */
+  }
+
+  .carouselBtn {
+    pointer-events: auto;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+    transition: all var(--transition-fast);
+  }
+
+  .carouselBtn:hover {
+    background: #fff;
+    transform: scale(1.1);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.25);
+  }
+
+  .carouselBtn:active {
+    transform: scale(0.95);
+  }
+}
+
+/* View Detail Button */
+.campaignBottomRow {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+@media (min-width: 1024px) {
+  .campaignBottomRow {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+}
+
+.viewDetailBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.8rem 1.5rem;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: var(--radius-full);
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: all var(--transition-fast);
+}
+
+.campaignCardLight .viewDetailBtn {
+  background: rgba(0, 0, 0, 0.1);
+  border-color: rgba(0, 0, 0, 0.1);
+  color: #111;
+}
+
+.viewDetailBtn:hover {
+  background: var(--color-accent);
+  color: #111;
+  border-color: var(--color-accent);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(212, 247, 33, 0.3);
 }
 
 /* Dots Styling for mobile view */
