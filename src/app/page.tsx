@@ -206,7 +206,7 @@ export default function Home_Page() {
                   </div>
                 )}
                 <div className={styles.greetingBlock}>
-                  <span className={styles.greetingSubtitle}>{authUser && mounted ? getGreeting() : 'Welcome to Trovestay'}</span>
+                  <span className={styles.greetingSubtitle}>{authUser && mounted ? getGreeting() : 'Welcome to Utopia Estate'}</span>
                   <h2 className={styles.greetingTitle}>{mounted ? getDisplayTitle() : 'Sign In'}</h2>
                 </div>
               </div>

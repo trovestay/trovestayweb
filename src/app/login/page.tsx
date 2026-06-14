@@ -46,7 +46,7 @@ export default function LoginPage() {
         <div className={styles.header}>
           <h1 className={styles.title}>Sign in</h1>
           <p className={styles.subtitle}>
-            Welcome to TroveStay. Sign in to access your properties.
+            Welcome to Utopia Estate. Sign in to access your properties.
           </p>
         </div>
 

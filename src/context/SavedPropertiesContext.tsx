@@ -17,7 +17,7 @@ export function SavedPropertiesProvider({ children }: { children: React.ReactNod
   // Load from localStorage on mount
   useEffect(() => {
     try {
-      const stored = localStorage.getItem('trovestay_saved_properties');
+      const stored = localStorage.getItem('utopia_estate_saved_properties');
       if (stored) {
         setSavedIds(JSON.parse(stored));
       }
@@ -31,7 +31,7 @@ export function SavedPropertiesProvider({ children }: { children: React.ReactNod
   useEffect(() => {
     if (!isLoaded) return;
     try {
-      localStorage.setItem('trovestay_saved_properties', JSON.stringify(savedIds));
+      localStorage.setItem('utopia_estate_saved_properties', JSON.stringify(savedIds));
     } catch (e) {
       console.error('Failed to save properties to localStorage', e);
     }

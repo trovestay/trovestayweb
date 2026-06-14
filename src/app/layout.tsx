@@ -15,13 +15,13 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: 'TROVE STAY',
+  title: 'UTOPIA ESTATE',
   description: 'Premium Bali Property Rentals',
   manifest: '/manifest.json',
   appleWebApp: {
     capable: true,
     statusBarStyle: 'default',
-    title: 'TroveStay',
+    title: 'Utopia Estate',
   },
 };
 

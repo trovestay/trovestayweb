@@ -26,7 +26,7 @@ export default function Contact() {
                 <Mail className={styles.icon} />
                 <div>
                   <strong>Email</strong>
-                  <p>hello@trovestay.com</p>
+                  <p>hello@utopiaestate.com</p>
                 </div>
              </div>
 

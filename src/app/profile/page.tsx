@@ -32,7 +32,7 @@ export default function ProfilePage() {
     } else if (canInstall) {
       installPWA();
     } else if (isInstalled) {
-      alert("Trovestay App is already installed!");
+      alert("Utopia Estate App is already installed!");
     } else {
       alert("App installation is not supported on this browser.");
     }
@@ -64,7 +64,7 @@ export default function ProfilePage() {
               <Smartphone size={24} color="#111" />
             </div>
             <div className={styles.pwaText}>
-              <h3>Get the TroveStay App</h3>
+              <h3>Get the Utopia Estate App</h3>
               <p>Install our app for a faster, native experience.</p>
             </div>
           </div>
