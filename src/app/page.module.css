@@ -1277,19 +1277,16 @@
 }
 
 .desktopHeroSaveBtn {
-  position: absolute;
-  top: 2rem;
-  right: 2rem;
-  width: 48px;
-  height: 48px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.9);
+  background: #f4f5f9;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: none;
+  border: 1px solid #e5e5ea;
   cursor: pointer;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
   transition: all var(--transition-fast);
 }
 
@@ -1310,11 +1307,14 @@
 }
 
 .desktopHeroHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
   margin-bottom: 1.5rem;
 }
 
 .desktopHeroAddress {
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   font-weight: 700;
   color: #111;
   line-height: 1.3;
@@ -1322,8 +1322,8 @@
 
 .desktopHeroStats {
   display: flex;
-  gap: 2rem;
-  margin-bottom: 2rem;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
 }
 
 .desktopHeroStat {
@@ -1333,7 +1333,7 @@
 }
 
 .statValue {
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   font-weight: 800;
   color: #111;
 }
@@ -1350,13 +1350,15 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 3rem;
-  padding-bottom: 2rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
   border-bottom: 1px solid #f0f0f0;
+  flex-wrap: wrap;
+  gap: 0.5rem;
 }
 
 .desktopHeroPrice {
-  font-size: 2rem;
+  font-size: 1.5rem;
   font-weight: 800;
   color: #111;
 }
@@ -1439,14 +1441,14 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: #D4F721; /* Neon green instead of black per user request */
+  background: #D4F721;
   color: #111;
-  padding: 1rem;
-  border-radius: 20px;
+  padding: 0.75rem;
+  border-radius: 16px;
   text-decoration: none;
   transition: all var(--transition-fast);
-  margin-top: 1rem;
-  box-shadow: 0 4px 16px rgba(212, 247, 33, 0.3);
+  margin-top: 0.75rem;
+  box-shadow: 0 4px 12px rgba(212, 247, 33, 0.2);
 }
 
 .requestTourBtn:hover {
@@ -1455,7 +1457,7 @@
 }
 
 .tourBtnMain {
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: 700;
 }
 

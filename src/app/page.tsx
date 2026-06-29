@@ -399,11 +399,11 @@ export default function Home_Page() {
                   ) : (
                     <img src={campaign.imageUrl} alt={campaign.campaignTitle} className={styles.desktopHeroImg} loading="lazy" />
                   )}
-                  <button className={styles.desktopHeroSaveBtn}><Bookmark size={18} color="#111" /></button>
                 </div>
                 <div className={styles.desktopHeroDetails}>
                   <div className={styles.desktopHeroHeader}>
                     <h2 className={styles.desktopHeroAddress}>{campaign.location}</h2>
+                    <button className={styles.desktopHeroSaveBtn}><Bookmark size={16} color="#111" /></button>
                   </div>
                   <div className={styles.desktopHeroStats}>
                     <div className={styles.desktopHeroStat}>
