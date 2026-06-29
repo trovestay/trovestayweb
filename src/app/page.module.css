@@ -1254,20 +1254,19 @@
 /* --- Desktop Hero Card --- */
 .desktopHeroCard {
   display: flex;
-  background: var(--color-surface);
-  border-radius: 32px;
-  overflow: hidden;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+  gap: 2rem;
+  background: transparent;
   height: 600px;
 }
 
 .desktopHeroImageWrapper {
   flex: 7;
   position: relative;
-  overflow: hidden;
-  padding: 1rem; /* The image has a bit of inset if we want, or full bleed. Let's make it full bleed with border-radius */
   border-radius: 32px;
   background: #f4f5f9;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+  padding: 1rem;
+  overflow: hidden;
 }
 
 .desktopHeroImg, .desktopHeroVideo {
@@ -1306,6 +1305,8 @@
   display: flex;
   flex-direction: column;
   background: #fff;
+  border-radius: 32px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
 }
 
 .desktopHeroHeader {
@@ -1476,22 +1477,25 @@
     align-items: center;
     background: #fff;
     border-radius: var(--radius-full);
-    padding: 0.5rem 1rem 0.5rem 2rem;
+    padding: 1rem;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
     margin: -2rem auto 0 auto;
     position: relative;
     z-index: 10;
     max-width: 90%;
     justify-content: space-between;
+    gap: 0.5rem;
   }
 }
 
 .heroSearchItem {
   display: flex;
   align-items: center;
-  gap: 1rem;
-  padding: 0.5rem 1rem;
+  gap: 0.75rem;
+  padding: 0.5rem 1.25rem;
   flex: 1;
+  border: 1px solid #e5e5ea;
+  border-radius: var(--radius-full);
 }
 
 .heroSearchIcon {
@@ -1518,16 +1522,13 @@
 }
 
 .heroSearchDivider {
-  width: 1px;
-  height: 40px;
-  background: #e5e5ea;
+  display: none;
 }
 
 .heroSearchActions {
   display: flex;
   align-items: center;
-  gap: 1rem;
-  padding-left: 1rem;
+  gap: 0.5rem;
 }
 
 .heroSearchMoreBtn {
