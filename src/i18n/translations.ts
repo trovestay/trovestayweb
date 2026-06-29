@@ -31,6 +31,7 @@ export const translations: TranslationDictionary = {
     requestViewing: 'Request Viewing',
     viewDetails: 'View Details',
     whereYoullBe: 'Where you\'ll be',
+    featuredCampaign: 'Premium Collection',
   },
   id: {
     monthly: '/bln',
@@ -56,6 +57,7 @@ export const translations: TranslationDictionary = {
     requestViewing: 'Jadwalkan Kunjungan',
     viewDetails: 'Lihat Detail',
     whereYoullBe: 'Lokasi Anda',
+    featuredCampaign: 'Koleksi Premium',
   },
   fr: {
     monthly: '/mois',
@@ -81,6 +83,7 @@ export const translations: TranslationDictionary = {
     requestViewing: 'Demander une Visite',
     viewDetails: 'Voir les Détails',
     whereYoullBe: 'Où vous serez',
+    featuredCampaign: 'Collection Premium',
   },
   ru: {
     monthly: '/мес',
@@ -106,6 +109,7 @@ export const translations: TranslationDictionary = {
     requestViewing: 'Запросить Просмотр',
     viewDetails: 'Подробнее',
     whereYoullBe: 'Где вы будете',
+    featuredCampaign: 'Премиум Коллекция',
   },
   es: {
     monthly: '/mes',
@@ -131,5 +135,6 @@ export const translations: TranslationDictionary = {
     requestViewing: 'Solicitar Visita',
     viewDetails: 'Ver Detalles',
     whereYoullBe: 'Dónde estarás',
+    featuredCampaign: 'Colección Premium',
   }
 };

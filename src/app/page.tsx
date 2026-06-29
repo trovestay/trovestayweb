@@ -426,6 +426,12 @@ export default function Home_Page() {
                       </div>
                     </div>
                     <div className={styles.desktopHeroStat}>
+                      <span className={styles.statValue}>{campaign.guests || 2}</span>
+                      <div className={styles.statLabelRow}>
+                        <User size={14} color="#8E8E93" /> <span className={styles.statLabel}>guests</span>
+                      </div>
+                    </div>
+                    <div className={styles.desktopHeroStat}>
                       <span className={styles.statValue}>{campaign.area}</span>
                       <div className={styles.statLabelRow}>
                         <Maximize size={14} color="#8E8E93" /> <span className={styles.statLabel}>sqm</span>
