@@ -1251,6 +1251,44 @@
   }
 }
 
+/* --- Desktop Hero Section --- */
+.desktopHeroSectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 1.5rem;
+  padding: 0 1rem;
+}
+
+.desktopHeroSectionTitle {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #111;
+}
+
+.desktopHeroSectionControls {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.heroControlBtn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid #e5e5ea;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #111;
+  transition: all var(--transition-fast);
+}
+
+.heroControlBtn:hover {
+  background: #f4f5f9;
+}
+
 /* --- Desktop Hero Card --- */
 .desktopHeroCard {
   display: flex;
@@ -1336,6 +1374,12 @@
   font-size: 1.25rem;
   font-weight: 800;
   color: #111;
+}
+
+.statLabelRow {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
 }
 
 .statLabel {

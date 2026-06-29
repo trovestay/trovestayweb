@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
-import { Search, Heart, User, Globe, ArrowUpRight, ArrowDownUp, ChevronDown, ChevronLeft, ChevronRight, MoreHorizontal, Home, Building2, Umbrella, X, MapPin, Bookmark, SlidersHorizontal } from 'lucide-react';
+import { Search, Heart, User, Globe, ArrowUpRight, ArrowDownUp, ChevronDown, ChevronLeft, ChevronRight, MoreHorizontal, Home, Building2, Umbrella, X, MapPin, Bookmark, SlidersHorizontal, Bed, Bath, Maximize } from 'lucide-react';
 import Link from 'next/link';
 import PropertyCard from '../components/PropertyCard';
 import SmallPropertyCard from '../components/SmallPropertyCard';
@@ -384,6 +384,13 @@ export default function Home_Page() {
 
           {/* Desktop Hero Section */}
           <section className={styles.desktopHeroSection}>
+            <div className={styles.desktopHeroSectionHeader}>
+              <h2 className={styles.desktopHeroSectionTitle}>{t('featuredCampaign')}</h2>
+              <div className={styles.desktopHeroSectionControls}>
+                <button className={styles.heroControlBtn}><ChevronLeft size={20}/></button>
+                <button className={styles.heroControlBtn}><ChevronRight size={20}/></button>
+              </div>
+            </div>
             {properties.filter(p => p.isCampaign).slice(0, 1).map(campaign => (
               <div key={`desktop-${campaign.id}`} className={styles.desktopHeroCard}>
                 <div className={styles.desktopHeroImageWrapper}>
@@ -408,15 +415,21 @@ export default function Home_Page() {
                   <div className={styles.desktopHeroStats}>
                     <div className={styles.desktopHeroStat}>
                       <span className={styles.statValue}>{campaign.bedrooms}</span>
-                      <span className={styles.statLabel}>beds</span>
+                      <div className={styles.statLabelRow}>
+                        <Bed size={14} color="#8E8E93" /> <span className={styles.statLabel}>beds</span>
+                      </div>
                     </div>
                     <div className={styles.desktopHeroStat}>
                       <span className={styles.statValue}>{campaign.bathrooms}</span>
-                      <span className={styles.statLabel}>baths</span>
+                      <div className={styles.statLabelRow}>
+                        <Bath size={14} color="#8E8E93" /> <span className={styles.statLabel}>baths</span>
+                      </div>
                     </div>
                     <div className={styles.desktopHeroStat}>
                       <span className={styles.statValue}>{campaign.area}</span>
-                      <span className={styles.statLabel}>sqm</span>
+                      <div className={styles.statLabelRow}>
+                        <Maximize size={14} color="#8E8E93" /> <span className={styles.statLabel}>sqm</span>
+                      </div>
                     </div>
                   </div>
                   <div className={styles.desktopHeroPriceRow}>
