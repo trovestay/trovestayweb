@@ -447,7 +447,13 @@ export default function Home_Page() {
                 <MapPin size={20} className={styles.heroSearchIcon} />
                 <div className={styles.heroSearchText}>
                   <span className={styles.heroSearchLabel}>Location</span>
-                  <span className={styles.heroSearchValue}>{filterLocation || 'Bali, Indonesia'}</span>
+                  <input 
+                    type="text" 
+                    className={styles.heroSearchInputInline}
+                    placeholder="Bali, Indonesia"
+                    value={filterLocation}
+                    onChange={(e) => setFilterLocation(e.target.value)}
+                  />
                 </div>
               </div>
               <div className={styles.heroSearchDivider} />
@@ -455,7 +461,16 @@ export default function Home_Page() {
                 <Building2 size={20} className={styles.heroSearchIcon} />
                 <div className={styles.heroSearchText}>
                   <span className={styles.heroSearchLabel}>Property type</span>
-                  <span className={styles.heroSearchValue}>{filterPropertyType === 'Any' ? 'Villas' : filterPropertyType}</span>
+                  <select 
+                    className={styles.heroSearchSelectInline}
+                    value={filterPropertyType}
+                    onChange={(e) => setFilterPropertyType(e.target.value)}
+                  >
+                    <option value="Any">All Types</option>
+                    <option value="Villa">Villas</option>
+                    <option value="Apartment">Apartments</option>
+                    <option value="Beachfront">Beachfront</option>
+                  </select>
                 </div>
               </div>
               <div className={styles.heroSearchDivider} />
@@ -463,7 +478,16 @@ export default function Home_Page() {
                 <ArrowDownUp size={20} className={styles.heroSearchIcon} />
                 <div className={styles.heroSearchText}>
                   <span className={styles.heroSearchLabel}>Price</span>
-                  <span className={styles.heroSearchValue}>{formatPrice(1000000)} - {formatPrice(maxPrice)}</span>
+                  <select 
+                    className={styles.heroSearchSelectInline}
+                    value={maxPrice}
+                    onChange={(e) => setMaxPrice(Number(e.target.value))}
+                  >
+                    <option value={500000000}>Any Price</option>
+                    <option value={10000000}>Up to 10M</option>
+                    <option value={50000000}>Up to 50M</option>
+                    <option value={100000000}>Up to 100M</option>
+                  </select>
                 </div>
               </div>
               <div className={styles.heroSearchDivider} />
@@ -471,7 +495,17 @@ export default function Home_Page() {
                 <Home size={20} className={styles.heroSearchIcon} />
                 <div className={styles.heroSearchText}>
                   <span className={styles.heroSearchLabel}>Bedrooms</span>
-                  <span className={styles.heroSearchValue}>{filterBedrooms === 'Any' ? '1-5' : filterBedrooms}</span>
+                  <select 
+                    className={styles.heroSearchSelectInline}
+                    value={filterBedrooms}
+                    onChange={(e) => setFilterBedrooms(e.target.value)}
+                  >
+                    <option value="Any">1-5</option>
+                    <option value="1">1 Bed</option>
+                    <option value="2">2 Beds</option>
+                    <option value="3">3 Beds</option>
+                    <option value="4+">4+ Beds</option>
+                  </select>
                 </div>
               </div>
               <div className={styles.heroSearchDivider} />

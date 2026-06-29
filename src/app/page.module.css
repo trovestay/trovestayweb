@@ -1520,7 +1520,7 @@
 .heroSearchDivider {
   width: 1px;
   height: 40px;
-  background: #f0f0f0;
+  background: #e5e5ea;
 }
 
 .heroSearchActions {
@@ -1557,5 +1557,27 @@
 .heroSearchSubmitBtn:hover {
   transform: scale(1.02);
   background: #000;
+}
+
+.heroSearchInputInline, .heroSearchSelectInline {
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #111;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+}
+
+.heroSearchSelectInline {
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.heroSearchInputInline::placeholder {
+  color: #111;
 }
 
