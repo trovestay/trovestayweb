@@ -31,7 +31,7 @@ export const translations: TranslationDictionary = {
     requestViewing: 'Request Viewing',
     viewDetails: 'View Details',
     whereYoullBe: 'Where you\'ll be',
-    featuredCampaign: 'Premium Collection',
+    featuredCampaign: 'Utopia Estate: Curated Luxury Estates & Premium Experiences',
   },
   id: {
     monthly: '/bln',
@@ -57,7 +57,7 @@ export const translations: TranslationDictionary = {
     requestViewing: 'Jadwalkan Kunjungan',
     viewDetails: 'Lihat Detail',
     whereYoullBe: 'Lokasi Anda',
-    featuredCampaign: 'Koleksi Premium',
+    featuredCampaign: 'Utopia Estate: Properti Mewah Pilihan & Pengalaman Premium',
   },
   fr: {
     monthly: '/mois',
@@ -83,7 +83,7 @@ export const translations: TranslationDictionary = {
     requestViewing: 'Demander une Visite',
     viewDetails: 'Voir les Détails',
     whereYoullBe: 'Où vous serez',
-    featuredCampaign: 'Collection Premium',
+    featuredCampaign: 'Utopia Estate: Domaines de Luxe et Expériences Premium',
   },
   ru: {
     monthly: '/мес',
@@ -109,7 +109,7 @@ export const translations: TranslationDictionary = {
     requestViewing: 'Запросить Просмотр',
     viewDetails: 'Подробнее',
     whereYoullBe: 'Где вы будете',
-    featuredCampaign: 'Премиум Коллекция',
+    featuredCampaign: 'Utopia Estate: Курируемые Роскошные Поместья и Премиальный Опыт',
   },
   es: {
     monthly: '/mes',
@@ -135,6 +135,6 @@ export const translations: TranslationDictionary = {
     requestViewing: 'Solicitar Visita',
     viewDetails: 'Ver Detalles',
     whereYoullBe: 'Dónde estarás',
-    featuredCampaign: 'Colección Premium',
+    featuredCampaign: 'Utopia Estate: Fincas de Lujo Seleccionadas y Experiencias Premium',
   }
 };
