@@ -361,7 +361,6 @@ export default function Home_Page() {
                                     <span key={i}>{line}<br /></span>
                                   ))}
                                 </h3>
-                                <div className={styles.viewDetailBtn}>View Detail</div>
                               </div>
                            </Link>
                         ) : (
@@ -373,7 +372,6 @@ export default function Home_Page() {
                                     <span key={i}>{line}<br /></span>
                                   ))}
                                 </h3>
-                                <div className={styles.viewDetailBtn}>View Detail</div>
                               </div>
                            </Link>
                         )}

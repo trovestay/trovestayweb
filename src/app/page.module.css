@@ -585,7 +585,7 @@
   overflow-x: auto;
   scroll-snap-type: x mandatory;
   scrollbar-width: none;
-  padding-bottom: 0.5rem;
+  padding: 0 1.5rem 0.5rem 1.5rem;
 }
 
 .campaignList::-webkit-scrollbar {
@@ -600,7 +600,7 @@
   border-radius: 24px;
   overflow: hidden;
   box-shadow: var(--shadow-sm);
-  scroll-snap-align: start;
+  scroll-snap-align: center;
 }
 
 @media (min-width: 1024px) {
