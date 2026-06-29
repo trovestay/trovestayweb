@@ -1226,3 +1226,336 @@
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+
+/* --- Hero Layout Toggles --- */
+.mobileHeroArea {
+  display: block;
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+.desktopHeroSection {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .mobileHeroArea {
+    display: none;
+  }
+  .desktopHeroSection {
+    display: block;
+    margin-bottom: 4rem;
+    padding: 0 var(--spacing-md);
+    max-width: 1400px;
+    margin: 0 auto 4rem auto;
+  }
+}
+
+/* --- Desktop Hero Card --- */
+.desktopHeroCard {
+  display: flex;
+  background: var(--color-surface);
+  border-radius: 32px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+  height: 600px;
+}
+
+.desktopHeroImageWrapper {
+  flex: 7;
+  position: relative;
+  overflow: hidden;
+  padding: 1rem; /* The image has a bit of inset if we want, or full bleed. Let's make it full bleed with border-radius */
+  border-radius: 32px;
+  background: #f4f5f9;
+}
+
+.desktopHeroImg, .desktopHeroVideo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 24px;
+}
+
+.desktopHeroSaveBtn {
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transition: all var(--transition-fast);
+}
+
+.desktopHeroSaveBtn:hover {
+  transform: scale(1.05);
+  background: #fff;
+}
+
+/* --- Desktop Hero Details --- */
+.desktopHeroDetails {
+  flex: 3;
+  padding: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+}
+
+.desktopHeroHeader {
+  margin-bottom: 1.5rem;
+}
+
+.desktopHeroAddress {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #111;
+  line-height: 1.3;
+}
+
+.desktopHeroStats {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.desktopHeroStat {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.statValue {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #111;
+}
+
+.statLabel {
+  font-size: 0.85rem;
+  color: #8E8E93;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.desktopHeroPriceRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 3rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.desktopHeroPrice {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #111;
+}
+
+.splitOptionsBtn {
+  background: transparent;
+  border: 1px solid #e5e5ea;
+  border-radius: var(--radius-full);
+  padding: 0.4rem 0.8rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #111;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.splitOptionsBtn:hover {
+  border-color: #111;
+}
+
+.desktopHeroAgent {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: auto; /* pushes everything else up, this down */
+  padding-bottom: 2rem;
+}
+
+.agentInfo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.agentAvatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #f2f2f7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #e5e5ea;
+}
+
+.agentDetails {
+  display: flex;
+  flex-direction: column;
+}
+
+.agentName {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #111;
+}
+
+.agentRole {
+  font-size: 0.8rem;
+  color: #8E8E93;
+  font-weight: 500;
+}
+
+.contactBtn {
+  border: 1px solid #e5e5ea;
+  border-radius: var(--radius-full);
+  padding: 0.5rem 1.25rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #111;
+  text-decoration: none;
+  transition: all var(--transition-fast);
+}
+
+.contactBtn:hover {
+  border-color: #111;
+}
+
+.requestTourBtn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #D4F721; /* Neon green instead of black per user request */
+  color: #111;
+  padding: 1rem;
+  border-radius: 20px;
+  text-decoration: none;
+  transition: all var(--transition-fast);
+  margin-top: 1rem;
+  box-shadow: 0 4px 16px rgba(212, 247, 33, 0.3);
+}
+
+.requestTourBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(212, 247, 33, 0.4);
+}
+
+.tourBtnMain {
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.tourBtnSub {
+  font-size: 0.75rem;
+  opacity: 0.7;
+  font-weight: 500;
+  margin-top: 0.2rem;
+}
+
+/* --- Desktop Hero Search Bar --- */
+.desktopHeroSearchBar {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .desktopHeroSearchBar {
+    display: flex;
+    align-items: center;
+    background: #fff;
+    border-radius: var(--radius-full);
+    padding: 0.5rem 1rem 0.5rem 2rem;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+    margin: -2rem auto 0 auto;
+    position: relative;
+    z-index: 10;
+    max-width: 90%;
+    justify-content: space-between;
+  }
+}
+
+.heroSearchItem {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.5rem 1rem;
+  flex: 1;
+}
+
+.heroSearchIcon {
+  color: #111;
+  opacity: 0.7;
+}
+
+.heroSearchText {
+  display: flex;
+  flex-direction: column;
+}
+
+.heroSearchLabel {
+  font-size: 0.75rem;
+  color: #8E8E93;
+  font-weight: 600;
+}
+
+.heroSearchValue {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #111;
+  white-space: nowrap;
+}
+
+.heroSearchDivider {
+  width: 1px;
+  height: 40px;
+  background: #f0f0f0;
+}
+
+.heroSearchActions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding-left: 1rem;
+}
+
+.heroSearchMoreBtn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: transparent;
+  border: none;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #111;
+  cursor: pointer;
+}
+
+.heroSearchSubmitBtn {
+  background: #111;
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-full);
+  padding: 0.75rem 2rem;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.heroSearchSubmitBtn:hover {
+  transform: scale(1.02);
+  background: #000;
+}
+

@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
-import { Search, Heart, User, Globe, ArrowUpRight, ArrowDownUp, ChevronDown, ChevronLeft, ChevronRight, MoreHorizontal, Home, Building2, Umbrella, X } from 'lucide-react';
+import { Search, Heart, User, Globe, ArrowUpRight, ArrowDownUp, ChevronDown, ChevronLeft, ChevronRight, MoreHorizontal, Home, Building2, Umbrella, X, MapPin, Bookmark, SlidersHorizontal } from 'lucide-react';
 import Link from 'next/link';
 import PropertyCard from '../components/PropertyCard';
 import SmallPropertyCard from '../components/SmallPropertyCard';
@@ -317,8 +317,8 @@ export default function Home_Page() {
             <section className={styles.topCategoriesSection}></section>
           </div>
 
-          {/* Campaign Area (Full Bleed) */}
-          <section className={styles.heroArea}>
+          {/* Campaign Area (Full Bleed) - Mobile Only */}
+          <section className={styles.mobileHeroArea}>
             <div className={styles.campaignCarouselControls}>
               <button className={styles.carouselBtn} onClick={() => scrollCampaign('left')} aria-label="Previous Campaign">
                 <ChevronLeft size={24} color="#111" />
@@ -381,6 +381,110 @@ export default function Home_Page() {
                 </div>
               </div>
             </section>
+
+          {/* Desktop Hero Section */}
+          <section className={styles.desktopHeroSection}>
+            {properties.filter(p => p.isCampaign).slice(0, 1).map(campaign => (
+              <div key={`desktop-${campaign.id}`} className={styles.desktopHeroCard}>
+                <div className={styles.desktopHeroImageWrapper}>
+                  {campaign.youtubeUrl && getYouTubeId(campaign.youtubeUrl) ? (
+                    <div style={{ width: '100%', height: '100%', position: 'absolute', top: 0, left: 0, overflow: 'hidden', zIndex: 0, background: '#000' }}>
+                      <iframe 
+                          src={`https://www.youtube.com/embed/${getYouTubeId(campaign.youtubeUrl)}?autoplay=1&mute=1&loop=1&playlist=${getYouTubeId(campaign.youtubeUrl)}&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&disablekb=1&fs=0`} 
+                          style={{ width: '180%', height: '180%', position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', pointerEvents: 'none', border: 'none' }}
+                          allow="autoplay; encrypted-media" 
+                      />
+                      <div style={{ position: 'absolute', inset: 0, zIndex: 10, background: 'rgba(0,0,0,0.01)' }} />
+                    </div>
+                  ) : (
+                    <img src={campaign.imageUrl} alt={campaign.campaignTitle} className={styles.desktopHeroImg} loading="lazy" />
+                  )}
+                  <button className={styles.desktopHeroSaveBtn}><Bookmark size={18} color="#111" /></button>
+                </div>
+                <div className={styles.desktopHeroDetails}>
+                  <div className={styles.desktopHeroHeader}>
+                    <h2 className={styles.desktopHeroAddress}>{campaign.location}</h2>
+                  </div>
+                  <div className={styles.desktopHeroStats}>
+                    <div className={styles.desktopHeroStat}>
+                      <span className={styles.statValue}>{campaign.bedrooms}</span>
+                      <span className={styles.statLabel}>beds</span>
+                    </div>
+                    <div className={styles.desktopHeroStat}>
+                      <span className={styles.statValue}>{campaign.bathrooms}</span>
+                      <span className={styles.statLabel}>baths</span>
+                    </div>
+                    <div className={styles.desktopHeroStat}>
+                      <span className={styles.statValue}>{campaign.area}</span>
+                      <span className={styles.statLabel}>sqm</span>
+                    </div>
+                  </div>
+                  <div className={styles.desktopHeroPriceRow}>
+                    <span className={styles.desktopHeroPrice}>{formatPrice(campaign.price)}</span>
+                    <button className={styles.splitOptionsBtn}>Split options {'>'}</button>
+                  </div>
+                  <div className={styles.desktopHeroAgent}>
+                    <div className={styles.agentInfo}>
+                      <div className={styles.agentAvatar}><User size={16} color="#111"/></div>
+                      <div className={styles.agentDetails}>
+                        <span className={styles.agentName}>Amelia Stephenson</span>
+                        <span className={styles.agentRole}>Agent</span>
+                      </div>
+                    </div>
+                    <Link href={`/properties/${campaign.id}`} className={styles.contactBtn}>Contact</Link>
+                  </div>
+                  <Link href={`/properties/${campaign.id}`} className={styles.requestTourBtn}>
+                    <span className={styles.tourBtnMain}>Request a tour</span>
+                    <span className={styles.tourBtnSub}>Earliest at 11:00 tomorrow</span>
+                  </Link>
+                </div>
+              </div>
+            ))}
+            
+            {/* Desktop Hero Search Bar */}
+            <div className={styles.desktopHeroSearchBar}>
+              <div className={styles.heroSearchItem}>
+                <MapPin size={20} className={styles.heroSearchIcon} />
+                <div className={styles.heroSearchText}>
+                  <span className={styles.heroSearchLabel}>Location</span>
+                  <span className={styles.heroSearchValue}>{filterLocation || 'Bali, Indonesia'}</span>
+                </div>
+              </div>
+              <div className={styles.heroSearchDivider} />
+              <div className={styles.heroSearchItem}>
+                <Building2 size={20} className={styles.heroSearchIcon} />
+                <div className={styles.heroSearchText}>
+                  <span className={styles.heroSearchLabel}>Property type</span>
+                  <span className={styles.heroSearchValue}>{filterPropertyType === 'Any' ? 'Villas' : filterPropertyType}</span>
+                </div>
+              </div>
+              <div className={styles.heroSearchDivider} />
+              <div className={styles.heroSearchItem}>
+                <ArrowDownUp size={20} className={styles.heroSearchIcon} />
+                <div className={styles.heroSearchText}>
+                  <span className={styles.heroSearchLabel}>Price</span>
+                  <span className={styles.heroSearchValue}>{formatPrice(1000000)} - {formatPrice(maxPrice)}</span>
+                </div>
+              </div>
+              <div className={styles.heroSearchDivider} />
+              <div className={styles.heroSearchItem}>
+                <Home size={20} className={styles.heroSearchIcon} />
+                <div className={styles.heroSearchText}>
+                  <span className={styles.heroSearchLabel}>Bedrooms</span>
+                  <span className={styles.heroSearchValue}>{filterBedrooms === 'Any' ? '1-5' : filterBedrooms}</span>
+                </div>
+              </div>
+              <div className={styles.heroSearchDivider} />
+              <div className={styles.heroSearchActions}>
+                <button className={styles.heroSearchMoreBtn} onClick={() => setShowFilters(true)}>
+                  <SlidersHorizontal size={16} /> More
+                </button>
+                <button className={styles.heroSearchSubmitBtn} onClick={handleSearch}>
+                  Search
+                </button>
+              </div>
+            </div>
+          </section>
         </div>
 
         {/* Light Curved Overlapping Body */}
