@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { Bookmark, MapPin } from 'lucide-react';
 import styles from './SmallPropertyCard.module.css';
-import type { Property } from '../data/mockProperties';
+import type { Property } from '../types/property';
 import { useAppContext } from '../context/AppContext';
 import { useSavedProperties } from '../context/SavedPropertiesContext';
 

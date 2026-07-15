@@ -12,7 +12,7 @@ import {
   Tv, Dumbbell, Wind, FileText, CalendarClock, ShieldAlert,
   Waves, Eye, Bath, Home, UserCheck, Plus, X, MapPin
 } from 'lucide-react';
-import { PropertyFeature, NearbyPlace, mockProperties } from '../../../../data/mockProperties';
+import { PropertyFeature, NearbyPlace } from '../../../../types/property';
 import { supabase } from '../../../../lib/supabaseClient';
 import { saveProperty } from '../../../actions/propertyActions';
 import styles from './form.module.css';
@@ -152,8 +152,9 @@ export default function AddProperty() {
     const { name, value, type } = e.target;
     
     if (name === 'id') {
-      const isDuplicate = mockProperties.some(p => p.id === value);
-      setIdError(isDuplicate ? 'This Property ID already exists.' : '');
+      supabase.from('properties').select('slug').eq('slug', value).then(({ data }) => {
+        setIdError(data && data.length > 0 ? 'This Property ID already exists.' : '');
+      });
     }
     
     setForm((prev) => ({

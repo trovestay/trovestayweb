@@ -3,7 +3,7 @@
 import { Bookmark, Star, ArrowRight, Bed, Bath, Waves, Maximize, CalendarClock } from 'lucide-react';
 import Link from 'next/link';
 import styles from './RentedPropertyCard.module.css';
-import type { Property } from '../data/mockProperties';
+import type { Property } from '../types/property';
 import { useAppContext } from '../context/AppContext';
 import { useSavedProperties } from '../context/SavedPropertiesContext';
 

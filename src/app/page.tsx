@@ -7,7 +7,7 @@ import Link from 'next/link';
 import PropertyCard from '../components/PropertyCard';
 import SmallPropertyCard from '../components/SmallPropertyCard';
 import RentedPropertyCard from '../components/RentedPropertyCard';
-import { mockProperties, Property } from '../data/mockProperties';
+import { Property } from '../types/property';
 import { supabase } from '../lib/supabaseClient';
 import { mockBlogs } from '../data/mockBlogs';
 import styles from './page.module.css';
@@ -153,7 +153,7 @@ export default function Home_Page() {
     return firstName.length > 10 ? firstName.substring(0, 8) + '...' : firstName;
   };
 
-  const checkMatch = (p: typeof mockProperties[0]) => {
+  const checkMatch = (p: Property) => {
     if (filterPropertyId && !p.id.toLowerCase().includes(filterPropertyId.toLowerCase())) return false;
     if (filterLocation) {
       const term = filterLocation.toLowerCase();

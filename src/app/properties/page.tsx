@@ -1,16 +1,61 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import PropertyCard from '../../components/PropertyCard';
-import { mockProperties } from '../../data/mockProperties';
+import { supabase } from '../../lib/supabaseClient';
+import { Property } from '../../types/property';
 import styles from './Properties.module.css';
 
 export default function Properties() {
   const [sort, setSort] = useState('popular');
   const [category, setCategory] = useState('All');
 
-  // Simple filter logic mock
-  const filteredProperties = mockProperties.filter(p => 
+  const [properties, setProperties] = useState<Property[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchProperties = async () => {
+      setLoading(true);
+      const { data, error } = await supabase
+        .from('properties')
+        .select('*')
+        .eq('status', 'published')
+        .order('created_at', { ascending: false });
+
+      if (!error && data) {
+        const mapped: Property[] = data.map((row: any) => ({
+          id: row.slug || row.id,
+          title: row.title,
+          location: row.location_name,
+          price: Number(row.monthly_price) || 0,
+          priceYearly: Number(row.yearly_price) || 0,
+          bedrooms: row.bedrooms,
+          bathrooms: row.bathrooms,
+          guests: row.guests,
+          area: row.area_sqm,
+          hasPool: row.has_pool,
+          category: 'Villa',
+          status: row.status,
+          isRented: row.is_rented,
+          imageUrl: '/placeholder.jpg',
+          listingType: row.listing_type,
+          salePrice: row.sale_price,
+          youtubeUrl: row.youtube_url,
+          isCampaign: row.is_campaign,
+          campaignLabel: row.campaign_label,
+          campaignTitle: row.campaign_title,
+          campaignTheme: row.campaign_theme,
+          description: row.description
+        }));
+        setProperties(mapped);
+      }
+      setLoading(false);
+    };
+
+    fetchProperties();
+  }, []);
+
+  const filteredProperties = properties.filter(p => 
     category === 'All' ? true : p.category === category
   );
 

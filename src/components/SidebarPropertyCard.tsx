@@ -3,7 +3,7 @@
 import { Bookmark, MapPin, Bed, Bath, Maximize } from 'lucide-react';
 import Link from 'next/link';
 import styles from './SidebarPropertyCard.module.css';
-import type { Property } from '../data/mockProperties';
+import type { Property } from '../types/property';
 import { useAppContext } from '../context/AppContext';
 import { useSavedProperties } from '../context/SavedPropertiesContext';
 

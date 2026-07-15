@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
-import type { Property } from '../data/mockProperties';
+import type { Property } from '../types/property';
 import Link from 'next/link';
 import { useAppContext } from '../context/AppContext';
 

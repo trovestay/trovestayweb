@@ -3,7 +3,7 @@
 import { use, useState, useEffect } from 'react';
 import Link from 'next/link';
 import { ArrowLeft, Bookmark, Star, MapPin, Compass, Bed, Bath, Waves, Maximize, Users, ChevronDown, Tag, Clock, Mail, ShieldCheck, UserCheck, CalendarClock, Wifi, Coffee, Car, ShieldAlert, CheckCircle, Info, Sparkles, MessageCircle, Phone, Video, Zap, Trees, Wrench, Bug, Landmark, ChevronLeft, ChevronRight } from 'lucide-react';
-import { Property, mockProperties } from '../../../data/mockProperties';
+import { Property } from '../../../types/property';
 import { supabase } from '../../../lib/supabaseClient';
 import BookingFlowModal from '../../../components/BookingFlowModal';
 import Map from '../../../components/Map';
@@ -20,6 +20,7 @@ export default function PropertyDetail({ params }: { params: Promise<{ id: strin
   const { isSaved, toggleSave } = useSavedProperties();
   const resolvedParams = use(params);
   const [property, setProperty] = useState<Property | null>(null);
+  const [similarProperties, setSimilarProperties] = useState<Property[]>([]);
   const [loading, setLoading] = useState(true);
   
   const [isDescExpanded, setIsDescExpanded] = useState(false);
@@ -61,6 +62,41 @@ export default function PropertyDetail({ params }: { params: Promise<{ id: strin
           campaignTheme: data.campaign_theme,
           description: data.description
         });
+
+        // Fetch similar properties
+        const { data: similarData, error: similarError } = await supabase
+          .from('properties')
+          .select('*')
+          .neq('id', data.id)
+          .eq('status', 'published')
+          .limit(4);
+        
+        if (!similarError && similarData) {
+          setSimilarProperties(similarData.map((row: any) => ({
+            id: row.slug || row.id,
+            title: row.title,
+            location: row.location_name,
+            price: Number(row.monthly_price) || 0,
+            priceYearly: Number(row.yearly_price) || 0,
+            bedrooms: row.bedrooms,
+            bathrooms: row.bathrooms,
+            guests: row.guests,
+            area: row.area_sqm,
+            hasPool: row.has_pool,
+            category: 'Villa',
+            status: row.status,
+            isRented: row.is_rented,
+            imageUrl: '/placeholder.jpg',
+            listingType: row.listing_type,
+            salePrice: row.sale_price,
+            youtubeUrl: row.youtube_url,
+            isCampaign: row.is_campaign,
+            campaignLabel: row.campaign_label,
+            campaignTitle: row.campaign_title,
+            campaignTheme: row.campaign_theme,
+            description: row.description
+          })));
+        }
       }
       setLoading(false);
     };
@@ -480,7 +516,7 @@ export default function PropertyDetail({ params }: { params: Promise<{ id: strin
                     </button>
                  </div>
               </div>
-              {mockProperties.filter(p => p.id !== property.id).slice(0, 4).map(similarProperty => (
+              {similarProperties.map(similarProperty => (
                  <SidebarPropertyCard key={similarProperty.id} property={similarProperty} rentalPeriod={billingCycle} />
               ))}
            </div>
@@ -499,7 +535,7 @@ export default function PropertyDetail({ params }: { params: Promise<{ id: strin
         <div className="mobile-similar">
           <h2 style={{ fontSize: '1.5rem', fontWeight: 800, margin: '2rem 0 1.5rem 0', color: '#111', letterSpacing: '-0.02em' }}>Similar Properties</h2>
           <div style={{ display: 'flex', gap: '1rem', overflowX: 'auto', paddingBottom: '1rem', scrollSnapType: 'x mandatory', scrollbarWidth: 'none', WebkitOverflowScrolling: 'touch' }}>
-             {mockProperties.filter(p => p.id !== property.id).slice(0, 4).map(similarProperty => (
+             {similarProperties.map(similarProperty => (
                 <div key={similarProperty.id} style={{ minWidth: '320px', width: '320px', scrollSnapAlign: 'start' }}>
                    <PropertyCard property={similarProperty} />
                 </div>

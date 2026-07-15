@@ -4,7 +4,7 @@ import { Bookmark, Star, ArrowRight, Bed, Bath, Waves, Maximize } from 'lucide-r
 import Link from 'next/link';
 import { useState } from 'react';
 import styles from './PropertyCard.module.css';
-import type { Property } from '../data/mockProperties';
+import type { Property } from '../types/property';
 import { useAppContext } from '../context/AppContext';
 import { useSavedProperties } from '../context/SavedPropertiesContext';
 

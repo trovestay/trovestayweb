@@ -20,7 +20,7 @@ import {
   Save,
   ScanFace,
 } from 'lucide-react';
-import { mockProperties, Property } from '../../../data/mockProperties';
+import { Property } from '../../../types/property';
 import { supabase } from '../../../lib/supabaseClient';
 import { deleteProperty } from '../../actions/propertyActions';
 import styles from './properties.module.css';

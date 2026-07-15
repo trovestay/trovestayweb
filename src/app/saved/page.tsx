@@ -2,14 +2,66 @@
 
 import { Bookmark } from 'lucide-react';
 import Link from 'next/link';
+import { useState, useEffect } from 'react';
 import { useSavedProperties } from '../../context/SavedPropertiesContext';
-import { mockProperties } from '../../data/mockProperties';
+import { supabase } from '../../lib/supabaseClient';
+import { Property } from '../../types/property';
 import PropertyCard from '../../components/PropertyCard';
 import styles from './saved.module.css'; // We'll create this if needed or use inline/globals
 
 export default function SavedPage() {
   const { savedIds } = useSavedProperties();
-  const savedProperties = mockProperties.filter(property => savedIds.includes(property.id));
+  const [savedProperties, setSavedProperties] = useState<Property[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchSavedProperties = async () => {
+      setLoading(true);
+      if (savedIds.length === 0) {
+        setSavedProperties([]);
+        setLoading(false);
+        return;
+      }
+
+      // Query by slug or id since savedIds could be slug
+      const { data, error } = await supabase
+        .from('properties')
+        .select('*')
+        .in('slug', savedIds)
+        .eq('status', 'published');
+
+      if (!error && data) {
+        const mapped: Property[] = data.map((row: any) => ({
+          id: row.slug || row.id,
+          title: row.title,
+          location: row.location_name,
+          price: Number(row.monthly_price) || 0,
+          priceYearly: Number(row.yearly_price) || 0,
+          bedrooms: row.bedrooms,
+          bathrooms: row.bathrooms,
+          guests: row.guests,
+          area: row.area_sqm,
+          hasPool: row.has_pool,
+          category: 'Villa',
+          status: row.status,
+          isRented: row.is_rented,
+          imageUrl: '/placeholder.jpg',
+          listingType: row.listing_type,
+          salePrice: row.sale_price,
+          youtubeUrl: row.youtube_url,
+          isCampaign: row.is_campaign,
+          campaignLabel: row.campaign_label,
+          campaignTitle: row.campaign_title,
+          campaignTheme: row.campaign_theme,
+          description: row.description
+        }));
+        setSavedProperties(mapped);
+      }
+      setLoading(false);
+    };
+
+    fetchSavedProperties();
+  }, [savedIds]);
 
   return (
     <div className="container" style={{ padding: '6rem 1.5rem', minHeight: '100vh' }}>
